@@ -1,5 +1,6 @@
-package Nitchie.Arruda.Gurnee.Chiluka.firstnxtproject;
+package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import nitchie.arruda.gurnee.chiluka.firstnxtproject.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
