@@ -11,9 +11,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -59,6 +57,39 @@ public class MainActivity extends Activity implements OnClickListener {
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
 
+	}
+	
+	private String getBatteryLevel() {
+		byte[] response = new byte[7];
+		try {
+			
+			byte[] buffer = new byte[4];
+			
+			buffer[0] = 2; // length lsb
+			buffer[1] = 0; // length msb
+			buffer[2] = 0x00;			// actual
+			buffer[3] = 0x0B;			// message			
+
+			os.write(buffer);
+			os.flush();
+			
+			response[0] = (byte) is.read(); // length lsb
+			response[1] = (byte) is.read(); // length msb
+			response[2] = (byte) is.read(); // will be 2
+			response[3] = (byte) is.read(); // will be 11 -> 0x0B
+			response[4] = (byte) is.read(); // Status byte. 0 = successful.
+			response[5] = (byte) is.read(); // battery level msb
+			response[6] = (byte) is.read(); // bettery level lsb
+			
+		}
+		catch (Exception e) {
+			Log.e(TAG,"Error in MoveForward(" + e.getMessage() + ")");
+			return null;
+		}
+		// unsigned!!!
+		int responseVoltage = (response[5] * 256) + response[6];
+		
+		return "" + responseVoltage;
 	}
 
 	public void setupTabs() {
@@ -130,6 +161,8 @@ public class MainActivity extends Activity implements OnClickListener {
  	 	    	btConnected = true;
  	 	    	connectButton.setVisibility(View.GONE);
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
+ 	 			TextView textView = (TextView) findViewById(R.id.textView1);
+ 	 			textView.setText(getBatteryLevel());
 
 				Log.i(TAG, "Connected with " + bd.getName());
 				return;
