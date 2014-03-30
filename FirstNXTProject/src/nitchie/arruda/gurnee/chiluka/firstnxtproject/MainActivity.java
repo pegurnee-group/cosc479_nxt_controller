@@ -58,18 +58,18 @@ public class MainActivity extends Activity implements OnClickListener {
 	    // need setup since uses @+id/ui_1_TabHost instead of android:id/tabhost
  	    tabHost.setup();
  	    
- 	    // Set up drive view tab
- 	    TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
- 	    getLayoutInflater().inflate(R.layout.drive_view, tabHost.getTabContentView(), true);
- 	    spec.setContent(R.id.drive_view_layout);
- 	    spec.setIndicator("View");
- 	    tabHost.addTab(spec);
- 	    
  	    // Set up connect view tab
- 	    spec = tabHost.newTabSpec("tag2");
+ 	    TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
  	    getLayoutInflater().inflate(R.layout.connect_view, tabHost.getTabContentView(), true);
  	    spec.setContent(R.id.connect_view_layout);
  	    spec.setIndicator("Connect");
+ 	    tabHost.addTab(spec);
+ 	    
+ 	    // Set up drive view tab
+ 	    spec = tabHost.newTabSpec("tag2");
+ 	    getLayoutInflater().inflate(R.layout.drive_view, tabHost.getTabContentView(), true);
+ 	    spec.setContent(R.id.drive_view_layout);
+ 	    spec.setIndicator("Drive");
  	    tabHost.addTab(spec);
 	}
 	
@@ -97,6 +97,7 @@ public class MainActivity extends Activity implements OnClickListener {
  	 	    		socket.connect();
  	 	    	} catch (IOException e) {
  	 	    		Log.e(TAG, "Error interacting with remote device -> " + e.getMessage());
+ 	 	    		return;
  	 	    	}
  	 	    	
  	 	    	try {
@@ -106,6 +107,7 @@ public class MainActivity extends Activity implements OnClickListener {
  	 	    		is = null;
  	 	    		os = null;
  	 	    		disconnectNXT(null);
+ 	 	    		return;
  	 	    	}
  	 	    	
  	 	    	Log.i(TAG, "Connected with " + bd.getName());
