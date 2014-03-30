@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TabHost;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -39,6 +40,17 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
 		
+		setupTabs();
+		
+		Button connectButton = (Button) this.findViewById(R.id.connectButton);
+		connectButton.setOnClickListener(this);
+		
+		Button disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
+		disconnectButton.setOnClickListener(this);
+
+	}
+	
+	public void setupTabs() {
 		// Set up tabbars
 		Resources res = getResources();
 		final TabHost tabHost = (TabHost) findViewById(R.id.ui_1_TabHost);
