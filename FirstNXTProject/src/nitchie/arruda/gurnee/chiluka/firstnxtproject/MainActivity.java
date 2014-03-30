@@ -36,18 +36,19 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 	private BluetoothAdapter btInterface;
 	private Set<BluetoothDevice> pairedDevices;
 	private BluetoothDevice bd;
+	private BluetoothSocket socket;
+	private InputStream is;
+	private OutputStream os;
 
 	// flag representing BT connection status
 	private boolean btConnected;
 	
-	private DeviceData dData;
 	boolean flag = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
-		dData = new DeviceData();
 		
 		
 		btConnected = false;
@@ -141,10 +142,10 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 
 			if (bd.getName().equalsIgnoreCase(ROBOTNAME)) {
 				try {
-					dData.setSocket(bd
+					socket = bd
 							.createRfcommSocketToServiceRecord(UUID
-									.fromString("00001101-0000-1000-8000-00805F9B34FB")));
-					dData.getSocket().connect();
+									.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+					socket.connect();
 				} catch (IOException e) {
 					Log.e(TAG,
 							"Error interacting with remote device -> "
@@ -153,11 +154,11 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 				}
 
 				try {
-					dData.setIs( dData.getSocket().getInputStream());
-					dData.setOs(dData.getSocket().getOutputStream());
+					is = socket.getInputStream();
+					os = socket.getOutputStream();
 				} catch (IOException e) {
-					dData.setIs(null);
-					dData.setOs(null);
+					is = null;
+					os = null;
 					disconnectNXT(null);
 					return;
 				}
@@ -177,9 +178,9 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 	public void disconnectNXT(View v) {
 		try {
 			Log.i(TAG, "Attempting to break BT connection of " + bd.getName());
-			dData.getSocket().close();
-			dData.getIs().close();
-			dData.getOs().close();
+			socket.close();
+			is.close();
+			os.close();
 			Log.i(TAG, "BT connection of " + bd.getName() + " is disconnected");
 		} catch (Exception e) {
 			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
