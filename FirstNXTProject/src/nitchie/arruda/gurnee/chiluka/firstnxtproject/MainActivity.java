@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,13 +14,17 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener,OnTouchListener {
 
 	private final String TAG = "NXT Project 1";
 	private final String ROBOTNAME = "herb-E";
@@ -42,6 +45,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private boolean btConnected;
 	
 	boolean flag = false;
+	int mpower1 = 20;
+	int mpower2 = 30;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
+		
+		
+	
 
 	}
 	
@@ -128,10 +136,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
 			break;
-		case (R.id.button1):
-			 MoveMotor(0, 75, 0x20);
-			 MoveMotor(1, 75, 0x20);
-			 break;
 			
 		}
 	}
@@ -202,45 +206,215 @@ public class MainActivity extends Activity implements OnClickListener {
 		return true;
 	}
 	
+	
+	//Set up Drive View Controls
 	public void driveDirections()
 	{
 		Button goFwd = (Button) findViewById(R.id.button1);
-		goFwd.setOnClickListener(this);
+		goFwd.setOnTouchListener(this);
+
+		Button goBwd = (Button) findViewById(R.id.button2);
+		goBwd.setOnTouchListener(this);
+		
+		Button goRight = (Button) findViewById(R.id.button3);
+		goRight.setOnTouchListener(this);
+		
+		Button goLeft = (Button) findViewById(R.id.button4);
+		goLeft.setOnTouchListener(this);
+
+		Button goFwd2 = (Button) findViewById(R.id.button5);
+		goFwd2.setOnTouchListener(this);
+		
+		Button goBwd2 = (Button) findViewById(R.id.button6);
+		goBwd2.setOnTouchListener(this);
+		
+		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
+        powerSeekBar1.setProgress(mpower1);
+        
+		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        	
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                    boolean fromUser) {
+            	mpower1 = progress;
+            	 //Log.i("NXT", "Action started "+ progressChanged );
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            	//Log.i("NXT", "Action started "+ mpower1);
+            }            
+        });
+		
+		
+		SeekBar powerSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
+        powerSeekBar2.setProgress(mpower2);
+        
+		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        	
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                    boolean fromUser) {
+            	mpower2 = progress;
+            	 //Log.i("NXT", "Action started "+ progressChanged );
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            	//Log.i("NXT", "Action started "+ mpower2);
+            }            
+        });
 	}
 	
-	//public void onClick(View view)
-	//{
-	//	int action;
+	public boolean onTouch(View view, MotionEvent event )
+	{
+		int action;
 
-		/*
-		Log.i("NXT", "onTouch event: " + Integer.toString(event.getAction()));
-		 action = event.getAction();
-        //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
-        if (action == MotionEvent.ACTION_DOWN) {
-       	 Log.i("NXT", "Action1 started " );
-       	 if(flag==false)
-       	 {
-       		 MoveMotor(1, 75, 0x20);
-       		 MoveMotor(2, 75, 0x20);
-       	 }
-       	 
-       	 flag = true;
-       	 
-           
-        } else if ((action == MotionEvent.ACTION_UP) ) {
-       	 Log.i("NXT", "Action1 Stopped " ); 
-       	 flag = false;
-       	 MoveMotor(1, 75, 0x00);
-       	 MoveMotor(2, 75, 0x00);
-        }
-        return true;*/
+		switch(view.getId())
+		{
+			//Go Fwd
+			case R.id.button1:
+				action = event.getAction();
+		        //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
+		        if (action == MotionEvent.ACTION_DOWN) {
+		       	
+		       	 
+			       	 if(flag==false)
+			       	 {
+			       		 MoveMotor(1, -mpower1, 0x20);
+			       		 MoveMotor(2, -mpower1, 0x20);
+			       	 }       	 
+			       	 flag = true;
+		  
+		        } else if ((action == MotionEvent.ACTION_UP) ) {
+			       	
+			       	 flag = false;
+			       	 MoveMotor(1, -mpower1, 0x00);
+			       	 MoveMotor(2, -mpower1, 0x00);
+		        }
+			         break;
+			//Go Rev         
+			case R.id.button2:
+				
+				 action = event.getAction();
+		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
+		         if (action == MotionEvent.ACTION_DOWN) {
+		        
+		        	 if(flag==false)
+			       	 {
+			       		 MoveMotor(1, mpower1, 0x20);
+			       		 MoveMotor(2, mpower1, 0x20);
+			       	 }       	 
+			       	 flag = true;
+		  
+		        } else if ((action == MotionEvent.ACTION_UP) ) {
+			       	 Log.i("NXT", "Action1 Stopped " ); 
+			       	 flag = false;
+			       	 MoveMotor(1, mpower1, 0x00);
+			       	 MoveMotor(2, mpower1, 0x00);
+		        }
+		         break;
+	     
+		//Go Right         
+		case R.id.button3:
+				
+				 action = event.getAction();
+		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
+		         if (action == MotionEvent.ACTION_DOWN) {
+		        	 Log.i("NXT", "Action3 started " ); 
+		        	 if(flag==false)
+			       	 {
+			       		 MoveMotor(1, -mpower1, 0x20);
+			       		 MoveMotor(2, mpower1, 0x20);
+			       	 }       	 
+			       	 flag = true;
+		  
+		        } else if ((action == MotionEvent.ACTION_UP) ) {
+			       	 Log.i("NXT", "Action1 Stopped " ); 
+			       	 flag = false;
+			       	 MoveMotor(1, -mpower1, 0x00);
+			       	 MoveMotor(2, mpower1, 0x00);
+		         }
+		         break;
 		
-	//}
+		 //Go Left
+		case R.id.button4:
+				
+				 action = event.getAction();
+		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
+		         if (action == MotionEvent.ACTION_DOWN) {
+		        	 Log.i("NXT", "Action4 started " );
+		        	 if(flag==false)
+			       	 {
+			       		 MoveMotor(1, mpower1, 0x20);
+			       		 MoveMotor(2, -mpower1, 0x20);
+			       	 }       	 
+			       	 flag = true;
+		  
+		        } else if ((action == MotionEvent.ACTION_UP) ) {
+			       	 Log.i("NXT", "Action1 Stopped " ); 
+			       	 flag = false;
+			       	 MoveMotor(1, mpower1, 0x00);
+			       	 MoveMotor(2, -mpower1, 0x00);
+		         }
+		         break;
+		         
+		case R.id.button5:
+			
+			 action = event.getAction();
+	         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
+	         if (action == MotionEvent.ACTION_DOWN) {
+	        	 Log.i("NXT", "Action4 started " );
+	        	 if(flag==false)
+		       	 {
+		       		 MoveMotor(3, -mpower2, 0x20);
+		       		
+		       	 }       	 
+		       	 flag = true;
+	  
+	        } else if ((action == MotionEvent.ACTION_UP) ) {
+		       	 Log.i("NXT", "Action1 Stopped " ); 
+		       	 flag = false;
+		       	 MoveMotor(3, -mpower2, 0x00);
+		  
+	         }
+	         break;
+	         
+		case R.id.button6:
+		
+			 action = event.getAction();
+			 if (action == MotionEvent.ACTION_DOWN) {
+				 Log.i("NXT", "Action4 started " );
+			 if(flag==false)
+	       	 {
+	       		 MoveMotor(3, mpower2, 0x20);	
+	       	 }       	 
+	       	 flag = true;
+  
+        } else if ((action == MotionEvent.ACTION_UP) ) {
+	       	 Log.i("NXT", "Action4 Stopped " ); 
+	       	 flag = false;
+	       	 MoveMotor(3, mpower2, 0x00); 
+	         }
+	         break;
+			         
+		}
+		return true;
+		
+	}
 	
 	
 	private void MoveMotor(int motor,int speed, int state) {
 		try {
-			Log.i(TAG,"Attempting to move [" + motor + " @ " + speed + "]");
+			//Log.i(TAG,"Attempting to move [" + motor + " @ " + speed + "]");
 			
 			byte[] buffer = new byte[15];
 			
@@ -260,8 +434,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			buffer[13] = 0;
 			buffer[14] = 0;
 
-			//os.write(buffer);
-			//os.flush();
+			os.write(buffer);
+			os.flush();
 			
 		}
 		catch (Exception e) {
