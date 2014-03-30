@@ -43,7 +43,7 @@ public class DriveActivity extends Activity implements OnTouchListener
 		
 		Button goFwd = (Button) findViewById(R.id.button1);
 		goFwd.setOnTouchListener(this);
-		
+		Log.i("NXT", "onTouch event: ");
 		Button goBwd = (Button) findViewById(R.id.button2);
 		goBwd.setOnTouchListener(this);
 		
