@@ -18,12 +18,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TabHost;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener,OnTouchListener {
 
 	private final String TAG = "NXT Project 1";
 	private final String ROBOTNAME = "herb-E";
@@ -35,23 +37,25 @@ public class MainActivity extends Activity implements OnClickListener {
 	// Bluetooth Variables
 	private BluetoothAdapter btInterface;
 	private Set<BluetoothDevice> pairedDevices;
-	private BluetoothSocket socket;
 	private BluetoothDevice bd;
-	private InputStream is = null;
-	private OutputStream os = null;
 
 	// flag representing BT connection status
 	private boolean btConnected;
+	
+	private DeviceData dData;
+	boolean flag = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
-
+		dData = new DeviceData();
+		
+		
 		btConnected = false;
 
 		setupTabs();
-
+		driveDirections();
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
 
@@ -106,10 +110,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			if (bd.getName().equalsIgnoreCase(ROBOTNAME)) {
 				try {
-					socket = bd
+					dData.setSocket(bd
 							.createRfcommSocketToServiceRecord(UUID
-									.fromString("00001101-0000-1000-8000-00805F9B34FB"));
-					socket.connect();
+									.fromString("00001101-0000-1000-8000-00805F9B34FB")));
+					dData.getSocket().connect();
 				} catch (IOException e) {
 					Log.e(TAG,
 							"Error interacting with remote device -> "
@@ -118,11 +122,11 @@ public class MainActivity extends Activity implements OnClickListener {
 				}
 
 				try {
-					is = socket.getInputStream();
-					os = socket.getOutputStream();
+					dData.setIs( dData.getSocket().getInputStream());
+					dData.setOs(dData.getSocket().getOutputStream());
 				} catch (IOException e) {
-					is = null;
-					os = null;
+					dData.setIs(null);
+					dData.setOs(null);
 					disconnectNXT(null);
 					return;
 				}
@@ -140,9 +144,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void disconnectNXT(View v) {
 		try {
 			Log.i(TAG, "Attempting to break BT connection of " + bd.getName());
-			socket.close();
-			is.close();
-			os.close();
+			dData.getSocket().close();
+			dData.getIs().close();
+			dData.getOs().close();
 			Log.i(TAG, "BT connection of " + bd.getName() + " is disconnected");
 		} catch (Exception e) {
 			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
@@ -160,5 +164,72 @@ public class MainActivity extends Activity implements OnClickListener {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	public void driveDirections()
+	{
+		Button goFwd = (Button) findViewById(R.id.button1);
+		goFwd.setOnTouchListener(this);
+	}
+	
+	public boolean onTouch(View view,MotionEvent event)
+	{
+		int action;
+
+		
+		Log.i("NXT", "onTouch event: " + Integer.toString(event.getAction()));
+		 action = event.getAction();
+        //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
+        if (action == MotionEvent.ACTION_DOWN) {
+       	 Log.i("NXT", "Action1 started " );
+       	 if(flag==false)
+       	 {
+       		 MoveMotor(1, 75, 0x20);
+       		 MoveMotor(2, 75, 0x20);
+       	 }
+       	 
+       	 flag = true;
+       	 
+           
+        } else if ((action == MotionEvent.ACTION_UP) ) {
+       	 Log.i("NXT", "Action1 Stopped " ); 
+       	 flag = false;
+       	 MoveMotor(1, 75, 0x00);
+       	 MoveMotor(2, 75, 0x00);
+        }
+        return true;
+	}
+	
+	
+	private void MoveMotor(int motor,int speed, int state) {
+		try {
+			//Log.i(tag,"Attempting to move [" + motor + " @ " + speed + "]");
+			
+			byte[] buffer = new byte[15];
+			
+			buffer[0] = (byte) (15-2);			// length lsb
+			buffer[1] = 0;						// length msb
+			buffer[2] =  0;						// direct command (with response)
+			buffer[3] = 0x04;					// set output state
+			buffer[4] = (byte) motor;			// output 1 (motor B)
+			buffer[5] = (byte) speed;			// power
+			buffer[6] = 1 + 2;					// motor on + brake between PWM
+			buffer[7] = 0;						// regulation
+			buffer[8] = 0;						// turn ration??
+			buffer[9] = (byte) state; //0x20;	// run state
+			buffer[10] = 0;
+			buffer[11] = 0;
+			buffer[12] = 0;
+			buffer[13] = 0;
+			buffer[14] = 0;
+
+			//os.write(buffer);
+			//os.flush();
+			
+		}
+		catch (Exception e) {
+			//Log.e(tag,"Error in MoveForward(" + e.getMessage() + ")");
+		}		
+	}
+	
 
 }
