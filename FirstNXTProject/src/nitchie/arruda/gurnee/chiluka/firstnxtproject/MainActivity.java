@@ -25,7 +25,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TabHost;
 
-public class MainActivity extends Activity implements OnClickListener,OnTouchListener {
+public class MainActivity extends Activity implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
 	private final String ROBOTNAME = "herb-E";
@@ -98,6 +98,11 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
 			break;
+		case (R.id.button1):
+			 MoveMotor(0, 75, 0x20);
+			 MoveMotor(1, 75, 0x20);
+			 break;
+			
 		}
 	}
 
@@ -168,14 +173,14 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 	public void driveDirections()
 	{
 		Button goFwd = (Button) findViewById(R.id.button1);
-		goFwd.setOnTouchListener(this);
+		goFwd.setOnClickListener(this);
 	}
 	
-	public boolean onTouch(View view,MotionEvent event)
-	{
-		int action;
+	//public void onClick(View view)
+	//{
+	//	int action;
 
-		
+		/*
 		Log.i("NXT", "onTouch event: " + Integer.toString(event.getAction()));
 		 action = event.getAction();
         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
@@ -196,13 +201,14 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
        	 MoveMotor(1, 75, 0x00);
        	 MoveMotor(2, 75, 0x00);
         }
-        return true;
-	}
+        return true;*/
+		
+	//}
 	
 	
 	private void MoveMotor(int motor,int speed, int state) {
 		try {
-			//Log.i(tag,"Attempting to move [" + motor + " @ " + speed + "]");
+			Log.i(TAG,"Attempting to move [" + motor + " @ " + speed + "]");
 			
 			byte[] buffer = new byte[15];
 			
