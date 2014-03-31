@@ -7,9 +7,11 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 import android.app.Activity;
+import android.app.TabActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +23,12 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-public class MainActivity extends Activity implements OnClickListener,OnTouchListener {
-
+public class MainActivity extends Activity  {
+/*
 	private final String TAG = "NXT Project 1";
 	private final String ROBOTNAME = "herb-E";
 
@@ -54,21 +57,18 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
-		
-		
+			
 		btConnected = false;
 
 		setupTabs();
-		driveDirections();
+		//driveDirections();
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
 
 		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
-		
-		
-	
+
 
 	}
 	
@@ -104,9 +104,26 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		
 		return "" + responseVoltage;
 	}
-
 	public void setupTabs() {
 		// Set up tabbars
+
+			TabHost tabHost = getTabHost();
+	 	    
+	        // Tab for Connect
+	        TabSpec spec = tabHost.newTabSpec("Connect");
+	       
+	        spec.setIndicator("Connect", getResources().getDrawable(R.drawable.blue_button));
+	        Intent i = new Intent(this, Connect.class);
+	        spec.setContent(i);
+	        tabHost.addTab(spec);
+		
+	        // Tab for Drive
+	        TabSpec drivespec = tabHost.newTabSpec("Drive");
+	        drivespec.setIndicator("Drive", getResources().getDrawable(R.drawable.blue_button));
+	        Intent driveIntent = new Intent(this, driveModule.class);
+	        drivespec.setContent(driveIntent);
+	        tabHost.addTab(drivespec);
+	        
 		Resources res = getResources();
 		final TabHost tabHost = (TabHost) findViewById(R.id.ui_1_TabHost);
 
@@ -114,22 +131,26 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		tabHost.setup();
 
 		// Set up connect view tab
-		TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
+		TabSpec spec1 = tabHost.newTabSpec("tag1");
 		getLayoutInflater().inflate(R.layout.connect_view,
 				tabHost.getTabContentView(), true);
-		spec.setContent(R.id.connect_view_layout);
-		spec.setIndicator("Connect");
-		tabHost.addTab(spec);
+		spec1.setContent(R.id.connect_view_layout);
+		spec1.setIndicator("Connect");
+		tabHost.addTab(spec1);
+		
+		Log.i("fine!","");
 
 		// Set up drive view tab
-		spec = tabHost.newTabSpec("tag2");
-		getLayoutInflater().inflate(R.layout.drive_view,
-				tabHost.getTabContentView(), true);
-		spec.setContent(R.id.drive_view_layout);
-		spec.setIndicator("Drive");
-		tabHost.addTab(spec);
+		TabSpec spec2 = tabHost.newTabSpec("tag2");
+		//getLayoutInflater().inflate(R.layout.drive_view,
+			//	tabHost.getTabContentView(), true);
+		Intent  driveLayout = new Intent(this, DriveActivity.class);
+		spec2.setContent(driveLayout);
+		//spec.setContent(R.id.drive_view_layout);
+		spec2.setIndicator("Drive");
+		tabHost.addTab(spec2);
 	}
-
+/*
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.connectButton):
@@ -448,6 +469,42 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		catch (Exception e) {
 			//Log.e(tag,"Error in MoveForward(" + e.getMessage() + ")");
 		}		
+	}
+*/	
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_view);
+		
+		Resources res = getResources();
+		final TabHost tabHost = (TabHost) findViewById(R.id.ui_1_TabHost);
+
+		// need setup since uses @+id/ui_1_TabHost instead of android:id/tabhost
+		tabHost.setup();	
+		//TabHost tabHost = getTabHost();
+		
+
+		// Set up connect view tab
+		TabSpec spec1 = tabHost.newTabSpec("tag1");
+		Intent connectIntent = new Intent(this,ConnectActivity.class);
+		spec1.setContent(connectIntent);
+		spec1.setIndicator("Connect");
+		tabHost.addTab(spec1);
+	
+ 
+        
+
+		// Set up drive view tab
+		TabSpec spec2 = tabHost.newTabSpec("tag2");
+	
+		Intent  driveIntent = new Intent(this, DriveActivity.class);
+		spec2.setContent(driveIntent);
+		//spec2.setContent(R.id.drive_view_layout);
+		spec2.setIndicator("Drive");
+		tabHost.addTab(spec2);
+
+
 	}
 	
 

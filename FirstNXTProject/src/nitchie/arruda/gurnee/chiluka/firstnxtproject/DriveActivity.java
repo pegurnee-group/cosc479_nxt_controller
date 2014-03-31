@@ -1,6 +1,7 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,11 @@ public class DriveActivity extends Activity implements OnTouchListener{
 	int mpower1 = 20;
 	int mpower2 = 30;
 	boolean flag = false;
+	
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.id.drive_view_layout);
+	}
 
 	//Set up Drive View Controls
 	public void driveDirections()
@@ -245,6 +251,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			DeviceData myObject = (DeviceData) DeviceData.getInstance();
 			myObject.getOs().write(buffer);
 			myObject.getOs().flush();
+			Log.i("OS Fine!","");
 			
 		}
 		catch (Exception e) {
