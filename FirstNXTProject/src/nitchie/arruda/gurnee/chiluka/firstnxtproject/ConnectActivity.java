@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ConnectActivity extends  Activity implements  OnClickListener{
@@ -31,6 +32,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	Button disconnectButton;
 	ImageView btImage;
 	TextView statusLabel;
+	ProgressBar batteryStatus;
 
 
 	// Bluetooth Variables
@@ -63,6 +65,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		btImage = (ImageView) findViewById(R.id.imageView1);
 		btImage.setImageAlpha(50);
 		statusLabel = (TextView) findViewById(R.id.statusLabel);
+		batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
 
 
 	}
@@ -94,7 +97,16 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			Log.e(TAG,"Error in MoveForward(" + e.getMessage() + ")");
 			return null;
 		}
-		// unsigned!!!
+		
+		// Returns unsigned bytes
+		// Prevent negative numbers
+		if (response[5] < 0) {
+			response[5] += 256;
+		}
+		if (response[6] < 0) {
+			response[6] += 256;
+		}
+		
 		int responseVoltage = (response[5] * 256) + response[6];
 		
 		return "" + responseVoltage;
