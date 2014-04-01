@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -19,10 +20,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class MainActivity extends Activity implements OnClickListener,OnTouchListener {
 
@@ -32,6 +34,7 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 	// UI Components
 	Button connectButton;
 	Button disconnectButton;
+	ImageView btImage;
 
 	// Bluetooth Variables
 	private BluetoothAdapter btInterface;
@@ -53,6 +56,8 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
 		
+		btImage = (ImageView) findViewById(R.id.imageView1);
+		btImage.setAlpha(.3f);
 		
 		btConnected = false;
 
@@ -173,6 +178,7 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
  	 	    	btConnected = true;
  	 	    	connectButton.setVisibility(View.GONE);
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
+ 	 	    	btImage.setAlpha(1.0f);
  	 			TextView textView = (TextView) findViewById(R.id.textView1);
  	 			textView.setText(getBatteryLevel());
 
@@ -196,7 +202,7 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		btConnected = false;
 		connectButton.setVisibility(View.VISIBLE);
 		disconnectButton.setVisibility(View.GONE);
-
+		btImage.setAlpha(.3f);
 	}
 
 	@Override
