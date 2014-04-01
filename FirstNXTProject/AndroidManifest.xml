@@ -8,7 +8,7 @@
 	</uses-permission>
     
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <application

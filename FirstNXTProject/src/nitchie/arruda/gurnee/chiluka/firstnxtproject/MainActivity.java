@@ -29,12 +29,13 @@ import android.widget.TextView;
 public class MainActivity extends Activity implements OnClickListener,OnTouchListener {
 
 	private final String TAG = "NXT Project 1";
-	private final String ROBOTNAME = "herb-E";
+	private final String ROBOTNAME = "Columbus";
 
 	// UI Components
 	Button connectButton;
 	Button disconnectButton;
 	ImageView btImage;
+	TextView statusLabel;
 
 	// Bluetooth Variables
 	private BluetoothAdapter btInterface;
@@ -56,12 +57,13 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
 		
-		btImage = (ImageView) findViewById(R.id.imageView1);
-		btImage.setAlpha(.3f);
-		
 		btConnected = false;
 
 		setupTabs();
+		
+		btImage = (ImageView) findViewById(R.id.imageView1);
+		btImage.setImageAlpha(50);
+		
 		driveDirections();
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
@@ -70,8 +72,7 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
 		
-		
-	
+		statusLabel = (TextView) findViewById(R.id.statusLabel);
 
 	}
 	
@@ -178,7 +179,8 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
  	 	    	btConnected = true;
  	 	    	connectButton.setVisibility(View.GONE);
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
- 	 	    	btImage.setAlpha(1.0f);
+ 	 	    	btImage.setImageAlpha(255);
+ 	 	    	statusLabel.setText(R.string.nxtConnected);
  	 			TextView textView = (TextView) findViewById(R.id.textView1);
  	 			textView.setText(getBatteryLevel());
 
@@ -202,7 +204,8 @@ public class MainActivity extends Activity implements OnClickListener,OnTouchLis
 		btConnected = false;
 		connectButton.setVisibility(View.VISIBLE);
 		disconnectButton.setVisibility(View.GONE);
-		btImage.setAlpha(.3f);
+		btImage.setImageAlpha(100);
+		statusLabel.setText(R.string.nxtDisconnected);
 	}
 
 	@Override
