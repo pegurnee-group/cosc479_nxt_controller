@@ -70,7 +70,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 
 	}
 	
-	private String getBatteryLevel() {
+	private int getBatteryLevel() {
 		byte[] response = new byte[7];
 		try {
 			
@@ -94,8 +94,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			
 		}
 		catch (Exception e) {
-			Log.e(TAG,"Error in MoveForward(" + e.getMessage() + ")");
-			return null;
+			Log.e(TAG,"Error getting battery level(" + e.getMessage() + ")");
+			return -1;
 		}
 		
 		// Returns unsigned bytes
@@ -109,7 +109,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		
 		int responseVoltage = (response[5] * 256) + response[6];
 		
-		return "" + responseVoltage;
+		return responseVoltage;
 	}
 	
 	public void onClick(View v) {
@@ -164,8 +164,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
  	 	    	btConnected = true;
  	 	    	connectButton.setVisibility(View.GONE);
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
- 	 			TextView textView = (TextView) findViewById(R.id.textView1);
- 	 			textView.setText(getBatteryLevel());
+ 	 			setBatteryMeter(getBatteryLevel());
  	 	    	btImage.setImageAlpha(255);
  	 	    	statusLabel.setText(R.string.nxtConnected);
 
@@ -173,6 +172,11 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 				return;
 			}
 		}
+	}
+	
+	private void setBatteryMeter(int voltage) {
+		Log.i(TAG, "Voltage is" + voltage);
+		final int maxMilliVolts = 9000;
 	}
 
 	public void disconnectNXT(View v) {
