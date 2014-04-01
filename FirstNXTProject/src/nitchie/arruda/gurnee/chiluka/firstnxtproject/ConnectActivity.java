@@ -176,7 +176,10 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	
 	private void setBatteryMeter(int voltage) {
 		Log.i(TAG, "Voltage is" + voltage);
-		final int maxMilliVolts = 9000;
+		final double maxMilliVolts = 9000.0;
+		
+		double batteryLevel = voltage/maxMilliVolts;
+		
 	}
 
 	public void disconnectNXT(View v) {
