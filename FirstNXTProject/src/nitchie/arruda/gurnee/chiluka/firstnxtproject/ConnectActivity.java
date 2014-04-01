@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ConnectActivity extends  Activity implements  OnClickListener{
@@ -27,6 +28,9 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	// UI Components
 	Button connectButton;
 	Button disconnectButton;
+	ImageView btImage;
+	TextView statusLabel;
+
 
 	// Bluetooth Variables
 	private BluetoothAdapter btInterface;
@@ -49,14 +53,15 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			
 		btConnected = false;
 
-		//setupTabs();
-		//driveDirections();
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
 
 		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
+		btImage = (ImageView) findViewById(R.id.imageView1);
+		btImage.setImageAlpha(50);
+		statusLabel = (TextView) findViewById(R.id.statusLabel);
 
 
 	}
@@ -146,6 +151,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
  	 			TextView textView = (TextView) findViewById(R.id.textView1);
  	 			textView.setText(getBatteryLevel());
+ 	 	    	btImage.setImageAlpha(255);
+ 	 	    	statusLabel.setText(R.string.nxtConnected);
 
 				Log.i(TAG, "Connected with " + bd.getName());
 				return;
@@ -167,6 +174,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		btConnected = false;
 		connectButton.setVisibility(View.VISIBLE);
 		disconnectButton.setVisibility(View.GONE);
+		btImage.setImageAlpha(100);
+		statusLabel.setText(R.string.nxtDisconnected);
 
 	}
 

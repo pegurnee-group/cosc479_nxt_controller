@@ -35,4 +35,22 @@
         android:layout_toRightOf="@+id/connectButton"
         android:text="TextView" />
 
+    <TextView
+        android:id="@+id/statusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginBottom="18dp"
+        android:text="@string/nxtDisconnected" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/disconnectButton"
+        android:layout_below="@+id/disconnectButton"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/bluetooth" />
+
 </RelativeLayout>
