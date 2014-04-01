@@ -1,6 +1,8 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.ListActivity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +17,8 @@ public class PopupActivity extends ListActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.popup_view);
 		
-		Log.e("hello", "in otherworld");
-		
-		String[] names = {"eddie", "was", "here", "don'tchu", "worry", "child" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.row_view, R.id.row_lbl, names);
-		this.setListAdapter(adapter);
-		
-		/*
+		//String[] names = {"eddie", "was", "here", "don'tchu", "worry", "child" };
+
 		BluetoothDevice[] devices = (BluetoothDevice[]) BluetoothAdapter
 				.getDefaultAdapter().getBondedDevices().toArray();
 		
@@ -32,8 +28,11 @@ public class PopupActivity extends ListActivity implements OnClickListener {
 		for (int i = 0; i < limit; i++) {
 			names[i] = devices[i].getName() + "\n" + devices[i].getAddress();
 		}
-
-		*/
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.row_view, R.id.row_lbl, names);
+		this.setListAdapter(adapter);
+		
 		Log.e("hello", "popup viewed");
 	}
 	
