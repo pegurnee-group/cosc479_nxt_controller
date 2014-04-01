@@ -161,8 +161,6 @@ public class MainActivity extends Activity  {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.connectButton):
-			Intent i = new Intent(this, PopupActivity.class);
-			this.startActivity(i);
 			connectToDevice();
 			break;
 		case (R.id.disconnectButton):

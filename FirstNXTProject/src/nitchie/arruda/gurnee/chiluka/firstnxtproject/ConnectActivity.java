@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -102,6 +103,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.connectButton):
+			Intent i = new Intent(this, PopupActivity.class);
+			this.startActivity(i);
 			connectToDevice();
 			break;
 		case (R.id.disconnectButton):
