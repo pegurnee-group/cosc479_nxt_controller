@@ -1,5 +1,7 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import java.util.Set;
+
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -19,8 +21,11 @@ public class PopupActivity extends ListActivity {
 		// String[] names = { "eddie", "was", "here", "don'tchu", "worry",
 		// "child" };
 
-		devices = (BluetoothDevice[]) BluetoothAdapter.getDefaultAdapter()
-				.getBondedDevices().toArray();
+		Set<BluetoothDevice> theDudes = BluetoothAdapter.getDefaultAdapter()
+				.getBondedDevices();
+		if (null != theDudes) {
+			devices = (BluetoothDevice[]) theDudes.toArray(new BluetoothDevice[0]);
+		}
 
 		int limit = devices.length;
 		String[] names = new String[limit];
