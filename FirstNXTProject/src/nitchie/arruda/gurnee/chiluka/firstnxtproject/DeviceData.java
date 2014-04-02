@@ -3,13 +3,14 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.UUID;
+
+import android.bluetooth.BluetoothDevice;
 
 public class DeviceData implements Serializable {
 
 	private InputStream is;
 	private OutputStream os;
-	private UUID theUUID;
+	private BluetoothDevice bt;
 
 	public static DeviceData instance;
 
@@ -29,12 +30,12 @@ public class DeviceData implements Serializable {
 		this.os = os;
 	}
 
-	public UUID getTheUUID() {
-		return theUUID;
+	public BluetoothDevice getBt() {
+		return bt;
 	}
 
-	public void setTheUUID(UUID theUUID) {
-		this.theUUID = theUUID;
+	public void setBt(BluetoothDevice bt) {
+		this.bt = bt;
 	}
 
 	public static synchronized Object getInstance() {
