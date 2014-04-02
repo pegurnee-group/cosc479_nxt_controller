@@ -9,7 +9,7 @@ This is silly pantszzz
 
 You will suffer for your ignorance!
 
-
+BAD IDEA u.u
 
 
 Edits
