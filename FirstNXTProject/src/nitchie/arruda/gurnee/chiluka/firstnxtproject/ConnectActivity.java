@@ -25,7 +25,8 @@ import android.widget.TextView;
 public class ConnectActivity extends  Activity implements  OnClickListener{
 	
 	private final String TAG = "NXT Project 1";
-	private final String ROBOTNAME = "Columbus";
+	private final String ROBOTNAME = "herb-E";
+	private final double MAX_MILLI_VOLTS = 9000.0;
 
 	// UI Components
 	Button connectButton;
@@ -54,7 +55,6 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connect_view);
 		
-			
 		btConnected = false;
 
 		connectButton = (Button) this.findViewById(R.id.connectButton);
@@ -63,15 +63,15 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
+		
 		btImage = (ImageView) findViewById(R.id.imageView1);
 		btImage.setImageAlpha(50);
+		
 		statusLabel = (TextView) findViewById(R.id.statusLabel);
 		batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
-
-
 	}
 	
-	private String getBatteryLevel() {
+	private int getBatteryLevel() {
 		byte[] response = new byte[7];
 		try {
 			
@@ -95,37 +95,45 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			
 		}
 		catch (Exception e) {
-			Log.e(TAG,"Error in MoveForward(" + e.getMessage() + ")");
-			return null;
+			Log.e(TAG,"Error getting battery level(" + e.getMessage() + ")");
+			return -1;
 		}
 		
-		// Returns unsigned bytes
-		// Prevent negative numbers
-		if (response[5] < 0) {
-			response[5] += 256;
-		}
-		if (response[6] < 0) {
-			response[6] += 256;
-		}
+		Log.i(TAG, "Most sig byte is " + Integer.toBinaryString(response[5]));
+		Log.i(TAG, "MSB is " + response[5]);
+		Log.i(TAG, "Least sig byte is " + Integer.toBinaryString(response[6]));
+		Log.i(TAG, "LSB is " + response[6]);
 		
-		int responseVoltage = (response[5] * 256) + response[6];
+//		// Returns unsigned bytes
+//		// Prevent negative numbers
+//		if (response[5] < 0) {
+//			response[5] += 256;
+//		}
+//		if (response[6] < 0) {
+//			response[6] += 256;
+//		}
 		
-		return "" + responseVoltage;
+		// converting unsigned word to an int
+		int responseVoltage = (0xFF & response[5]) | ((0xFF & response[6]) << 8);
+		
+		Log.i(TAG, "response voltage is " + responseVoltage);
+		
+//		int responseVoltage = (response[5] * 256) + response[6];
+		
+		return responseVoltage;
 	}
 	
 	public void onClick(View v) {
+		
 		switch (v.getId()) {
 		case (R.id.connectButton):
-			
-			Intent i = new Intent(this, PopupActivity.class);
-			this.startActivity(i);
-			
-			//connectToDevice();
+//			Intent i = new Intent(this, PopupActivity.class);
+//			this.startActivity(i);
+			connectToDevice();
 			break;
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
 			break;
-			
 		}
 	}
 
@@ -167,8 +175,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
  	 	    	btConnected = true;
  	 	    	connectButton.setVisibility(View.GONE);
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
- 	 			TextView textView = (TextView) findViewById(R.id.textView1);
- 	 			textView.setText(getBatteryLevel());
+ 	 			setBatteryMeter(getBatteryLevel());
  	 	    	btImage.setImageAlpha(255);
  	 	    	statusLabel.setText(R.string.nxtConnected);
 
@@ -176,6 +183,15 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 				return;
 			}
 		}
+	}
+	
+	private void setBatteryMeter(int voltage) {
+		Log.i(TAG, "Voltage is" + voltage);
+		
+		
+		double batteryLevel = voltage/this.MAX_MILLI_VOLTS;
+		
+		Log.i(TAG, "Battery percentage is " + (batteryLevel * 100));
 	}
 
 	public void disconnectNXT(View v) {
