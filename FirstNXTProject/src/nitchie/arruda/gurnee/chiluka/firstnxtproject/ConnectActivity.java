@@ -25,7 +25,8 @@ import android.widget.TextView;
 public class ConnectActivity extends  Activity implements  OnClickListener{
 	
 	private final String TAG = "NXT Project 1";
-	private final String ROBOTNAME = "herb-E";
+	private final String ROBOTNAME = "herb-E"; //ours
+//	private final String ROBOTNAME = "Columbus" //not ours
 	private final double MAX_MILLI_VOLTS = 9000.0;
 
 	// UI Components
