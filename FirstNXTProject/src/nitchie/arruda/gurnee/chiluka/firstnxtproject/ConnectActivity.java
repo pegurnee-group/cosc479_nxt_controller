@@ -3,12 +3,9 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.UUID;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -25,8 +22,6 @@ import android.widget.TextView;
 public class ConnectActivity extends Activity implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
-	private final String ROBOTNAME = "herb-E"; // ours
-	// private final String ROBOTNAME = "Columbus" //not ours
 	private final double MAX_MILLI_VOLTS = 9000.0;
 
 	// UI Components
@@ -37,8 +32,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	ProgressBar batteryStatus;
 
 	// Bluetooth Variables
-	private BluetoothAdapter btInterface;
-	private Set<BluetoothDevice> pairedDevices;
 	private BluetoothDevice bd;
 	private BluetoothSocket socket;
 	private InputStream is;
@@ -110,13 +103,10 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View v) {
-
 		switch (v.getId()) {
 		case (R.id.connectButton):
 			Intent i = new Intent(this, PopupActivity.class);
 			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
-			// this.startActivity(i);
-			// connectToDevice();
 			break;
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
@@ -126,9 +116,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.e("hello", "request: " + requestCode + "\nresult: " + resultCode);
 		if (requestCode == PICK_BLUETOOTH_ID) {
-			Log.e("hello", "did something");
 			if (resultCode == RESULT_OK) {
 				this.connectToDevice();
 			}
@@ -136,49 +124,41 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	}
 
 	public void connectToDevice() {
-		btInterface = BluetoothAdapter.getDefaultAdapter();
-		pairedDevices = btInterface.getBondedDevices();
-		Iterator<BluetoothDevice> it = pairedDevices.iterator();
-		while (it.hasNext()) {
-			bd = it.next();
+		try {
+			DeviceData myObject = (DeviceData) DeviceData.getInstance();
+			bd = myObject.getBt();
 
-			if (bd.getName().equalsIgnoreCase(ROBOTNAME)) {
-				try {
-					socket = bd.createRfcommSocketToServiceRecord(UUID
-							.fromString(this.SPP_UUID));
-					socket.connect();
-				} catch (IOException e) {
-					Log.e(TAG,
-							"Error interacting with remote device -> "
-									+ e.getMessage());
-					return;
-				}
-
-				try {
-					is = socket.getInputStream();
-					os = socket.getOutputStream();
-
-					DeviceData myObject = (DeviceData) DeviceData.getInstance();
-					myObject.setIs(is);
-					myObject.setOs(os);
-
-				} catch (IOException e) {
-					is = null;
-					os = null;
-					disconnectNXT(null);
-					return;
-				}
-
-				connectButton.setVisibility(View.GONE);
-				disconnectButton.setVisibility(View.VISIBLE);
-				setBatteryMeter(getBatteryLevel());
-				btImage.setImageAlpha(255);
-				statusLabel.setText(R.string.nxtConnected);
-
-				Log.i(TAG, "Connected with " + bd.getName());
-				return;
-			}
+			socket = bd.createRfcommSocketToServiceRecord(UUID
+					.fromString(this.SPP_UUID));
+			socket.connect();
+		} catch (IOException e) {
+			Log.e(TAG,
+					"Error interacting with remote device -> " + e.getMessage());
+			return;
 		}
+
+		try {
+			is = socket.getInputStream();
+			os = socket.getOutputStream();
+
+			DeviceData myObject = (DeviceData) DeviceData.getInstance();
+			myObject.setIs(is);
+			myObject.setOs(os);
+
+		} catch (IOException e) {
+			is = null;
+			os = null;
+			disconnectNXT(null);
+			return;
+		}
+
+		connectButton.setVisibility(View.GONE);
+		disconnectButton.setVisibility(View.VISIBLE);
+		setBatteryMeter(getBatteryLevel());
+		btImage.setImageAlpha(255);
+		statusLabel.setText(R.string.nxtConnected);
+
+		Log.i(TAG, "Connected with " + bd.getName());
 	}
 
 	private void setBatteryMeter(int voltage) {
