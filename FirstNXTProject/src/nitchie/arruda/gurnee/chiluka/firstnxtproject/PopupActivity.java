@@ -18,9 +18,9 @@ public class PopupActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.popup_view);
 
-		// String[] names = { "eddie", "was", "here", "don'tchu", "worry",
-		// "child" };
-
+//		 String[] names = { "eddie", "was", "here", "don'tchu", "worry",
+//		 "child" };
+		 
 		Set<BluetoothDevice> bluetoothDevicesSet = BluetoothAdapter.getDefaultAdapter()
 				.getBondedDevices();
 		if (null != bluetoothDevicesSet) {
