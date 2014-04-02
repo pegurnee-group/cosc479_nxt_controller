@@ -9,5 +9,6 @@
     <string name="bluetoothDesc">Bluetooth Icon</string>
     <string name="nxtDisconnected">Not connected to NXT</string>
     <string name="nxtConnected">Connected to NXT</string>
+    <string name="defaultBatteryStatus">100%</string>
 
 </resources>

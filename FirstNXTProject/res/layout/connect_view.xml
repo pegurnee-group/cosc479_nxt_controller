@@ -26,31 +26,41 @@
         android:layout_marginTop="19dp"
         android:text="@string/close" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignLeft="@+id/disconnectButton"
         android:layout_below="@+id/disconnectButton"
-        android:layout_marginTop="118dp"
-        android:layout_toRightOf="@+id/connectButton"
-        android:text="TextView" />
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/bluetooth" 
+        android:contentDescription="@string/bluetoothDesc"/>
 
     <TextView
         android:id="@+id/statusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_marginBottom="18dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="26dp"
+        android:layout_toRightOf="@+id/imageView1"
         android:text="@string/nxtDisconnected" />
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/disconnectButton"
-        android:layout_below="@+id/disconnectButton"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="52dp"
-        android:src="@drawable/bluetooth" />
+        android:layout_alignLeft="@+id/statusLabel"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="76dp"
+        android:text="@string/defaultBatteryStatus" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

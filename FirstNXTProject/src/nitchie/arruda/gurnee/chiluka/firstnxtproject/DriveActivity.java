@@ -12,13 +12,16 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class DriveActivity extends Activity implements OnTouchListener{
 	
-	int mpower1 = 20;
-	int mpower2 = 30;
+	int mpower1 = 40;
+	int mpower2 = 40;
 	boolean flag = false;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.id.drive_view_layout);
+		
+		setContentView(R.layout.drive_view);
+		Log.e("Check1","Check");
+		driveDirections();
 	}
 
 	//Set up Drive View Controls
@@ -86,12 +89,13 @@ public class DriveActivity extends Activity implements OnTouchListener{
             	//Log.i("NXT", "Action started "+ mpower2);
             }            
         });
+		Log.e("Check2","Check");
 	}
 	
 	public boolean onTouch(View view, MotionEvent event )
 	{
 		int action;
-
+		
 		switch(view.getId())
 		{
 			//Go Fwd
@@ -251,7 +255,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			DeviceData myObject = (DeviceData) DeviceData.getInstance();
 			myObject.getOs().write(buffer);
 			myObject.getOs().flush();
-			Log.i("OS Fine!","");
+		
 			
 		}
 		catch (Exception e) {
