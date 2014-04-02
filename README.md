@@ -1,3 +1,20 @@
 MobileGroupProjects
 ===================
-WE"RE MAKING A ROBOTT!!!!111!!!!
+You guys, this is disgraceful. We need to make this professional. Rar rar rar. NO I WON'T.
+
+WE'RE MAKING A DOMO ARIGATO ROBOT!!!!111!!one!!
+Friggin doofus
+
+This is silly pantszzz
+
+You will suffer for your ignorance!
+
+
+
+
+Edits
+
+
+are
+
+here

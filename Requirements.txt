@@ -1,0 +1,9 @@
+Requirements
+- 0 -> 100 number on power sliders
+- A and B for driving motors, C for 3rd motor.
+- turning - wheels go in opposite directions.
+- List of connected devices must handle more than 1. (all paired? or just NXT??)
+- read battery and normalize
+- name selection (Must be activity/intent)
+- name selection popup. Be pretty... Ask a daughter to do it.
+- Should show Name and ID.

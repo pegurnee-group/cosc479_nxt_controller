@@ -11,12 +11,15 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ConnectActivity extends  Activity implements  OnClickListener{
@@ -27,6 +30,10 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	// UI Components
 	Button connectButton;
 	Button disconnectButton;
+	ImageView btImage;
+	TextView statusLabel;
+	ProgressBar batteryStatus;
+
 
 	// Bluetooth Variables
 	private BluetoothAdapter btInterface;
@@ -50,14 +57,16 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			
 		btConnected = false;
 
-		//setupTabs();
-		//driveDirections();
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
 
 		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
+		btImage = (ImageView) findViewById(R.id.imageView1);
+		btImage.setImageAlpha(50);
+		statusLabel = (TextView) findViewById(R.id.statusLabel);
+		batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
 
 
 	}
@@ -89,7 +98,16 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			Log.e(TAG,"Error in MoveForward(" + e.getMessage() + ")");
 			return null;
 		}
-		// unsigned!!!
+		
+		// Returns unsigned bytes
+		// Prevent negative numbers
+		if (response[5] < 0) {
+			response[5] += 256;
+		}
+		if (response[6] < 0) {
+			response[6] += 256;
+		}
+		
 		int responseVoltage = (response[5] * 256) + response[6];
 		
 		return "" + responseVoltage;
@@ -98,6 +116,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.connectButton):
+			Intent i = new Intent(this, PopupActivity.class);
+			this.startActivity(i);
 			connectToDevice();
 			break;
 		case (R.id.disconnectButton):
@@ -147,6 +167,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
  	 			TextView textView = (TextView) findViewById(R.id.textView1);
  	 			textView.setText(getBatteryLevel());
+ 	 	    	btImage.setImageAlpha(255);
+ 	 	    	statusLabel.setText(R.string.nxtConnected);
 
 				Log.i(TAG, "Connected with " + bd.getName());
 				return;
@@ -168,6 +190,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		btConnected = false;
 		connectButton.setVisibility(View.VISIBLE);
 		disconnectButton.setVisibility(View.GONE);
+		btImage.setImageAlpha(100);
+		statusLabel.setText(R.string.nxtDisconnected);
 
 	}
 
