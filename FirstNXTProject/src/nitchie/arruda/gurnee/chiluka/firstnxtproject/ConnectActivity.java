@@ -22,11 +22,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ConnectActivity extends  Activity implements  OnClickListener{
-	
+public class ConnectActivity extends Activity implements OnClickListener {
+
 	private final String TAG = "NXT Project 1";
-	private final String ROBOTNAME = "herb-E"; //ours
-//	private final String ROBOTNAME = "Columbus" //not ours
+	private final String ROBOTNAME = "herb-E"; // ours
+	// private final String ROBOTNAME = "Columbus" //not ours
 	private final double MAX_MILLI_VOLTS = 9000.0;
 
 	// UI Components
@@ -36,7 +36,6 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	TextView statusLabel;
 	ProgressBar batteryStatus;
 
-
 	// Bluetooth Variables
 	private BluetoothAdapter btInterface;
 	private Set<BluetoothDevice> pairedDevices;
@@ -45,48 +44,50 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	private InputStream is;
 	private OutputStream os;
 	private final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
-	
+
+	private final int PICK_BLUETOOTH_ID = 1;
+
 	boolean flag = false;
-	
+
 	int mpower1 = 20;
 	int mpower2 = 30;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connect_view);
-		
+
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
 
 		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
 		disconnectButton.setOnClickListener(this);
 		disconnectButton.setVisibility(View.GONE);
-		
+
 		btImage = (ImageView) findViewById(R.id.imageView1);
 		btImage.setImageAlpha(50);
-		
+
 		statusLabel = (TextView) findViewById(R.id.statusLabel);
 		batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
 		batteryStatus.setIndeterminate(false);
 		batteryStatus.setMax(100);
 		batteryStatus.setProgress(100);
 	}
-	
+
 	private int getBatteryLevel() {
 		byte[] response = new byte[7];
 		try {
-			
+
 			byte[] buffer = new byte[4];
-			
+
 			// request battery level
-			buffer[0] = 2; 		// length lsb
-			buffer[1] = 0; 		// length msb
-			buffer[2] = 0x00;	// actual
-			buffer[3] = 0x0B;	// message			
+			buffer[0] = 2; // length lsb
+			buffer[1] = 0; // length msb
+			buffer[2] = 0x00; // actual
+			buffer[3] = 0x0B; // message
 
 			os.write(buffer);
 			os.flush();
-			
+
 			// receive battery level
 			response[0] = (byte) is.read(); // length lsb
 			response[1] = (byte) is.read(); // length msb
@@ -95,30 +96,42 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			response[4] = (byte) is.read(); // Status byte. 0 = successful.
 			response[5] = (byte) is.read(); // battery level lsb
 			response[6] = (byte) is.read(); // bettery level msb
-			
-		}
-		catch (Exception e) {
-			Log.e(TAG,"Error getting battery level(" + e.getMessage() + ")");
+
+		} catch (Exception e) {
+			Log.e(TAG, "Error getting battery level(" + e.getMessage() + ")");
 			return -1;
 		}
-				
+
 		// converting unsigned word to an int
-		int responseVoltage = (0xFF & response[5]) | ((0xFF & response[6]) << 8);
-						
+		int responseVoltage = (0xFF & response[5])
+				| ((0xFF & response[6]) << 8);
+
 		return responseVoltage;
 	}
-	
+
 	public void onClick(View v) {
-		
+
 		switch (v.getId()) {
 		case (R.id.connectButton):
 			Intent i = new Intent(this, PopupActivity.class);
-//			this.startActivity(i);
-			connectToDevice();
+			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
+			// this.startActivity(i);
+			// connectToDevice();
 			break;
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
 			break;
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.e("hello", "request: " + requestCode + "\nresult: " + resultCode);
+		if (requestCode == PICK_BLUETOOTH_ID) {
+			Log.e("hello", "did something");
+			if (resultCode == RESULT_OK) {
+				this.connectToDevice();
+			}
 		}
 	}
 
@@ -131,9 +144,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 
 			if (bd.getName().equalsIgnoreCase(ROBOTNAME)) {
 				try {
-					socket = bd
-							.createRfcommSocketToServiceRecord(UUID
-									.fromString(this.SPP_UUID));
+					socket = bd.createRfcommSocketToServiceRecord(UUID
+							.fromString(this.SPP_UUID));
 					socket.connect();
 				} catch (IOException e) {
 					Log.e(TAG,
@@ -145,32 +157,32 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 				try {
 					is = socket.getInputStream();
 					os = socket.getOutputStream();
-					
+
 					DeviceData myObject = (DeviceData) DeviceData.getInstance();
 					myObject.setIs(is);
 					myObject.setOs(os);
-					
+
 				} catch (IOException e) {
 					is = null;
 					os = null;
 					disconnectNXT(null);
 					return;
 				}
-				
- 	 	    	connectButton.setVisibility(View.GONE);
- 	 	    	disconnectButton.setVisibility(View.VISIBLE);
- 	 			setBatteryMeter(getBatteryLevel());
- 	 	    	btImage.setImageAlpha(255);
- 	 	    	statusLabel.setText(R.string.nxtConnected);
+
+				connectButton.setVisibility(View.GONE);
+				disconnectButton.setVisibility(View.VISIBLE);
+				setBatteryMeter(getBatteryLevel());
+				btImage.setImageAlpha(255);
+				statusLabel.setText(R.string.nxtConnected);
 
 				Log.i(TAG, "Connected with " + bd.getName());
 				return;
 			}
 		}
 	}
-	
-	private void setBatteryMeter(int voltage) {		
-		double batteryLevel = voltage/this.MAX_MILLI_VOLTS;
+
+	private void setBatteryMeter(int voltage) {
+		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
 		int batteryProgress = (int) (batteryLevel * 100);
 		batteryStatus.setProgress(batteryProgress);
 	}
@@ -198,7 +210,4 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
-	
-	
 }
