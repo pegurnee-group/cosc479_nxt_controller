@@ -25,6 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectActivity">
+            
+        </activity>
+        <activity
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.DriveActivity">
+            
+        </activity>
     </application>
 
 </manifest>

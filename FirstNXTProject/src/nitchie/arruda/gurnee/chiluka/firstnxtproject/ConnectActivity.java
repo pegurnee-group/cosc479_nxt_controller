@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class ConnectActivity extends  Activity implements  OnClickListener{
 	
 	private final String TAG = "NXT Project 1";
-	private final String ROBOTNAME = "herb-E";
+	private final String ROBOTNAME = "Columbus";
 
 	// UI Components
 	Button connectButton;
@@ -45,7 +45,8 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.id.connect_view_layout);
+		setContentView(R.layout.connect_view);
+		
 			
 		btConnected = false;
 
