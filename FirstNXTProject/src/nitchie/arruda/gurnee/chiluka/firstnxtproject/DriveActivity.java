@@ -95,15 +95,18 @@ public class DriveActivity extends Activity implements OnTouchListener{
 	public boolean onTouch(View view, MotionEvent event )
 	{
 		int action;
+		Button button;
 		
 		switch(view.getId())
 		{
 			//Go Fwd
 			case R.id.button1:
 				action = event.getAction();
+	        	button = (Button) findViewById(R.id.button1);
+	        	button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_down_pressed));
 		        //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
 		        if (action == MotionEvent.ACTION_DOWN) {
-		       	
+		        	button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_down_pressed));
 		       	 
 			       	 if(flag==false)
 			       	 {
@@ -115,7 +118,8 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		        } else if ((action == MotionEvent.ACTION_UP) ) {
 			       	
 			       	 flag = false;
-			       	 MoveMotor(1, -mpower1, 0x00);
+			       	 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_down));
+		       		 MoveMotor(1, -mpower1, 0x00);
 			       	 MoveMotor(2, -mpower1, 0x00);
 		        }
 			         break;
@@ -123,8 +127,10 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			case R.id.button2:
 				
 				 action = event.getAction();
+				 button = (Button) findViewById(R.id.button2);
 		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
 		         if (action == MotionEvent.ACTION_DOWN) {
+	        		 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_up_pressed));
 		        
 		        	 if(flag==false)
 			       	 {
@@ -134,6 +140,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			       	 flag = true;
 		  
 		        } else if ((action == MotionEvent.ACTION_UP) ) {
+	        		 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_up));
 			       	 Log.i("NXT", "Action1 Stopped " ); 
 			       	 flag = false;
 			       	 MoveMotor(1, mpower1, 0x00);
@@ -145,8 +152,10 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		case R.id.button3:
 				
 				 action = event.getAction();
+				 button = (Button) findViewById(R.id.button3);
 		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
 		         if (action == MotionEvent.ACTION_DOWN) {
+		        	 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_right_pressed));
 		        	 Log.i("NXT", "Action3 started " ); 
 		        	 if(flag==false)
 			       	 {
@@ -156,6 +165,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			       	 flag = true;
 		  
 		        } else if ((action == MotionEvent.ACTION_UP) ) {
+	        		 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_right));
 			       	 Log.i("NXT", "Action1 Stopped " ); 
 			       	 flag = false;
 			       	 MoveMotor(1, -mpower1, 0x00);
@@ -167,8 +177,10 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		case R.id.button4:
 				
 				 action = event.getAction();
+				 button = (Button) findViewById(R.id.button4);
 		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
 		         if (action == MotionEvent.ACTION_DOWN) {
+	        		 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_left_pressed));
 		        	 Log.i("NXT", "Action4 started " );
 		        	 if(flag==false)
 			       	 {
@@ -178,6 +190,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			       	 flag = true;
 		  
 		        } else if ((action == MotionEvent.ACTION_UP) ) {
+	        		 button.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_left));
 			       	 Log.i("NXT", "Action1 Stopped " ); 
 			       	 flag = false;
 			       	 MoveMotor(1, mpower1, 0x00);
