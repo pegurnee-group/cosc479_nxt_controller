@@ -21,10 +21,10 @@ public class PopupActivity extends ListActivity {
 		// String[] names = { "eddie", "was", "here", "don'tchu", "worry",
 		// "child" };
 
-		Set<BluetoothDevice> theDudes = BluetoothAdapter.getDefaultAdapter()
+		Set<BluetoothDevice> bluetoothDevicesSet = BluetoothAdapter.getDefaultAdapter()
 				.getBondedDevices();
-		if (null != theDudes) {
-			devices = (BluetoothDevice[]) theDudes.toArray(new BluetoothDevice[0]);
+		if (null != bluetoothDevicesSet) {
+			devices = (BluetoothDevice[]) bluetoothDevicesSet.toArray(new BluetoothDevice[0]);
 		}
 
 		int limit = devices.length;
@@ -41,7 +41,6 @@ public class PopupActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-
 		super.onListItemClick(l, v, position, id);
 		DeviceData myObject = (DeviceData) DeviceData.getInstance();
 		myObject.setTheUUID(devices[position].getUuids()[0].getUuid());
