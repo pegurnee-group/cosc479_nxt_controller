@@ -6,6 +6,8 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.os.ParcelUuid;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,13 +20,18 @@ public class PopupActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.popup_view);
 
-//		 String[] names = { "eddie", "was", "here", "don'tchu", "worry",
-//		 "child" };
-		 
-		Set<BluetoothDevice> bluetoothDevicesSet = BluetoothAdapter.getDefaultAdapter()
-				.getBondedDevices();
+		// String[] names = { "eddie", "was", "here", "don'tchu", "worry",
+		// "child" };
+
+		Set<BluetoothDevice> bluetoothDevicesSet = BluetoothAdapter
+				.getDefaultAdapter().getBondedDevices();
+
 		if (null != bluetoothDevicesSet) {
-			devices = (BluetoothDevice[]) bluetoothDevicesSet.toArray(new BluetoothDevice[0]);
+			this.devices = (BluetoothDevice[]) bluetoothDevicesSet
+					.toArray(new BluetoothDevice[0]);
+		} else {
+			this.finish();
+			return;
 		}
 
 		int limit = devices.length;
@@ -43,7 +50,9 @@ public class PopupActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		DeviceData myObject = (DeviceData) DeviceData.getInstance();
-		myObject.setTheUUID(devices[position].getUuids()[0].getUuid());
-		PopupActivity.this.finish();
+		myObject.setBt(devices[position]);
+
+		this.setResult(RESULT_OK);
+		this.finish();
 	}
 }
