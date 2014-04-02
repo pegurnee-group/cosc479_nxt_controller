@@ -44,8 +44,10 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	private BluetoothSocket socket;
 	private InputStream is;
 	private OutputStream os;
+	private final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
 	
 	boolean flag = false;
+	
 	int mpower1 = 20;
 	int mpower2 = 30;
 
@@ -110,7 +112,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		
 		switch (v.getId()) {
 		case (R.id.connectButton):
-//			Intent i = new Intent(this, PopupActivity.class);
+			Intent i = new Intent(this, PopupActivity.class);
 //			this.startActivity(i);
 			connectToDevice();
 			break;
@@ -131,7 +133,7 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 				try {
 					socket = bd
 							.createRfcommSocketToServiceRecord(UUID
-									.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+									.fromString(this.SPP_UUID));
 					socket.connect();
 				} catch (IOException e) {
 					Log.e(TAG,
