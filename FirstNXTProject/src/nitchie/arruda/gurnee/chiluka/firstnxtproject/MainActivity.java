@@ -28,7 +28,7 @@ public class MainActivity extends TabActivity  {
         TabSpec spec1 = tabHost.newTabSpec("tag1");
         Intent connectIntent = new Intent(this,ConnectActivity.class);
         spec1.setContent(connectIntent);
-        spec1.setIndicator("Connect");
+        spec1.setIndicator("Connect", res.getDrawable(R.drawable.connect));
         tabHost.addTab(spec1);
   
         // Set up drive view tab
