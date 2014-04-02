@@ -292,7 +292,7 @@ public class MainActivity extends TabActivity  {
         Intent  driveIntent = new Intent(this, DriveActivity.class);
         spec2.setContent(driveIntent);
         //spec2.setContent(R.id.drive_view_layout);
-        spec2.setIndicator("Drive");
+        spec2.setIndicator("Drive", res.getDrawable(R.drawable.steering_wheel));
         tabHost.addTab(spec2);
 
 	}
