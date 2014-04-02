@@ -109,9 +109,9 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		
 		switch (v.getId()) {
 		case (R.id.connectButton):
-			Intent i = new Intent(this, PopupActivity.class);
-			this.startActivity(i);
-//			connectToDevice();
+//			Intent i = new Intent(this, PopupActivity.class);
+//			this.startActivity(i);
+			connectToDevice();
 			break;
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
