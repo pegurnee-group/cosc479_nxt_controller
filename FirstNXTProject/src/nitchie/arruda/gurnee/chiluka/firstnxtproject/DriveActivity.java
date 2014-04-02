@@ -20,7 +20,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.drive_view);
-		Log.e("Check1","Check");
+		
 		driveDirections();
 	}
 
