@@ -1,36 +1,22 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.UUID;
 
-import android.app.Activity;
 import android.app.TabActivity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-public class MainActivity extends Activity  {
+@SuppressWarnings("deprecation")
+public class MainActivity extends TabActivity  {
+
+
 /*
+
 	private final String TAG = "NXT Project 1";
 	private final String ROBOTNAME = "Columbus";
 
@@ -54,13 +40,14 @@ public class MainActivity extends Activity  {
 	boolean flag = false;
 	int mpower1 = 20;
 	int mpower2 = 30;
-	
+
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_view);
+
 
 		
 		btConnected = false;
@@ -253,269 +240,60 @@ public class MainActivity extends Activity  {
 
 		Button goBwd = (Button) findViewById(R.id.button2);
 		goBwd.setOnTouchListener(this);
+>>>>>>> 33fe26cc527a2e516ec187013cdf179284ae665d
 		
-		Button goRight = (Button) findViewById(R.id.button3);
-		goRight.setOnTouchListener(this);
+		TabHost tabHost;
 		
-		Button goLeft = (Button) findViewById(R.id.button4);
-		goLeft.setOnTouchListener(this);
-
-		Button goFwd2 = (Button) findViewById(R.id.button5);
-		goFwd2.setOnTouchListener(this);
+		 tabHost = getTabHost();
 		
-		Button goBwd2 = (Button) findViewById(R.id.button6);
-		goBwd2.setOnTouchListener(this);
-		
-		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
-        powerSeekBar1.setProgress(mpower1);
-        
-		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-        	
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                    boolean fromUser) {
-            	mpower1 = progress;
-            	 //Log.i("NXT", "Action started "+ progressChanged );
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            	//Log.i("NXT", "Action started "+ mpower1);
-            }            
-        });
-		
-		
-		SeekBar powerSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
-        powerSeekBar2.setProgress(mpower2);
-        
-		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-        	
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                    boolean fromUser) {
-            	mpower2 = progress;
-            	 //Log.i("NXT", "Action started "+ progressChanged );
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            	//Log.i("NXT", "Action started "+ mpower2);
-            }            
-        });
-	}
-	
-	public boolean onTouch(View view, MotionEvent event )
-	{
-		int action;
-
-		switch(view.getId())
-		{
-			//Go Fwd
-			case R.id.button1:
-				action = event.getAction();
-		        //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
-		        if (action == MotionEvent.ACTION_DOWN) {
-		       	
-		       	 
-			       	 if(flag==false)
-			       	 {
-			       		 MoveMotor(1, -mpower1, 0x20);
-			       		 MoveMotor(2, -mpower1, 0x20);
-			       	 }       	 
-			       	 flag = true;
-		  
-		        } else if ((action == MotionEvent.ACTION_UP) ) {
-			       	
-			       	 flag = false;
-			       	 MoveMotor(1, -mpower1, 0x00);
-			       	 MoveMotor(2, -mpower1, 0x00);
-		        }
-			         break;
-			//Go Rev         
-			case R.id.button2:
-				
-				 action = event.getAction();
-		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
-		         if (action == MotionEvent.ACTION_DOWN) {
-		        
-		        	 if(flag==false)
-			       	 {
-			       		 MoveMotor(1, mpower1, 0x20);
-			       		 MoveMotor(2, mpower1, 0x20);
-			       	 }       	 
-			       	 flag = true;
-		  
-		        } else if ((action == MotionEvent.ACTION_UP) ) {
-			       	 Log.i("NXT", "Action1 Stopped " ); 
-			       	 flag = false;
-			       	 MoveMotor(1, mpower1, 0x00);
-			       	 MoveMotor(2, mpower1, 0x00);
-		        }
-		         break;
-	     
-		//Go Right         
-		case R.id.button3:
-				
-				 action = event.getAction();
-		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
-		         if (action == MotionEvent.ACTION_DOWN) {
-		        	 Log.i("NXT", "Action3 started " ); 
-		        	 if(flag==false)
-			       	 {
-			       		 MoveMotor(1, -mpower1, 0x20);
-			       		 MoveMotor(2, mpower1, 0x20);
-			       	 }       	 
-			       	 flag = true;
-		  
-		        } else if ((action == MotionEvent.ACTION_UP) ) {
-			       	 Log.i("NXT", "Action1 Stopped " ); 
-			       	 flag = false;
-			       	 MoveMotor(1, -mpower1, 0x00);
-			       	 MoveMotor(2, mpower1, 0x00);
-		         }
-		         break;
-		
-		 //Go Left
-		case R.id.button4:
-				
-				 action = event.getAction();
-		         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
-		         if (action == MotionEvent.ACTION_DOWN) {
-		        	 Log.i("NXT", "Action4 started " );
-		        	 if(flag==false)
-			       	 {
-			       		 MoveMotor(1, mpower1, 0x20);
-			       		 MoveMotor(2, -mpower1, 0x20);
-			       	 }       	 
-			       	 flag = true;
-		  
-		        } else if ((action == MotionEvent.ACTION_UP) ) {
-			       	 Log.i("NXT", "Action1 Stopped " ); 
-			       	 flag = false;
-			       	 MoveMotor(1, mpower1, 0x00);
-			       	 MoveMotor(2, -mpower1, 0x00);
-		         }
-		         break;
-		         
-		case R.id.button5:
-			
-			 action = event.getAction();
-	         //if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_MOVE)) {
-	         if (action == MotionEvent.ACTION_DOWN) {
-	        	 Log.i("NXT", "Action4 started " );
-	        	 if(flag==false)
-		       	 {
-		       		 MoveMotor(3, -mpower2, 0x20);
-		       		
-		       	 }       	 
-		       	 flag = true;
-	  
-	        } else if ((action == MotionEvent.ACTION_UP) ) {
-		       	 Log.i("NXT", "Action1 Stopped " ); 
-		       	 flag = false;
-		       	 MoveMotor(3, -mpower2, 0x00);
-		  
-	         }
-	         break;
-	         
-		case R.id.button6:
-		
-			 action = event.getAction();
-			 if (action == MotionEvent.ACTION_DOWN) {
-				 Log.i("NXT", "Action4 started " );
-			 if(flag==false)
-	       	 {
-	       		 MoveMotor(3, mpower2, 0x20);	
-	       	 }       	 
-	       	 flag = true;
-  
-        } else if ((action == MotionEvent.ACTION_UP) ) {
-	       	 Log.i("NXT", "Action4 Stopped " ); 
-	       	 flag = false;
-	       	 MoveMotor(3, mpower2, 0x00); 
-	         }
-	         break;
-			         
-		}
-		return true;
-		
-	}
-	
-	
-	private void MoveMotor(int motor,int speed, int state) {
-		try {
-			//Log.i(TAG,"Attempting to move [" + motor + " @ " + speed + "]");
-			
-			byte[] buffer = new byte[15];
-			
-			buffer[0] = (byte) (15-2);			// length lsb
-			buffer[1] = 0;						// length msb
-			buffer[2] =  0;						// direct command (with response)
-			buffer[3] = 0x04;					// set output state
-			buffer[4] = (byte) motor;			// output 1 (motor B)
-			buffer[5] = (byte) speed;			// power
-			buffer[6] = 1 + 2;					// motor on + brake between PWM
-			buffer[7] = 0;						// regulation
-			buffer[8] = 0;						// turn ration??
-			buffer[9] = (byte) state; //0x20;	// run state
-			buffer[10] = 0;
-			buffer[11] = 0;
-			buffer[12] = 0;
-			buffer[13] = 0;
-			buffer[14] = 0;
-
-			os.write(buffer);
-			os.flush();
-			
-		}
-		catch (Exception e) {
-			//Log.e(tag,"Error in MoveForward(" + e.getMessage() + ")");
-		}		
-	}
-*/	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_view);
-		
-		Resources res = getResources();
-		final TabHost tabHost = (TabHost) findViewById(R.id.ui_1_TabHost);
-
-		// need setup since uses @+id/ui_1_TabHost instead of android:id/tabhost
-		tabHost.setup();	
-		//TabHost tabHost = getTabHost();
-		
-
 		// Set up connect view tab
 		TabSpec spec1 = tabHost.newTabSpec("tag1");
 		Intent connectIntent = new Intent(this,ConnectActivity.class);
-		spec1.setContent(connectIntent);
 		spec1.setIndicator("Connect");
+		spec1.setContent(connectIntent);
 		tabHost.addTab(spec1);
 	
- 
-        
 
 		// Set up drive view tab
 		TabSpec spec2 = tabHost.newTabSpec("tag2");
 	
 		Intent  driveIntent = new Intent(this, DriveActivity.class);
-		spec2.setContent(driveIntent);
-		//spec2.setContent(R.id.drive_view_layout);
 		spec2.setIndicator("Drive");
+		spec2.setContent(driveIntent);
 		tabHost.addTab(spec2);
 
 
 	}
 	
+*/
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_view);
+       
+        Resources res = getResources();
+        //final TabHost tabHost = (TabHost) findViewById(R.id.ui_1_TabHost);
 
+        // need setup since uses @+id/ui_1_TabHost instead of android:id/tabhost
+        //tabHost.setup();   
+        TabHost tabHost = getTabHost();
+       
+
+        // Set up connect view tab
+        TabSpec spec1 = tabHost.newTabSpec("tag1");
+        Intent connectIntent = new Intent(this,ConnectActivity.class);
+        spec1.setContent(connectIntent);
+        spec1.setIndicator("Connect");
+        tabHost.addTab(spec1);
+  
+        // Set up drive view tab
+        TabSpec spec2 = tabHost.newTabSpec("tag2");
+   
+        Intent  driveIntent = new Intent(this, DriveActivity.class);
+        spec2.setContent(driveIntent);
+        //spec2.setContent(R.id.drive_view_layout);
+        spec2.setIndicator("Drive");
+        tabHost.addTab(spec2);
+
+	}
 }
