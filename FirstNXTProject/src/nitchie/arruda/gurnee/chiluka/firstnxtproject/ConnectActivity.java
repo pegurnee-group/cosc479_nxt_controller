@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -43,9 +42,6 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	private BluetoothSocket socket;
 	private InputStream is;
 	private OutputStream os;
-
-	// flag representing BT connection status
-	private boolean btConnected;
 	
 	boolean flag = false;
 	int mpower1 = 20;
@@ -55,8 +51,6 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connect_view);
 		
-		btConnected = false;
-
 		connectButton = (Button) this.findViewById(R.id.connectButton);
 		connectButton.setOnClickListener(this);
 
@@ -80,21 +74,23 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			
 			byte[] buffer = new byte[4];
 			
-			buffer[0] = 2; // length lsb
-			buffer[1] = 0; // length msb
-			buffer[2] = 0x00;			// actual
-			buffer[3] = 0x0B;			// message			
+			// request battery level
+			buffer[0] = 2; 		// length lsb
+			buffer[1] = 0; 		// length msb
+			buffer[2] = 0x00;	// actual
+			buffer[3] = 0x0B;	// message			
 
 			os.write(buffer);
 			os.flush();
 			
+			// receive battery level
 			response[0] = (byte) is.read(); // length lsb
 			response[1] = (byte) is.read(); // length msb
 			response[2] = (byte) is.read(); // will be 2
 			response[3] = (byte) is.read(); // will be 11 -> 0x0B
 			response[4] = (byte) is.read(); // Status byte. 0 = successful.
-			response[5] = (byte) is.read(); // battery level msb
-			response[6] = (byte) is.read(); // bettery level lsb
+			response[5] = (byte) is.read(); // battery level lsb
+			response[6] = (byte) is.read(); // bettery level msb
 			
 		}
 		catch (Exception e) {
@@ -157,7 +153,6 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 					return;
 				}
 				
- 	 	    	btConnected = true;
  	 	    	connectButton.setVisibility(View.GONE);
  	 	    	disconnectButton.setVisibility(View.VISIBLE);
  	 			setBatteryMeter(getBatteryLevel());
@@ -170,17 +165,10 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		}
 	}
 	
-	private void setBatteryMeter(int voltage) {
-		Log.i(TAG, "Voltage is" + voltage);
-		
-		
+	private void setBatteryMeter(int voltage) {		
 		double batteryLevel = voltage/this.MAX_MILLI_VOLTS;
 		int batteryProgress = (int) (batteryLevel * 100);
 		batteryStatus.setProgress(batteryProgress);
-		
-		Log.i(TAG, "Battery percentage is " + (batteryLevel * 100));
-		
-		
 	}
 
 	public void disconnectNXT(View v) {
@@ -194,12 +182,10 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
 		}
 
-		btConnected = false;
 		connectButton.setVisibility(View.VISIBLE);
 		disconnectButton.setVisibility(View.GONE);
 		btImage.setImageAlpha(100);
 		statusLabel.setText(R.string.nxtDisconnected);
-
 	}
 
 	@Override

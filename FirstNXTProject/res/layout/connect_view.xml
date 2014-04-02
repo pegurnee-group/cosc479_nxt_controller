@@ -63,4 +63,13 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/singButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar1"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="@string/sing" />
+
 </RelativeLayout>

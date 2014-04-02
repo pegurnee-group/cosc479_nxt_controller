@@ -17,13 +17,9 @@ public class MainActivity extends TabActivity  {
         setContentView(R.layout.main_view);
        
         Resources res = getResources();
-        //final TabHost tabHost = (TabHost) findViewById(R.id.ui_1_TabHost);
-
-        // need setup since uses @+id/ui_1_TabHost instead of android:id/tabhost
-        //tabHost.setup();   
+  
         TabHost tabHost = getTabHost();
        
-
         // Set up connect view tab
         TabSpec spec1 = tabHost.newTabSpec("tag1");
         Intent connectIntent = new Intent(this,ConnectActivity.class);
