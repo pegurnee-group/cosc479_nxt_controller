@@ -69,6 +69,9 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		
 		statusLabel = (TextView) findViewById(R.id.statusLabel);
 		batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
+		batteryStatus.setIndeterminate(false);
+		batteryStatus.setMax(100);
+		batteryStatus.setProgress(100);
 	}
 	
 	private int getBatteryLevel() {
@@ -98,28 +101,10 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 			Log.e(TAG,"Error getting battery level(" + e.getMessage() + ")");
 			return -1;
 		}
-		
-		Log.i(TAG, "Most sig byte is " + Integer.toBinaryString(response[5]));
-		Log.i(TAG, "MSB is " + response[5]);
-		Log.i(TAG, "Least sig byte is " + Integer.toBinaryString(response[6]));
-		Log.i(TAG, "LSB is " + response[6]);
-		
-//		// Returns unsigned bytes
-//		// Prevent negative numbers
-//		if (response[5] < 0) {
-//			response[5] += 256;
-//		}
-//		if (response[6] < 0) {
-//			response[6] += 256;
-//		}
-		
+				
 		// converting unsigned word to an int
 		int responseVoltage = (0xFF & response[5]) | ((0xFF & response[6]) << 8);
-		
-		Log.i(TAG, "response voltage is " + responseVoltage);
-		
-//		int responseVoltage = (response[5] * 256) + response[6];
-		
+						
 		return responseVoltage;
 	}
 	
@@ -190,8 +175,12 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		
 		
 		double batteryLevel = voltage/this.MAX_MILLI_VOLTS;
+		int batteryProgress = (int) (batteryLevel * 100);
+		batteryStatus.setProgress(batteryProgress);
 		
 		Log.i(TAG, "Battery percentage is " + (batteryLevel * 100));
+		
+		
 	}
 
 	public void disconnectNXT(View v) {
