@@ -2,7 +2,6 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -105,7 +104,6 @@ public class DriveActivity extends Activity implements OnTouchListener {
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
 		});
-		Log.e("Check2", "Check");
 	}
 
 	public boolean onTouch(View view, MotionEvent event) {
@@ -197,7 +195,6 @@ public class DriveActivity extends Activity implements OnTouchListener {
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.arrow_left_pressed));
-				Log.i("NXT", "Action4 started ");
 				if (this.flag == false) {
 					MoveMotor(this.MOTOR_A, this.mpower1, this.ON_MOTOR);
 					MoveMotor(this.MOTOR_B, -this.mpower1, this.ON_MOTOR);
@@ -286,7 +283,6 @@ public class DriveActivity extends Activity implements OnTouchListener {
 			this.myObject.getOs().flush();
 
 		} catch (Exception e) {
-			// Log.e(tag,"Error in MoveForward(" + e.getMessage() + ")");
 		}
 	}
 
