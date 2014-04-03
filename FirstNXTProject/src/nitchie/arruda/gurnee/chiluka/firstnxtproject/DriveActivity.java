@@ -9,6 +9,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnTouchListener{
 	
@@ -48,12 +49,19 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
         powerSeekBar1.setProgress(mpower1);
         
+        TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
+        powerLabel1.setText("" + mpower1 + " %");
+        
 		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         	
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                     boolean fromUser) {
             	mpower1 = progress;
+            	
+            	TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
+            	powerLabel1.setText("" + mpower1 + " %");
+            	
             	 //Log.i("NXT", "Action started "+ progressChanged );
             }
 
@@ -71,12 +79,19 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		SeekBar powerSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
         powerSeekBar2.setProgress(mpower2);
         
+        TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
+        powerLabel1.setText("" + mpower2 + " %");
+        
 		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         	
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                     boolean fromUser) {
             	mpower2 = progress;
+            	
+            	TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
+            	powerLabel2.setText("" + mpower2 + " %");
+            	
             	 //Log.i("NXT", "Action started "+ progressChanged );
             }
 
