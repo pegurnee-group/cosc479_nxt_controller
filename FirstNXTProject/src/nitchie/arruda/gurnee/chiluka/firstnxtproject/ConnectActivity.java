@@ -79,7 +79,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.disconnectButton.setVisibility(View.VISIBLE);
 		this.setBatteryMeter(this.getBatteryLevel());
 		this.btImage.setImageAlpha(255);
-		this.statusLabel.setText(R.string.nxtConnected + bd.getName());
+		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
 		//this.statusLabel.setTextColor(color.holo_orange_dark);
 		singButton.setVisibility(View.VISIBLE);
 
