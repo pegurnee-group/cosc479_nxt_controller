@@ -47,23 +47,25 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.connect_view);
+		this.setContentView(R.layout.connect_view);
 
-		connectButton = (Button) this.findViewById(R.id.connectButton);
-		connectButton.setOnClickListener(this);
+		this.connectButton = (Button) this.findViewById(R.id.connectButton);
+		this.connectButton.setOnClickListener(this);
 
-		disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
-		disconnectButton.setOnClickListener(this);
-		disconnectButton.setVisibility(View.GONE);
+		this.disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
+		this.disconnectButton.setOnClickListener(this);
+		this.disconnectButton.setVisibility(View.GONE);
 
-		btImage = (ImageView) findViewById(R.id.imageView1);
-		btImage.setImageAlpha(50);
+		this.btImage = (ImageView) findViewById(R.id.imageView1);
+		this.btImage.setImageAlpha(50);
 
-		statusLabel = (TextView) findViewById(R.id.statusLabel);
-		batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
-		batteryStatus.setIndeterminate(false);
-		batteryStatus.setMax(100);
-		batteryStatus.setProgress(100);
+		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
+		
+		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
+		this.batteryStatus.setIndeterminate(false);
+		this.batteryStatus.setMax(100);
+		this.batteryStatus.setProgress(100);
+		this.batteryStatus.setOnClickListener(this);
 	}
 
 	private int getBatteryLevel() {
@@ -78,8 +80,8 @@ public class ConnectActivity extends Activity implements OnClickListener {
 			buffer[2] = 0x00; // actual
 			buffer[3] = 0x0B; // message
 
-			os.write(buffer);
-			os.flush();
+			this.os.write(buffer);
+			this.os.flush();
 
 			// receive battery level
 			response[0] = (byte) is.read(); // length lsb
@@ -109,7 +111,10 @@ public class ConnectActivity extends Activity implements OnClickListener {
 			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
 			break;
 		case (R.id.disconnectButton):
-			disconnectNXT(v);
+			this.disconnectNXT(v);
+			break;
+		case (R.id.progressBar1):
+			this.setBatteryMeter(this.getBatteryLevel());
 			break;
 		}
 	}
@@ -126,11 +131,11 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	public void connectToDevice() {
 		try {
 			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			bd = myObject.getBt();
+			this.bd = myObject.getBt();
 
-			socket = bd.createRfcommSocketToServiceRecord(UUID
+			this.socket = this.bd.createRfcommSocketToServiceRecord(UUID
 					.fromString(this.SPP_UUID));
-			socket.connect();
+			this.socket.connect();
 		} catch (IOException e) {
 			Log.e(TAG,
 					"Error interacting with remote device -> " + e.getMessage());
@@ -138,56 +143,56 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		}
 
 		try {
-			is = socket.getInputStream();
-			os = socket.getOutputStream();
+			this.is = this.socket.getInputStream();
+			this.os = this.socket.getOutputStream();
 
 			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			myObject.setIs(is);
-			myObject.setOs(os);
+			myObject.setIs(this.is);
+			myObject.setOs(this.os);
 
 		} catch (IOException e) {
-			is = null;
-			os = null;
-			disconnectNXT(null);
+			this.is = null;
+			this.os = null;
+			this.disconnectNXT(null);
 			return;
 		}
 
-		connectButton.setVisibility(View.GONE);
-		disconnectButton.setVisibility(View.VISIBLE);
-		setBatteryMeter(getBatteryLevel());
-		btImage.setImageAlpha(255);
-		statusLabel.setText(R.string.nxtConnected);
+		this.connectButton.setVisibility(View.GONE);
+		this.disconnectButton.setVisibility(View.VISIBLE);
+		this.setBatteryMeter(this.getBatteryLevel());
+		this.btImage.setImageAlpha(255);
+		this.statusLabel.setText(R.string.nxtConnected);
 
-		Log.i(TAG, "Connected with " + bd.getName());
+		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
 
 	private void setBatteryMeter(int voltage) {
 		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
 		int batteryProgress = (int) (batteryLevel * 100);
-		batteryStatus.setProgress(batteryProgress);
+		this.batteryStatus.setProgress(batteryProgress);
 	}
-
+	
 	public void disconnectNXT(View v) {
 		try {
-			Log.i(TAG, "Attempting to break BT connection of " + bd.getName());
-			socket.close();
-			is.close();
-			os.close();
-			Log.i(TAG, "BT connection of " + bd.getName() + " is disconnected");
+			Log.i(TAG, "Attempting to break BT connection of " + this.bd.getName());
+			this.socket.close();
+			this.is.close();
+			this.os.close();
+			Log.i(TAG, "BT connection of " + this.bd.getName() + " is disconnected");
 		} catch (Exception e) {
 			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
 		}
 
-		connectButton.setVisibility(View.VISIBLE);
-		disconnectButton.setVisibility(View.GONE);
-		btImage.setImageAlpha(100);
-		statusLabel.setText(R.string.nxtDisconnected);
+		this.connectButton.setVisibility(View.VISIBLE);
+		this.disconnectButton.setVisibility(View.GONE);
+		this.btImage.setImageAlpha(100);
+		this.statusLabel.setText(R.string.nxtDisconnected);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		this.getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 }
