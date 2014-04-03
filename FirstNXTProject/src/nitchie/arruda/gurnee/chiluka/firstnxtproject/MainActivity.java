@@ -24,7 +24,7 @@ public class MainActivity extends TabActivity  {
         TabSpec spec1 = tabHost.newTabSpec("tag1");
         Intent connectIntent = new Intent(this,ConnectActivity.class);
         spec1.setContent(connectIntent);
-        spec1.setIndicator("Connect", res.getDrawable(R.drawable.connect));
+        spec1.setIndicator("Connect", res.getDrawable(R.drawable.connect_icon));
         tabHost.addTab(spec1);
   
         // Set up drive view tab
@@ -33,7 +33,7 @@ public class MainActivity extends TabActivity  {
         Intent  driveIntent = new Intent(this, DriveActivity.class);
         spec2.setContent(driveIntent);
         //spec2.setContent(R.id.drive_view_layout);
-        spec2.setIndicator("Drive", res.getDrawable(R.drawable.steering_wheel));
+        spec2.setIndicator("Drive", res.getDrawable(R.drawable.drive_icon));
         tabHost.addTab(spec2);
 
 	}
