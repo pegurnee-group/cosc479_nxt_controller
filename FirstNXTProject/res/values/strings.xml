@@ -5,8 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="connect">Connect</string>
-    <string name="close">Close</string>
+    <string name="close">Disconnect</string>
     <string name="bluetoothDesc">Bluetooth Icon</string>
+    <string name="nxtConnecting">Attemping to connect to NXT</string>
     <string name="nxtDisconnected">Not connected to NXT</string>
     <string name="nxtConnected">Connected to NXT</string>
     <string name="defaultBatteryStatus">BatteryLevel</string>

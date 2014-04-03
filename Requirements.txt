@@ -7,3 +7,12 @@ Requirements
 - name selection (Must be activity/intent)
 - name selection popup. Be pretty... Ask a daughter to do it.
 - Should show Name and ID.
+
+Bonus requirements
+- Recording sound for playback
+- Lock screen in portrait (or make pretty landscape)
+- alternative ways to drive
+- get a sensor working
+- popup window asking user to turn on bluetooth if it is turned off
+- some kind of preferences
+- if the robot is turned off, disconnect from the bluetooth
