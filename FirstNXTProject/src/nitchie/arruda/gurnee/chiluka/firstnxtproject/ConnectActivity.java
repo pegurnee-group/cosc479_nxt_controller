@@ -28,11 +28,13 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 	private final double MAX_MILLI_VOLTS = 9000.0;
 
 	// UI Components
-	Button connectButton;
-	Button disconnectButton;
-	ImageView btImage;
-	TextView statusLabel;
-	ProgressBar batteryStatus;
+	private Button connectButton;
+	private Button disconnectButton;
+	private ImageView btImage;
+	private TextView statusLabel;
+	private ProgressBar batteryStatus;
+	private Button singButton;
+	
 
 
 	// Bluetooth Variables
@@ -66,6 +68,9 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		batteryStatus.setIndeterminate(false);
 		batteryStatus.setMax(100);
 		batteryStatus.setProgress(100);
+		
+		singButton = (Button) findViewById(R.id.singButton);
+		singButton.setOnClickListener(this);
 	}
 	
 	private int getBatteryLevel() {
@@ -115,6 +120,31 @@ public class ConnectActivity extends  Activity implements  OnClickListener{
 		case (R.id.disconnectButton):
 			disconnectNXT(v);
 			break;
+		case (R.id.singButton):
+			singASong();
+			break;
+		}
+	}
+	
+	private void singASong() {
+		try {
+			
+			byte[] buffer = new byte[8];
+			
+			// request battery level
+			buffer[0] = 6; 		// length lsb
+			buffer[1] = 0; 		// length msb
+			buffer[2] = 0x00;	// actual
+			buffer[3] = 0x03;	// message
+			buffer[4] = -72; // freq lsb
+			buffer[5] = 1; // freq msb
+			buffer[6] = -24; // duration in ms lsb
+			buffer[7] = 3; // duration in ms msb
+			os.write(buffer);
+			os.flush();	
+		}
+		catch (Exception e) {
+			Log.e(TAG,"Error singing :-( (" + e.getMessage() + ")");
 		}
 	}
 
