@@ -33,7 +33,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private TextView statusLabel;
 	private ProgressBar batteryStatus;
 	private Button singButton;
-	private ProgressBar connectStatus;
+	private TextView connectStatus;
 	
 
 	// Bluetooth Variables
@@ -46,6 +46,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private final int PICK_BLUETOOTH_ID = 1;
 
 	public void connectToDevice() {
+		connectStatus.setVisibility(View.VISIBLE);
 		try {
 			DeviceData myObject = (DeviceData) DeviceData.getInstance();
 			this.bd = myObject.getBt();
@@ -80,6 +81,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.btImage.setImageAlpha(255);
 		this.statusLabel.setText(R.string.nxtConnected + bd.getName());
 		//this.statusLabel.setTextColor(color.holo_orange_dark);
+		singButton.setVisibility(View.VISIBLE);
 
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
@@ -101,7 +103,9 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.disconnectButton.setVisibility(View.GONE);
 		this.btImage.setImageAlpha(100);
 		this.statusLabel.setText(R.string.nxtDisconnected);
+		this.batteryStatus.setProgress(0);
 		//this.statusLabel.setTextColor(color.primary_text_light);
+		singButton.setVisibility(View.INVISIBLE);
 	}
 
 	private int getBatteryLevel() {
@@ -144,9 +148,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICK_BLUETOOTH_ID) {
 			if (resultCode == RESULT_OK) {
-//				connectStatus.setVisibility(View.VISIBLE);
 				this.connectToDevice();
-//				connectStatus.setVisibility(View.INVISIBLE);
 			}
 		}
 	}
@@ -202,6 +204,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		
 		singButton = (Button) findViewById(R.id.singButton);
 		singButton.setOnClickListener(this);
+		singButton.setVisibility(View.INVISIBLE);
 
 		this.disconnectButton = (Button) this
 				.findViewById(R.id.disconnectButton);
@@ -217,12 +220,12 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
 		this.batteryStatus.setIndeterminate(false);
 		this.batteryStatus.setMax(100);
-		this.batteryStatus.setProgress(100);
+		this.batteryStatus.setProgress(0);
 		
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
 		
-		connectStatus = (ProgressBar) findViewById(R.id.connectionStatusIndicator);
-//		connectStatus.setVisibility(View.INVISIBLE);
+		connectStatus = (TextView) findViewById(R.id.connectStatus);
+		connectStatus.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
