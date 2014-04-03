@@ -44,11 +44,12 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
 
 	private final int PICK_BLUETOOTH_ID = 1;
+	
+	private DeviceData myObject;
 
 	public void connectToDevice() {
 		try {
-			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			this.bd = myObject.getBt();
+			this.bd = this.myObject.getBt();
 
 			this.socket = this.bd.createRfcommSocketToServiceRecord(UUID
 					.fromString(this.SPP_UUID));
@@ -63,9 +64,8 @@ public class ConnectActivity extends Activity implements OnClickListener {
 			this.is = this.socket.getInputStream();
 			this.os = this.socket.getOutputStream();
 
-			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			myObject.setIs(this.is);
-			myObject.setOs(this.os);
+			this.myObject.setIs(this.is);
+			this.myObject.setOs(this.os);
 
 		} catch (IOException e) {
 			this.is = null;
@@ -197,6 +197,8 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.connect_view);
 
+		this.myObject = (DeviceData) DeviceData.getInstance();
+		
 		this.connectButton = (Button) this.findViewById(R.id.connectButton);
 		this.connectButton.setOnClickListener(this);
 		
