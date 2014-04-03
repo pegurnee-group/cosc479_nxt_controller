@@ -11,7 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class PopupActivity extends ListActivity {
-	BluetoothDevice[] devices;
+	private BluetoothDevice[] devices;
+	private DeviceData myObject;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,11 @@ public class PopupActivity extends ListActivity {
 			return;
 		}
 
-		int limit = devices.length;
+		int limit = this.devices.length;
 		String[] names = new String[limit];
 
 		for (int i = 0; i < limit; i++) {
-			names[i] = devices[i].getName() + "\n" + devices[i].getAddress();
+			names[i] = this.devices[i].getName() + "\n" + this.devices[i].getAddress();
 		}
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -44,8 +45,8 @@ public class PopupActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		DeviceData myObject = (DeviceData) DeviceData.getInstance();
-		myObject.setBt(devices[position]);
+		this.myObject = (DeviceData) DeviceData.getInstance();
+		this.myObject.setBt(this.devices[position]);
 
 		this.setResult(RESULT_OK);
 		this.finish();
