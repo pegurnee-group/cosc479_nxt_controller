@@ -16,6 +16,10 @@ public class DriveActivity extends Activity implements OnTouchListener {
 	private int mpower1 = 40;
 	private int mpower2 = 40;
 	private boolean flag = false;
+	
+	private final int MOTOR_A = 0;
+	private final int MOTOR_B = 1;
+	private final int MOTOR_C = 2;
 
 	private DeviceData myObject;
 
@@ -48,10 +52,10 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		goBwd2.setOnTouchListener(this);
 
 		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
-		powerSeekBar1.setProgress(mpower1);
+		powerSeekBar1.setProgress(this.mpower1);
 
 		TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
-		powerLabel1.setText("" + mpower1);
+		powerLabel1.setText("" + this.mpower1);
 
 		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
@@ -126,8 +130,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.arrow_down_pressed));
 
 				if (this.flag == false) {
-					MoveMotor(1, -this.mpower1, 0x20);
-					MoveMotor(2, -this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_A, -this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_B, -this.mpower1, 0x20);
 				}
 				this.flag = true;
 
@@ -136,8 +140,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 				this.flag = false;
 				button.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.arrow_down));
-				MoveMotor(1, -this.mpower1, 0x00);
-				MoveMotor(2, -this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_A, -this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_B, -this.mpower1, 0x00);
 			}
 			break;
 		// Go Rev
@@ -153,8 +157,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.arrow_up_pressed));
 
 				if (this.flag == false) {
-					MoveMotor(1, this.mpower1, 0x20);
-					MoveMotor(2, this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_A, this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_B, this.mpower1, 0x20);
 				}
 				this.flag = true;
 
@@ -163,8 +167,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.arrow_up));
 				Log.i("NXT", "Action1 Stopped ");
 				this.flag = false;
-				MoveMotor(1, this.mpower1, 0x00);
-				MoveMotor(2, this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_A, this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_B, this.mpower1, 0x00);
 			}
 			break;
 
@@ -180,9 +184,9 @@ public class DriveActivity extends Activity implements OnTouchListener {
 				button.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.arrow_right_pressed));
 				Log.i("NXT", "Action3 started ");
-				if (flag == false) {
-					MoveMotor(1, -this.mpower1, 0x20);
-					MoveMotor(2, this.mpower1, 0x20);
+				if (this.flag == false) {
+					MoveMotor(this.MOTOR_A, -this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_B, this.mpower1, 0x20);
 				}
 				this.flag = true;
 
@@ -191,8 +195,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.arrow_right));
 				Log.i("NXT", "Action1 Stopped ");
 				this.flag = false;
-				MoveMotor(1, -this.mpower1, 0x00);
-				MoveMotor(2, this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_A, -this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_B, this.mpower1, 0x00);
 			}
 			break;
 
@@ -209,8 +213,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.arrow_left_pressed));
 				Log.i("NXT", "Action4 started ");
 				if (this.flag == false) {
-					MoveMotor(1, this.mpower1, 0x20);
-					MoveMotor(2, -this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_A, this.mpower1, 0x20);
+					MoveMotor(this.MOTOR_B, -this.mpower1, 0x20);
 				}
 				this.flag = true;
 
@@ -219,8 +223,8 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.arrow_left));
 				Log.i("NXT", "Action1 Stopped ");
 				this.flag = false;
-				MoveMotor(1, this.mpower1, 0x00);
-				MoveMotor(2, -this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_A, this.mpower1, 0x00);
+				MoveMotor(this.MOTOR_B, -this.mpower1, 0x00);
 			}
 			break;
 
@@ -236,7 +240,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.backward_pressed));
 				Log.i("NXT", "Action4 started ");
 				if (this.flag == false) {
-					MoveMotor(3, -this.mpower2, 0x20);
+					MoveMotor(this.MOTOR_C, -this.mpower2, 0x20);
 
 				}
 				this.flag = true;
@@ -246,7 +250,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.backward));
 				Log.i("NXT", "Action1 Stopped ");
 				this.flag = false;
-				MoveMotor(3, -this.mpower2, 0x00);
+				MoveMotor(this.MOTOR_C, -this.mpower2, 0x00);
 
 			}
 			break;
@@ -261,7 +265,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.forward_pressed));
 				Log.i("NXT", "Action4 started ");
 				if (this.flag == false) {
-					MoveMotor(3, this.mpower2, 0x20);
+					MoveMotor(this.MOTOR_C, this.mpower2, 0x20);
 				}
 				this.flag = true;
 
@@ -270,7 +274,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 						R.drawable.forward));
 				Log.i("NXT", "Action4 Stopped ");
 				this.flag = false;
-				MoveMotor(3, this.mpower2, 0x00);
+				MoveMotor(this.MOTOR_C, this.mpower2, 0x00);
 			}
 			break;
 
