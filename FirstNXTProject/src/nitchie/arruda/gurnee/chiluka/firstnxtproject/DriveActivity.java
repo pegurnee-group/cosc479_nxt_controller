@@ -92,6 +92,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
 		Log.e("Check2","Check");
 	}
 	
+	@SuppressWarnings("deprecation")
 	public boolean onTouch(View view, MotionEvent event )
 	{
 		int action;
