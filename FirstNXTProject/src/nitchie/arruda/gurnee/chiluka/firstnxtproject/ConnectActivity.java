@@ -41,96 +41,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 	private final int PICK_BLUETOOTH_ID = 1;
 
-	boolean flag = false;
-
-	int mpower1 = 20;
-	int mpower2 = 30;
-
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.connect_view);
-
-		this.connectButton = (Button) this.findViewById(R.id.connectButton);
-		this.connectButton.setOnClickListener(this);
-
-		this.disconnectButton = (Button) this
-				.findViewById(R.id.disconnectButton);
-		this.disconnectButton.setOnClickListener(this);
-		this.disconnectButton.setVisibility(View.GONE);
-
-		this.btImage = (ImageView) findViewById(R.id.imageView1);
-		this.btImage.setImageAlpha(50);
-
-		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
-
-		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
-		this.batteryStatus.setIndeterminate(false);
-		this.batteryStatus.setMax(100);
-		this.batteryStatus.setProgress(100);
-		
-		this.batteryStatus.setOnClickListener(this); // for battery level reset
-	}
-
-	private int getBatteryLevel() {
-		byte[] response = new byte[7];
-		try {
-
-			byte[] buffer = new byte[4];
-
-			// request battery level
-			buffer[0] = 2; // length lsb
-			buffer[1] = 0; // length msb
-			buffer[2] = 0x00; // actual
-			buffer[3] = 0x0B; // message
-
-			this.os.write(buffer);
-			this.os.flush();
-
-			// receive battery level
-			response[0] = (byte) is.read(); // length lsb
-			response[1] = (byte) is.read(); // length msb
-			response[2] = (byte) is.read(); // will be 2
-			response[3] = (byte) is.read(); // will be 11 -> 0x0B
-			response[4] = (byte) is.read(); // Status byte. 0 = successful.
-			response[5] = (byte) is.read(); // battery level lsb
-			response[6] = (byte) is.read(); // bettery level msb
-
-		} catch (Exception e) {
-			Log.e(TAG, "Error getting battery level(" + e.getMessage() + ")");
-			return -1;
-		}
-
-		// converting unsigned word to an int
-		int responseVoltage = (0xFF & response[5])
-				| ((0xFF & response[6]) << 8);
-
-		return responseVoltage;
-	}
-
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case (R.id.connectButton):
-			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-				BluetoothAdapter.getDefaultAdapter().enable();
-			}
-			Intent i = new Intent(this, PopupActivity.class);
-			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
-			break;
-		case (R.id.disconnectButton):
-			this.disconnectNXT(v);
-			break;
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == PICK_BLUETOOTH_ID) {
-			if (resultCode == RESULT_OK) {
-				this.connectToDevice();
-			}
-		}
-	}
-
 	public void connectToDevice() {
 		try {
 			DeviceData myObject = (DeviceData) DeviceData.getInstance();
@@ -169,12 +79,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
 
-	private void setBatteryMeter(int voltage) {
-		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
-		int batteryProgress = (int) (batteryLevel * 100);
-		this.batteryStatus.setProgress(batteryProgress);
-	}
-
 	public void disconnectNXT(View v) {
 		try {
 			Log.i(TAG,
@@ -194,10 +98,103 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.statusLabel.setText(R.string.nxtDisconnected);
 	}
 
+	private int getBatteryLevel() {
+		byte[] response = new byte[7];
+		try {
+
+			byte[] buffer = new byte[4];
+
+			// request battery level
+			buffer[0] = 2; // length lsb
+			buffer[1] = 0; // length msb
+			buffer[2] = 0x00; // actual
+			buffer[3] = 0x0B; // message
+
+			this.os.write(buffer);
+			this.os.flush();
+
+			// receive battery level
+			response[0] = (byte) is.read(); // length lsb
+			response[1] = (byte) is.read(); // length msb
+			response[2] = (byte) is.read(); // will be 2
+			response[3] = (byte) is.read(); // will be 11 -> 0x0B
+			response[4] = (byte) is.read(); // Status byte. 0 = successful.
+			response[5] = (byte) is.read(); // battery level lsb
+			response[6] = (byte) is.read(); // bettery level msb
+
+		} catch (Exception e) {
+			Log.e(TAG, "Error getting battery level(" + e.getMessage() + ")");
+			return -1;
+		}
+
+		// converting unsigned word to an int
+		int responseVoltage = (0xFF & response[5])
+				| ((0xFF & response[6]) << 8);
+
+		return responseVoltage;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PICK_BLUETOOTH_ID) {
+			if (resultCode == RESULT_OK) {
+				this.connectToDevice();
+			}
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case (R.id.connectButton):
+			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+				BluetoothAdapter.getDefaultAdapter().enable();
+			}
+			Intent i = new Intent(this, PopupActivity.class);
+			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
+			break;
+		case (R.id.disconnectButton):
+			this.disconnectNXT(v);
+			break;
+		}
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.connect_view);
+
+		this.connectButton = (Button) this.findViewById(R.id.connectButton);
+		this.connectButton.setOnClickListener(this);
+
+		this.disconnectButton = (Button) this
+				.findViewById(R.id.disconnectButton);
+		this.disconnectButton.setOnClickListener(this);
+		this.disconnectButton.setVisibility(View.GONE);
+
+		this.btImage = (ImageView) findViewById(R.id.imageView1);
+		this.btImage.setImageAlpha(50);
+
+		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
+
+		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
+		this.batteryStatus.setIndeterminate(false);
+		this.batteryStatus.setMax(100);
+		this.batteryStatus.setProgress(100);
+		
+		this.batteryStatus.setOnClickListener(this); // for battery level reset
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		this.getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	private void setBatteryMeter(int voltage) {
+		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
+		int batteryProgress = (int) (batteryLevel * 100);
+		this.batteryStatus.setProgress(batteryProgress);
 	}
 }
