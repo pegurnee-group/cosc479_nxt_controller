@@ -80,7 +80,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
         powerSeekBar2.setProgress(mpower2);
         
         TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
-        powerLabel1.setText("" + mpower2);
+        powerLabel2.setText("" + mpower2);
         
 		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         	
