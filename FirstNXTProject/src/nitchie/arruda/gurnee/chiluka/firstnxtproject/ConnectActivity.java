@@ -33,7 +33,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private TextView statusLabel;
 	private ProgressBar batteryStatus;
 	private Button singButton;
-	private TextView connectStatus;
 	
 
 	// Bluetooth Variables
@@ -48,7 +47,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private DeviceData myObject;
 
 	public void connectToDevice() {
-		connectStatus.setVisibility(View.VISIBLE);
 		try {
 			this.bd = this.myObject.getBt();
 
@@ -225,7 +223,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.batteryStatus.setProgress(0);
 		
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
-		
 	}
 
 	@Override
