@@ -14,3 +14,5 @@ Bonus requirements
 - alternative ways to drive
 - get a sensor working
 - popup window asking user to turn on bluetooth if it is turned off
+- some kind of preferences
+- if the robot is turned off, disconnect from the bluetooth
