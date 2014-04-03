@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnTouchListener {
 
-	int mpower1 = 40;
-	int mpower2 = 40;
-	boolean flag = false;
+	private int mpower1 = 40;
+	private int mpower2 = 40;
+	private boolean flag = false;
 
 	private DeviceData myObject;
 
