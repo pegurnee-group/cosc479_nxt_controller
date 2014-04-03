@@ -17,3 +17,10 @@ Bonus requirements
 - if the robot is turned off, disconnect from the bluetooth
 - menu, with at least 2 items, preferences being one of them
 - save preferences to the phone
+
+
+AWESOME
+- IR Sensor. Get it to follow us and stop once it is at our feet
+- Respond to "Come here, boy!" or whatever
+- Voice Activated
+
