@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.R.color;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -74,7 +75,8 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.disconnectButton.setVisibility(View.VISIBLE);
 		this.setBatteryMeter(this.getBatteryLevel());
 		this.btImage.setImageAlpha(255);
-		this.statusLabel.setText(R.string.nxtConnected);
+		this.statusLabel.setText(R.string.nxtConnected + bd.getName());
+		//this.statusLabel.setTextColor(color.holo_orange_dark);
 
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
@@ -96,6 +98,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.disconnectButton.setVisibility(View.GONE);
 		this.btImage.setImageAlpha(100);
 		this.statusLabel.setText(R.string.nxtDisconnected);
+		//this.statusLabel.setTextColor(color.primary_text_light);
 	}
 
 	private int getBatteryLevel() {
@@ -176,6 +179,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.btImage.setImageAlpha(50);
 
 		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
+		//this.statusLabel.setTextColor(color.primary_text_light);
 
 		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
 		this.batteryStatus.setIndeterminate(false);
