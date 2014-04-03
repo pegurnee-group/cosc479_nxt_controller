@@ -5,11 +5,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.R.color;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -80,7 +82,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.setBatteryMeter(this.getBatteryLevel());
 		this.btImage.setImageAlpha(255);
 		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
-		//this.statusLabel.setTextColor(color.holo_orange_dark);
+		this.statusLabel.setTextColor(this.getResources().getColor(color.holo_orange_light));
 		singButton.setVisibility(View.VISIBLE);
 
 		Log.i(TAG, "Connected with " + this.bd.getName());
@@ -104,7 +106,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.btImage.setImageAlpha(100);
 		this.statusLabel.setText(R.string.nxtDisconnected);
 		this.batteryStatus.setProgress(0);
-		//this.statusLabel.setTextColor(color.primary_text_light);
+//		this.statusLabel.setTextColor(color.primary_text_light); // TODO: Finish
 		singButton.setVisibility(View.INVISIBLE);
 	}
 
@@ -158,6 +160,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case (R.id.connectButton):
 			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+				Log.e("hello", "not enabled");
 				BluetoothAdapter.getDefaultAdapter().enable();
 			}
 			Intent i = new Intent(this, PopupActivity.class);

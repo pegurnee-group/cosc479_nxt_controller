@@ -9,7 +9,7 @@
     <string name="bluetoothDesc">Bluetooth Icon</string>
     <string name="nxtConnecting">Attemping to connect to NXT</string>
     <string name="nxtDisconnected">Not connected to NXT</string>
-    <string name="nxtConnected">Connected to NXT</string>
+    <string name="nxtConnected">Connected to NXT </string>
     <string name="defaultBatteryStatus">BatteryLevel</string>
     <string name="sing">Sing!</string>
 
