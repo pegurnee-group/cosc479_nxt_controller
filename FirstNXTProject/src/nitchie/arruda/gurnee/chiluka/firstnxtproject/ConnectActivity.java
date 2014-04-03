@@ -33,6 +33,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private TextView statusLabel;
 	private ProgressBar batteryStatus;
 	private Button singButton;
+	private ProgressBar connectStatus;
 	
 
 	// Bluetooth Variables
@@ -143,7 +144,9 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICK_BLUETOOTH_ID) {
 			if (resultCode == RESULT_OK) {
+//				connectStatus.setVisibility(View.VISIBLE);
 				this.connectToDevice();
+//				connectStatus.setVisibility(View.INVISIBLE);
 			}
 		}
 	}
@@ -217,6 +220,9 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.batteryStatus.setProgress(100);
 		
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
+		
+		connectStatus = (ProgressBar) findViewById(R.id.connectionStatusIndicator);
+//		connectStatus.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
