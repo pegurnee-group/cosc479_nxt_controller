@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -52,7 +53,8 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.connectButton = (Button) this.findViewById(R.id.connectButton);
 		this.connectButton.setOnClickListener(this);
 
-		this.disconnectButton = (Button) this.findViewById(R.id.disconnectButton);
+		this.disconnectButton = (Button) this
+				.findViewById(R.id.disconnectButton);
 		this.disconnectButton.setOnClickListener(this);
 		this.disconnectButton.setVisibility(View.GONE);
 
@@ -60,12 +62,13 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.btImage.setImageAlpha(50);
 
 		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
-		
+
 		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
 		this.batteryStatus.setIndeterminate(false);
 		this.batteryStatus.setMax(100);
 		this.batteryStatus.setProgress(100);
-		this.batteryStatus.setOnClickListener(this);
+		
+		this.batteryStatus.setOnClickListener(this); // for battery level reset
 	}
 
 	private int getBatteryLevel() {
@@ -107,6 +110,9 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.connectButton):
+			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+				BluetoothAdapter.getDefaultAdapter().enable();
+			}
 			Intent i = new Intent(this, PopupActivity.class);
 			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
 			break;
@@ -168,14 +174,16 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		int batteryProgress = (int) (batteryLevel * 100);
 		this.batteryStatus.setProgress(batteryProgress);
 	}
-	
+
 	public void disconnectNXT(View v) {
 		try {
-			Log.i(TAG, "Attempting to break BT connection of " + this.bd.getName());
+			Log.i(TAG,
+					"Attempting to break BT connection of " + this.bd.getName());
 			this.socket.close();
 			this.is.close();
 			this.os.close();
-			Log.i(TAG, "BT connection of " + this.bd.getName() + " is disconnected");
+			Log.i(TAG, "BT connection of " + this.bd.getName()
+					+ " is disconnected");
 		} catch (Exception e) {
 			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
 		}
