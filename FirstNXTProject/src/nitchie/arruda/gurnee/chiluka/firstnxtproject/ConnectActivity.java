@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import android.R.color;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -20,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ConnectActivity extends Activity implements OnClickListener {
 
@@ -56,6 +56,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		} catch (IOException e) {
 			Log.e(TAG,
 					"Error interacting with remote device -> " + e.getMessage());
+			Toast.makeText(this, "Yikes! That didn't work.", Toast.LENGTH_LONG).show();
 			return;
 		}
 
@@ -70,6 +71,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 			this.is = null;
 			this.os = null;
 			this.disconnectNXT(null);
+			Toast.makeText(this, "You crossed the streams!", Toast.LENGTH_LONG).show();
 			return;
 		}
 
