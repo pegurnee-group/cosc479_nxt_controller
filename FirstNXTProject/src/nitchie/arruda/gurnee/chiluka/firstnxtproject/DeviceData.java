@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import android.bluetooth.BluetoothDevice;
 
+@SuppressWarnings("serial")
 public class DeviceData implements Serializable {
 
 	private InputStream is;
