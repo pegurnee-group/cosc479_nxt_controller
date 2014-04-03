@@ -113,9 +113,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		case (R.id.disconnectButton):
 			this.disconnectNXT(v);
 			break;
-		case (R.id.progressBar1):
-			this.setBatteryMeter(this.getBatteryLevel());
-			break;
 		}
 	}
 
