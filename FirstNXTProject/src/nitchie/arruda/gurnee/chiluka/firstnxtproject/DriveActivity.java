@@ -50,7 +50,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
         powerSeekBar1.setProgress(mpower1);
         
         TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
-        powerLabel1.setText("" + mpower1 + " %");
+        powerLabel1.setText("" + mpower1);
         
 		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         	
@@ -60,7 +60,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
             	mpower1 = progress;
             	
             	TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
-            	powerLabel1.setText("" + mpower1 + " %");
+            	powerLabel1.setText("" + mpower1);
             	
             	 //Log.i("NXT", "Action started "+ progressChanged );
             }
@@ -80,7 +80,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
         powerSeekBar2.setProgress(mpower2);
         
         TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
-        powerLabel1.setText("" + mpower2 + " %");
+        powerLabel1.setText("" + mpower2);
         
 		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         	
@@ -90,7 +90,7 @@ public class DriveActivity extends Activity implements OnTouchListener{
             	mpower2 = progress;
             	
             	TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
-            	powerLabel2.setText("" + mpower2 + " %");
+            	powerLabel2.setText("" + mpower2);
             	
             	 //Log.i("NXT", "Action started "+ progressChanged );
             }
