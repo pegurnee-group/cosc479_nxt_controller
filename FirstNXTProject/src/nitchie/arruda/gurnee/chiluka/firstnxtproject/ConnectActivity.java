@@ -28,6 +28,10 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
 	private final double MAX_MILLI_VOLTS = 9000.0;
+	private final int IMAGE_TRANSPARENT = 100;
+	private final int IMAGE_OPAQUE = 255;
+	private final int BATTERY_MAX = 100;
+	private final int BATTERY_MIN = 0;
 
 	// UI Components
 	private Button connectButton;
@@ -36,7 +40,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private TextView statusLabel;
 	private ProgressBar batteryStatus;
 	private Button singButton;
-
+	
 	// Bluetooth Variables
 	private BluetoothDevice bd;
 	private BluetoothSocket socket;
@@ -47,6 +51,39 @@ public class ConnectActivity extends Activity implements OnClickListener {
 	private final int PICK_BLUETOOTH_ID = 1;
 
 	private DeviceData myObject;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.connect_view);
+
+		this.myObject = (DeviceData) DeviceData.getInstance();
+		
+		this.connectButton = (Button) this.findViewById(R.id.connectButton);
+		this.connectButton.setOnClickListener(this);
+		
+		singButton = (Button) findViewById(R.id.singButton);
+		singButton.setOnClickListener(this);
+		singButton.setVisibility(View.INVISIBLE);
+
+		this.disconnectButton = (Button) this
+				.findViewById(R.id.disconnectButton);
+		this.disconnectButton.setOnClickListener(this);
+		this.disconnectButton.setVisibility(View.GONE);
+
+		this.btImage = (ImageView) findViewById(R.id.imageView1);
+		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
+
+		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
+		//this.statusLabel.setTextColor(color.primary_text_light);
+
+		this.batteryStatus = (ProgressBar) findViewById(R.id.batteryStatusBar);
+		this.batteryStatus.setIndeterminate(false);
+		this.batteryStatus.setMax(this.BATTERY_MAX);
+		this.batteryStatus.setProgress(this.BATTERY_MIN);
+		
+		this.batteryStatus.setOnClickListener(this); // for battery level reset
+	}
 
 	public void connectToDevice() {
 		try {
@@ -81,14 +118,11 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 		this.connectButton.setVisibility(View.GONE);
 		this.disconnectButton.setVisibility(View.VISIBLE);
+		
 		this.setBatteryMeter(this.getBatteryLevel());
-		this.btImage.setImageAlpha(255);
-		this.statusLabel.setText(this.getResources().getString(
-				R.string.nxtConnected)
-				+ bd.getName());
-		this.statusLabel.setTextColor(this.getResources().getColor(
-				color.holo_orange_light));
-		singButton.setVisibility(View.VISIBLE);
+		this.btImage.setImageAlpha(this.IMAGE_OPAQUE);
+		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
+		this.statusLabel.setTextColor(this.getResources().getColor(color.holo_orange_light));
 
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
@@ -108,12 +142,11 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 		this.connectButton.setVisibility(View.VISIBLE);
 		this.disconnectButton.setVisibility(View.GONE);
-		this.btImage.setImageAlpha(100);
+		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 		this.statusLabel.setText(R.string.nxtDisconnected);
-		this.batteryStatus.setProgress(0);
-		// this.statusLabel.setTextColor(color.primary_text_light); // TODO:
-		// Finish
-		singButton.setVisibility(View.INVISIBLE);
+		this.batteryStatus.setProgress(this.BATTERY_MIN);
+		this.statusLabel.setTextColor(this.getResources().getColor(color.white));
+		this.singButton.setVisibility(View.INVISIBLE);
 	}
 
 	private int getBatteryLevel() {
@@ -226,38 +259,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.connect_view);
-
-		this.myObject = (DeviceData) DeviceData.getInstance();
-
-		this.connectButton = (Button) this.findViewById(R.id.connectButton);
-		this.connectButton.setOnClickListener(this);
-
-		singButton = (Button) findViewById(R.id.singButton);
-		singButton.setOnClickListener(this);
-		singButton.setVisibility(View.INVISIBLE);
-
-		this.disconnectButton = (Button) this
-				.findViewById(R.id.disconnectButton);
-		this.disconnectButton.setOnClickListener(this);
-		this.disconnectButton.setVisibility(View.GONE);
-
-		this.btImage = (ImageView) findViewById(R.id.imageView1);
-		this.btImage.setImageAlpha(50);
-
-		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
-		// this.statusLabel.setTextColor(color.primary_text_light);
-
-		this.batteryStatus = (ProgressBar) findViewById(R.id.batteryStatusBar);
-		this.batteryStatus.setIndeterminate(false);
-		this.batteryStatus.setMax(100);
-		this.batteryStatus.setProgress(0);
-
-		this.batteryStatus.setOnClickListener(this); // for battery level reset
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
