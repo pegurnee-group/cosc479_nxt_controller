@@ -17,11 +17,13 @@ public class DriveActivity extends Activity implements OnTouchListener{
 	int mpower2 = 40;
 	boolean flag = false;
 	
+	private DeviceData myObject;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.drive_view);
 		
+		this.myObject = (DeviceData) DeviceData.getInstance();
 		driveDirections();
 	}
 
@@ -292,9 +294,8 @@ public class DriveActivity extends Activity implements OnTouchListener{
 			buffer[13] = 0;
 			buffer[14] = 0;
 
-			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			myObject.getOs().write(buffer);
-			myObject.getOs().flush();
+			this.myObject.getOs().write(buffer);
+			this.myObject.getOs().flush();
 		
 			
 		}
