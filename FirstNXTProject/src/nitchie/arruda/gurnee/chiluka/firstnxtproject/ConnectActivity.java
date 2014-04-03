@@ -169,7 +169,11 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		case (R.id.singButton):
 			singASong();
 			break;
+		case (R.id.batteryStatusBar):
+			this.setBatteryMeter(this.getBatteryLevel());
+			break;
 		}
+		
 	}
 	
 	private void singASong() {
@@ -177,7 +181,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 			
 			byte[] buffer = new byte[8];
 			
-			// request battery level
 			buffer[0] = 6; 		// length lsb
 			buffer[1] = 0; 		// length msb
 			buffer[2] = 0x00;	// actual
@@ -219,7 +222,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
 		//this.statusLabel.setTextColor(color.primary_text_light);
 
-		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
+		this.batteryStatus = (ProgressBar) findViewById(R.id.batteryStatusBar);
 		this.batteryStatus.setIndeterminate(false);
 		this.batteryStatus.setMax(100);
 		this.batteryStatus.setProgress(0);
@@ -238,5 +241,7 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
 		int batteryProgress = (int) (batteryLevel * 100);
 		this.batteryStatus.setProgress(batteryProgress);
+		
+		Toast.makeText(this, "Battery level at " + batteryProgress + "%", Toast.LENGTH_LONG).show();
 	}
 }
