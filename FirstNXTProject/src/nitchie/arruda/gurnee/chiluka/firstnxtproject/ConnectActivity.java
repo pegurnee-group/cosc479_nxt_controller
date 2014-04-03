@@ -226,8 +226,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
 		
-		connectStatus = (TextView) findViewById(R.id.connectStatus);
-		connectStatus.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
