@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 public class DriveActivity extends Activity implements OnTouchListener {
 
-	private int mpower1 = 40;
-	private int mpower2 = 40;
+	private int drivePower = 40;
+	private int thirdPower = 40;
 	private boolean flag = false;
 	
 	private final int MOTOR_A = 0;
@@ -35,39 +35,39 @@ public class DriveActivity extends Activity implements OnTouchListener {
 
 	// Set up Drive View Controls
 	public void driveDirections() {
-		Button goFwd = (Button) findViewById(R.id.button1);
-		goFwd.setOnTouchListener(this);
-
-		Button goBwd = (Button) findViewById(R.id.button2);
+		Button goBwd = (Button) findViewById(R.id.bwd_btn);
 		goBwd.setOnTouchListener(this);
 
-		Button goRight = (Button) findViewById(R.id.button3);
+		Button goFwd = (Button) findViewById(R.id.fwd_btn);
+		goFwd.setOnTouchListener(this);
+
+		Button goRight = (Button) findViewById(R.id.rgt_btn);
 		goRight.setOnTouchListener(this);
 
-		Button goLeft = (Button) findViewById(R.id.button4);
+		Button goLeft = (Button) findViewById(R.id.lft_btn);
 		goLeft.setOnTouchListener(this);
 
-		Button goFwd2 = (Button) findViewById(R.id.button5);
+		Button goFwd2 = (Button) findViewById(R.id.third_lft_btn);
 		goFwd2.setOnTouchListener(this);
 
-		Button goBwd2 = (Button) findViewById(R.id.button6);
+		Button goBwd2 = (Button) findViewById(R.id.third_rgt_btn);
 		goBwd2.setOnTouchListener(this);
 
 		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
-		powerSeekBar1.setProgress(this.mpower1);
+		powerSeekBar1.setProgress(this.drivePower);
 
 		TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
-		powerLabel1.setText("" + this.mpower1);
+		powerLabel1.setText("" + this.drivePower);
 
 		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				DriveActivity.this.mpower1 = progress;
+				DriveActivity.this.drivePower = progress;
 
 				TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
-				powerLabel1.setText("" + DriveActivity.this.mpower1);
+				powerLabel1.setText("" + DriveActivity.this.drivePower);
 			}
 
 			@Override
@@ -80,20 +80,20 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		});
 
 		SeekBar powerSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
-		powerSeekBar2.setProgress(this.mpower2);
+		powerSeekBar2.setProgress(this.thirdPower);
 
 		TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
-		powerLabel2.setText("" + this.mpower2);
+		powerLabel2.setText("" + this.thirdPower);
 
 		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				DriveActivity.this.mpower2 = progress;
+				DriveActivity.this.thirdPower = progress;
 
 				TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
-				powerLabel2.setText("" + DriveActivity.this.mpower2);
+				powerLabel2.setText("" + DriveActivity.this.thirdPower);
 			}
 
 			@Override
@@ -112,145 +112,145 @@ public class DriveActivity extends Activity implements OnTouchListener {
 
 		switch (view.getId()) {
 		// Go Fwd
-		case R.id.button1:
+		case R.id.bwd_btn:
 			action = event.getAction();
-			button = (Button) findViewById(R.id.button1);
+			button = (Button) findViewById(R.id.bwd_btn);
 
-			button.setBackgroundDrawable(getResources().getDrawable(
+			button.setBackground(getResources().getDrawable(
 					R.drawable.arrow_down_pressed));
 			
 			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_down_pressed));
 
 				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, -this.mpower1, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, -this.mpower1, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
 				}
 				this.flag = true;
 
 			} else if ((action == MotionEvent.ACTION_UP)) {
 				this.flag = false;
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_down));
-				MoveMotor(this.MOTOR_A, -this.mpower1, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, -this.mpower1, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_A, -this.drivePower, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_B, -this.drivePower, this.OFF_MOTOR);
 			}
 			break;
 		// Go Rev
-		case R.id.button2:
+		case R.id.fwd_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.button2);
+			button = (Button) findViewById(R.id.fwd_btn);
 			
 			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_up_pressed));
 
 				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, this.mpower1, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, this.mpower1, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
 				}
 				this.flag = true;
 
 			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_up));
 				this.flag = false;
-				MoveMotor(this.MOTOR_A, this.mpower1, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, this.mpower1, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
 			}
 			break;
 
 		// Go Right
-		case R.id.button3:
+		case R.id.rgt_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.button3);
+			button = (Button) findViewById(R.id.rgt_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_right_pressed));
 				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, -this.mpower1, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, this.mpower1, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
 				}
 				this.flag = true;
 
 			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_right));
 				this.flag = false;
-				MoveMotor(this.MOTOR_A, -this.mpower1, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, this.mpower1, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_A, -this.drivePower, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
 			}
 			break;
 
 		// Go Left
-		case R.id.button4:
+		case R.id.lft_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.button4);
+			button = (Button) findViewById(R.id.lft_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_left_pressed));
 				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, this.mpower1, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, -this.mpower1, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
 				}
 				this.flag = true;
 
 			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_left));
 				this.flag = false;
-				MoveMotor(this.MOTOR_A, this.mpower1, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, -this.mpower1, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_B, -this.drivePower, this.OFF_MOTOR);
 			}
 			break;
 
-		case R.id.button5:
+		case R.id.third_lft_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.button5);
+			button = (Button) findViewById(R.id.third_lft_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.backward_pressed));
 				if (this.flag == false) {
-					MoveMotor(this.MOTOR_C, -this.mpower2, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_C, -this.thirdPower, this.ON_MOTOR);
 
 				}
 				this.flag = true;
 
 			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.backward));
 				this.flag = false;
-				MoveMotor(this.MOTOR_C, -this.mpower2, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_C, -this.thirdPower, this.OFF_MOTOR);
 
 			}
 			break;
 
-		case R.id.button6:
+		case R.id.third_rgt_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.button6);
+			button = (Button) findViewById(R.id.third_rgt_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.forward_pressed));
 				if (this.flag == false) {
-					MoveMotor(this.MOTOR_C, this.mpower2, this.ON_MOTOR);
+					MoveMotor(this.MOTOR_C, this.thirdPower, this.ON_MOTOR);
 				}
 				this.flag = true;
 
 			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackgroundDrawable(getResources().getDrawable(
+				button.setBackground(getResources().getDrawable(
 						R.drawable.forward));
 				this.flag = false;
-				MoveMotor(this.MOTOR_C, this.mpower2, this.OFF_MOTOR);
+				MoveMotor(this.MOTOR_C, this.thirdPower, this.OFF_MOTOR);
 			}
 			break;
 
