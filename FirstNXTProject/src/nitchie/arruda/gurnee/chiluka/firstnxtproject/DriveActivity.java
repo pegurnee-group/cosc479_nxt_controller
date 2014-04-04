@@ -41,17 +41,17 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		Button goFwd = (Button) findViewById(R.id.fwd_btn);
 		goFwd.setOnTouchListener(this);
 
-		Button goRight = (Button) findViewById(R.id.rgt_btn);
-		goRight.setOnTouchListener(this);
+		Button goRgt = (Button) findViewById(R.id.rgt_btn);
+		goRgt.setOnTouchListener(this);
 
-		Button goLeft = (Button) findViewById(R.id.lft_btn);
-		goLeft.setOnTouchListener(this);
+		Button goLft = (Button) findViewById(R.id.lft_btn);
+		goLft.setOnTouchListener(this);
 
-		Button goFwd2 = (Button) findViewById(R.id.third_lft_btn);
-		goFwd2.setOnTouchListener(this);
+		Button goThirdLft = (Button) findViewById(R.id.third_lft_btn);
+		goThirdLft.setOnTouchListener(this);
 
-		Button goBwd2 = (Button) findViewById(R.id.third_rgt_btn);
-		goBwd2.setOnTouchListener(this);
+		Button goThirdRgt = (Button) findViewById(R.id.third_rgt_btn);
+		goThirdRgt.setOnTouchListener(this);
 
 		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
 		powerSeekBar1.setProgress(this.drivePower);
