@@ -10,7 +10,7 @@
     <string name="nxtConnecting">Attemping to connect to NXT</string>
     <string name="nxtDisconnected">Not connected to NXT</string>
     <string name="nxtConnected">Connected to NXT\n </string>
-    <string name="defaultBatteryStatus">BatteryLevel</string>
+    <string name="defaultBatteryStatus">Battery level:</string>
     <string name="sing">Sing!</string>
 
 </resources>
