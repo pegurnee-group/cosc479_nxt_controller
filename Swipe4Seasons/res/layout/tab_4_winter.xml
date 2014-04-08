@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/wntrImg_str"
         android:src="@drawable/season_winter" />
 
 </RelativeLayout>
