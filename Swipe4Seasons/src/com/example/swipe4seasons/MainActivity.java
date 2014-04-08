@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -52,19 +54,26 @@ public class MainActivity extends FragmentActivity implements
  
         myViewPager.setAdapter(myPagerAdapter);
         myActionBar.setHomeButtonEnabled(false);
-        myActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);       
+        myActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);  
+        
+        myActionBar.setDisplayShowTitleEnabled(false); 
+        myActionBar.setDisplayShowHomeEnabled(false);
+        
  
         // Adding Tabs
         for (String tab_name : tabs) {
             myActionBar.addTab(myActionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }
+        
+
+ 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+//		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -86,19 +95,19 @@ public class MainActivity extends FragmentActivity implements
 
 	}
 	
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-          super.onWindowFocusChanged(hasFocus);
-      if (hasFocus) {
-    	  getWindow().getDecorView().setSystemUiVisibility(
-                  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                  | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                  | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                  | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                  | View.SYSTEM_UI_FLAG_FULLSCREEN
-                  | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-           );
-      }
-	}
+//	@Override
+//	public void onWindowFocusChanged(boolean hasFocus) {
+//          super.onWindowFocusChanged(hasFocus);
+//      if (hasFocus) {
+//    	  getWindow().getDecorView().setSystemUiVisibility(
+//                  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                  | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                  | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                  | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                  | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                  | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//           );
+//      }
+//	}
 
 }
