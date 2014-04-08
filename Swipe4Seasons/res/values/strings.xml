@@ -4,5 +4,9 @@
     <string name="app_name">Swipe4Seasons</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="sprgImg_str">Spring Image</string>
+    <string name="sumrImg_str">Summer Image</string>
+    <string name="fallImg_str">Fall Image</string>
+    <string name="wntrImg_str">Winter Image</string>
 
 </resources>
