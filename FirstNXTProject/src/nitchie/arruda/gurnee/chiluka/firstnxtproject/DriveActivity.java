@@ -105,15 +105,12 @@ public class DriveActivity extends Activity implements OnTouchListener {
 			}
 		});
 	}
-<<<<<<< HEAD
+
 	
-	@SuppressWarnings("deprecation")
-	public boolean onTouch(View view, MotionEvent event )
-	{
-=======
+	
 
 	public boolean onTouch(View view, MotionEvent event) {
->>>>>>> ec65fb93efc9d85484a196751eb082ed6899c25d
+
 		int action;
 		Button button;
 
