@@ -5,10 +5,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.R.color;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,19 +22,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ConnectActivity extends Activity implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
 	private final double MAX_MILLI_VOLTS = 9000.0;
+	private final int IMAGE_TRANSPARENT = 100;
+	private final int IMAGE_OPAQUE = 255;
+	private final int BATTERY_MAX = 100;
+	private final int BATTERY_MIN = 0;
 
 	// UI Components
-	Button connectButton;
-	Button disconnectButton;
-	ImageView btImage;
-	TextView statusLabel;
-	ProgressBar batteryStatus;
-
+	private Button connectButton;
+	private Button disconnectButton;
+	private ImageView btImage;
+	private TextView statusLabel;
+	private ProgressBar batteryStatus;
+	private Button singButton;
+	
 	// Bluetooth Variables
 	private BluetoothDevice bd;
 	private BluetoothSocket socket;
@@ -41,17 +50,21 @@ public class ConnectActivity extends Activity implements OnClickListener {
 
 	private final int PICK_BLUETOOTH_ID = 1;
 
-	boolean flag = false;
-
-	int mpower1 = 20;
-	int mpower2 = 30;
-
+	private DeviceData myObject;
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.connect_view);
 
+		this.myObject = (DeviceData) DeviceData.getInstance();
+		
 		this.connectButton = (Button) this.findViewById(R.id.connectButton);
 		this.connectButton.setOnClickListener(this);
+		
+		singButton = (Button) findViewById(R.id.singButton);
+		singButton.setOnClickListener(this);
+		singButton.setVisibility(View.INVISIBLE);
 
 		this.disconnectButton = (Button) this
 				.findViewById(R.id.disconnectButton);
@@ -59,16 +72,81 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		this.disconnectButton.setVisibility(View.GONE);
 
 		this.btImage = (ImageView) findViewById(R.id.imageView1);
-		this.btImage.setImageAlpha(50);
+		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 
 		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
+		//this.statusLabel.setTextColor(color.primary_text_light);
 
-		this.batteryStatus = (ProgressBar) findViewById(R.id.progressBar1);
+		this.batteryStatus = (ProgressBar) findViewById(R.id.batteryStatusBar);
 		this.batteryStatus.setIndeterminate(false);
-		this.batteryStatus.setMax(100);
-		this.batteryStatus.setProgress(100);
+		this.batteryStatus.setMax(this.BATTERY_MAX);
+		this.batteryStatus.setProgress(this.BATTERY_MIN);
 		
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
+	}
+
+	public void connectToDevice() {
+		try {
+			this.bd = this.myObject.getBt();
+
+			this.socket = this.bd.createRfcommSocketToServiceRecord(UUID
+					.fromString(this.SPP_UUID));
+			this.socket.connect();
+		} catch (IOException e) {
+			Log.e(TAG,
+					"Error interacting with remote device -> " + e.getMessage());
+			Toast.makeText(this, "Yikes! That didn't work.", Toast.LENGTH_LONG)
+					.show();
+			return;
+		}
+
+		try {
+			this.is = this.socket.getInputStream();
+			this.os = this.socket.getOutputStream();
+
+			this.myObject.setIs(this.is);
+			this.myObject.setOs(this.os);
+
+		} catch (IOException e) {
+			this.is = null;
+			this.os = null;
+			this.disconnectNXT(null);
+			Toast.makeText(this, "You crossed the streams!", Toast.LENGTH_LONG)
+					.show();
+			return;
+		}
+
+		this.connectButton.setVisibility(View.GONE);
+		this.disconnectButton.setVisibility(View.VISIBLE);
+		
+		this.setBatteryMeter(this.getBatteryLevel());
+		this.btImage.setImageAlpha(this.IMAGE_OPAQUE);
+		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
+		this.statusLabel.setTextColor(this.getResources().getColor(color.holo_orange_light));
+
+		Log.i(TAG, "Connected with " + this.bd.getName());
+	}
+
+	public void disconnectNXT(View v) {
+		try {
+			Log.i(TAG,
+					"Attempting to break BT connection of " + this.bd.getName());
+			this.socket.close();
+			this.is.close();
+			this.os.close();
+			Log.i(TAG, "BT connection of " + this.bd.getName()
+					+ " is disconnected");
+		} catch (Exception e) {
+			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
+		}
+
+		this.connectButton.setVisibility(View.VISIBLE);
+		this.disconnectButton.setVisibility(View.GONE);
+		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
+		this.statusLabel.setText(R.string.nxtDisconnected);
+		this.batteryStatus.setProgress(this.BATTERY_MIN);
+		this.statusLabel.setTextColor(this.getResources().getColor(color.white));
+		this.singButton.setVisibility(View.INVISIBLE);
 	}
 
 	private int getBatteryLevel() {
@@ -107,21 +185,6 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		return responseVoltage;
 	}
 
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case (R.id.connectButton):
-			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-				BluetoothAdapter.getDefaultAdapter().enable();
-			}
-			Intent i = new Intent(this, PopupActivity.class);
-			this.startActivityForResult(i, PICK_BLUETOOTH_ID);
-			break;
-		case (R.id.disconnectButton):
-			this.disconnectNXT(v);
-			break;
-		}
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICK_BLUETOOTH_ID) {
@@ -131,73 +194,85 @@ public class ConnectActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	public void connectToDevice() {
-		try {
-			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			this.bd = myObject.getBt();
+	private class DialogClickListener implements
+			DialogInterface.OnClickListener {
 
-			this.socket = this.bd.createRfcommSocketToServiceRecord(UUID
-					.fromString(this.SPP_UUID));
-			this.socket.connect();
-		} catch (IOException e) {
-			Log.e(TAG,
-					"Error interacting with remote device -> " + e.getMessage());
-			return;
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch (which) {
+			case DialogInterface.BUTTON_POSITIVE:
+				BluetoothAdapter.getDefaultAdapter().enable();
+				break;
+			case DialogInterface.BUTTON_NEGATIVE:
+				break;
+			}
 		}
 
-		try {
-			this.is = this.socket.getInputStream();
-			this.os = this.socket.getOutputStream();
+	}
 
-			DeviceData myObject = (DeviceData) DeviceData.getInstance();
-			myObject.setIs(this.is);
-			myObject.setOs(this.os);
-
-		} catch (IOException e) {
-			this.is = null;
-			this.os = null;
-			this.disconnectNXT(null);
-			return;
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case (R.id.connectButton):
+			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(
+						"Your Bluetooth is not enabled, would you like to enable it now?")
+						.setPositiveButton("Yes", new DialogClickListener())
+						.setNegativeButton("No", new DialogClickListener())
+						.show();
+			} else {
+				Intent i = new Intent(this, PopupActivity.class);
+				this.startActivityForResult(i, PICK_BLUETOOTH_ID);
+			}
+			break;
+		case (R.id.disconnectButton):
+			this.disconnectNXT(v);
+			break;
+		case (R.id.singButton):
+			singASong();
+			break;
+		case (R.id.batteryStatusBar):
+			this.setBatteryMeter(this.getBatteryLevel());
+			break;
 		}
 
-		this.connectButton.setVisibility(View.GONE);
-		this.disconnectButton.setVisibility(View.VISIBLE);
-		this.setBatteryMeter(this.getBatteryLevel());
-		this.btImage.setImageAlpha(255);
-		this.statusLabel.setText(R.string.nxtConnected);
-
-		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
 
-	private void setBatteryMeter(int voltage) {
-		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
-		int batteryProgress = (int) (batteryLevel * 100);
-		this.batteryStatus.setProgress(batteryProgress);
-	}
-
-	public void disconnectNXT(View v) {
+	private void singASong() {
 		try {
-			Log.i(TAG,
-					"Attempting to break BT connection of " + this.bd.getName());
-			this.socket.close();
-			this.is.close();
-			this.os.close();
-			Log.i(TAG, "BT connection of " + this.bd.getName()
-					+ " is disconnected");
+
+			byte[] buffer = new byte[8];
+
+			buffer[0] = 6; // length lsb
+			buffer[1] = 0; // length msb
+			buffer[2] = 0x00; // actual
+			buffer[3] = 0x03; // message
+			buffer[4] = -72; // freq lsb
+			buffer[5] = 1; // freq msb
+			buffer[6] = -24; // duration in ms lsb
+			buffer[7] = 3; // duration in ms msb
+			os.write(buffer);
+			os.flush();
 		} catch (Exception e) {
-			Log.e(TAG, "Error in disconnect -> " + e.getMessage());
+			Log.e(TAG, "Error singing :-( (" + e.getMessage() + ")");
 		}
-
-		this.connectButton.setVisibility(View.VISIBLE);
-		this.disconnectButton.setVisibility(View.GONE);
-		this.btImage.setImageAlpha(100);
-		this.statusLabel.setText(R.string.nxtDisconnected);
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		this.getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	private void setBatteryMeter(int voltage) {
+		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
+		int batteryProgress = (int) (batteryLevel * 100);
+		this.batteryStatus.setProgress(batteryProgress);
+
+		Toast.makeText(this, "Battery level at " + batteryProgress + "%",
+				Toast.LENGTH_LONG).show();
 	}
 }
