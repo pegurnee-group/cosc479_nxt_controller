@@ -33,6 +33,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         tabs.put("Connect", R.drawable.connect_icon);
         tabs.put("Drive", R.drawable.drive_icon);
         tabs.put("Sensors", R.drawable.connect_icon);
+        tabs.put("Voice", R.drawable.connect_icon);
        
         myViewPager = (ViewPager) findViewById(R.id.pager);
 

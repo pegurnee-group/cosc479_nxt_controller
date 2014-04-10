@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MyPagerAdapter extends FragmentPagerAdapter {
 
-	final int TAB_NUM = 3;
+	final int TAB_NUM = 4;
 	
 	public MyPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -22,6 +22,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         	return new DriveActivity();
         case 2:
         	return new SensorActivity();
+        case 3:
+        	return new VoiceRecognitionActivity();
 		}
 		return null;
 	}
