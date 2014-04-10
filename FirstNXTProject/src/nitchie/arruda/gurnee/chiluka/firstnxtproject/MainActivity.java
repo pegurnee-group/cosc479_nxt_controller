@@ -15,7 +15,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private MyPagerAdapter myPagerAdapter;
 	private ActionBar myActionBar;
 	
-	private String[] tabs = {"Connect", "Drive"};
+	private String[] tabs = {"Connect", "Drive", "Sensors"};
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         setContentView(R.layout.main_view);
        
         myViewPager = (ViewPager) findViewById(R.id.pager);
-        
+        int a = 5;
         /**
          * on swiping the viewpager make respective tab selected
          * */
@@ -54,6 +54,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         myActionBar.setHomeButtonEnabled(false);
         myActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);  
         
+        // Hide the title bar
         myActionBar.setDisplayShowTitleEnabled(false); 
         myActionBar.setDisplayShowHomeEnabled(false);
         

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MyPagerAdapter extends FragmentPagerAdapter {
 
-	final int TAB_NUM = 2;
+	final int TAB_NUM = 3;
 	
 	public MyPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -17,9 +17,11 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int arg0) {
 		switch (arg0) {
         case 0:
-            return new DriveActivity();
+        	return new ConnectActivity();
         case 1:
-            return new ConnectActivity();
+        	return new DriveActivity();
+        case 2:
+        	return new SensorActivity();
 		}
 		return null;
 	}
