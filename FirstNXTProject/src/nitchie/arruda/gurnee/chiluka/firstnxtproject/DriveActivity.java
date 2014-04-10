@@ -12,6 +12,14 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+/**
+ * PEEPS! Important!
+ * Anytime you would use
+ * <code>findViewById()</code>
+ * use
+ * <code>rootView.findViewById()</code>
+ * instead
+ */
 public class DriveActivity extends Fragment implements OnTouchListener {
 
 	private int drivePower = 40;

@@ -26,6 +26,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * PEEPS! Important!
+ * Anytime you would use
+ * <code>findViewById()</code>
+ * use
+ * <code>rootView.findViewById()</code>
+ * instead
+ */
 public class ConnectActivity extends Fragment implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
@@ -55,6 +63,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	private DeviceData myObject;
 	
 	private View rootView;
+	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
