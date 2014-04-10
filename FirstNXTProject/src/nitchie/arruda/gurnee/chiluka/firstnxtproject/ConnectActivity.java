@@ -54,36 +54,38 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 
 	private DeviceData myObject;
 	
+	private View rootView;
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        View rootView = inflater.inflate(R.layout.connect_view, container, false);
+        rootView = inflater.inflate(R.layout.connect_view, container, false);
         
 //		super.onCreate(savedInstanceState);
 //		this.setContentView(R.layout.connect_view);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 		
-		this.connectButton = (Button) getView().findViewById(R.id.connectButton);
+		this.connectButton = (Button)rootView.findViewById(R.id.connectButton);
 		this.connectButton.setOnClickListener(this);
 		
-		singButton = (Button) getView().findViewById(R.id.singButton);
+		singButton = (Button)rootView.findViewById(R.id.singButton);
 		singButton.setOnClickListener(this);
 		singButton.setVisibility(View.INVISIBLE);
 
 		this.disconnectButton = (Button)
-				getView().findViewById(R.id.disconnectButton);
+				rootView.findViewById(R.id.disconnectButton);
 		this.disconnectButton.setOnClickListener(this);
 		this.disconnectButton.setVisibility(View.GONE);
 
-		this.btImage = (ImageView) getView().findViewById(R.id.imageView1);
+		this.btImage = (ImageView)rootView.findViewById(R.id.imageView1);
 		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 
-		this.statusLabel = (TextView) getView().findViewById(R.id.statusLabel);
+		this.statusLabel = (TextView)rootView.findViewById(R.id.statusLabel);
 		//this.statusLabel.setTextColor(color.primary_text_light);
 
-		this.batteryStatus = (ProgressBar) getView().findViewById(R.id.batteryStatusBar);
+		this.batteryStatus = (ProgressBar)rootView.findViewById(R.id.batteryStatusBar);
 		this.batteryStatus.setIndeterminate(false);
 		this.batteryStatus.setMax(this.BATTERY_MAX);
 		this.batteryStatus.setProgress(this.BATTERY_MIN);
