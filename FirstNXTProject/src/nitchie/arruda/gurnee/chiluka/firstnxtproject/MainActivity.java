@@ -1,5 +1,8 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -15,7 +18,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private MyPagerAdapter myPagerAdapter;
 	private ActionBar myActionBar;
 	
-	private String[] tabs = {"Connect", "Drive", "Sensors"};
+//	private String[] tabs = {"Connect", "Drive", "Sensors"};
+	
+	private Map<String, Integer> tabs;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +28,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
         setContentView(R.layout.main_view);
+        
+        tabs = new HashMap<String, Integer>();
+        tabs.put("Connect", R.drawable.connect_icon);
+        tabs.put("Drive", R.drawable.drive_icon);
+        tabs.put("Sensors", R.drawable.connect_icon);
        
         myViewPager = (ViewPager) findViewById(R.id.pager);
-        int a = 5;
+
         /**
          * on swiping the viewpager make respective tab selected
          * */
@@ -60,8 +70,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         
  
         // Adding Tabs
-        for (String tab_name : tabs) {
-            myActionBar.addTab(myActionBar.newTab().setText(tab_name)
+        
+        for(Map.Entry<String, Integer> entry : tabs.entrySet()) {
+        	myActionBar.addTab(myActionBar.newTab().setText(entry.getKey()).setIcon(entry.getValue())
                     .setTabListener(this));
         }
 

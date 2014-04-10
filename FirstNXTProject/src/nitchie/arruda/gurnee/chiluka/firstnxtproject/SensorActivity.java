@@ -26,11 +26,4 @@ public class SensorActivity extends Fragment {
 		
 		return rootView;
 	}
-	
-	/**
-	 * Anytime you would use
-	 * <code>findViewById()</code>
-	 * use
-	 * <code>
-	 */
 }
