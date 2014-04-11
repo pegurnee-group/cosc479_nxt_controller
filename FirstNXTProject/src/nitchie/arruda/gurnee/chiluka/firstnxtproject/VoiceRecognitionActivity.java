@@ -130,6 +130,27 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 				ArrayList<String> textMatchList = data
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
+				/*
+				 * goForward(): 
+				 *     forward, fwd, come, here, "good idea"
+				 *     commandKey = 'f'
+				 *     
+				 * goBackward():
+				 *     back, backward
+				 *     commandKey = 'b'
+				 *     
+				 * stop():
+				 *     stop, "bad idea"
+				 *     commandKey = 's'
+				 *     
+				 * goLeft():
+				 *     left
+				 *     commandKey = 'l'
+				 *     
+				 * goRight():
+				 *     right, write, rite
+				 *     commandKey = 'r'
+				 */
 				if (!textMatchList.isEmpty()) {
 					// If first Match contains the 'search' word
 					// Then start web search.
