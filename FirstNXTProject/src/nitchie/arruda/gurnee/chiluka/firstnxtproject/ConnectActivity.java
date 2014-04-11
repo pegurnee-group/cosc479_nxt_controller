@@ -26,12 +26,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 /**
  * PEEPS! Important!
  * Anytime you would use
  * <code>findViewById()</code>
  * use
  * <code>rootView.findViewById()</code>
+ * instead
+ * 
+ * Anytime you would use
+ * <code>this</code>
+ * use
+ * <code>getActivity()</code>
  * instead
  */
 public class ConnectActivity extends Fragment implements OnClickListener {

@@ -6,12 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 /**
  * PEEPS! Important!
  * Anytime you would use
  * <code>findViewById()</code>
  * use
  * <code>rootView.findViewById()</code>
+ * instead
+ * 
+ * Anytime you would use
+ * <code>this</code>
+ * use
+ * <code>getActivity()</code>
  * instead
  */
 public class SensorActivity extends Fragment {

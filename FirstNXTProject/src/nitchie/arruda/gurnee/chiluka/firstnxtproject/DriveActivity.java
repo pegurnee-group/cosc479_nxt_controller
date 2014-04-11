@@ -19,6 +19,12 @@ import android.widget.TextView;
  * use
  * <code>rootView.findViewById()</code>
  * instead
+ * 
+ * Anytime you would use
+ * <code>this</code>
+ * use
+ * <code>getActivity()</code>
+ * instead
  */
 public class DriveActivity extends Fragment implements OnTouchListener {
 

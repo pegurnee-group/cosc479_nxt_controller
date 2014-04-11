@@ -28,6 +28,21 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
+/**
+ * PEEPS! Important!
+ * Anytime you would use
+ * <code>findViewById()</code>
+ * use
+ * <code>rootView.findViewById()</code>
+ * instead
+ * 
+ * Anytime you would use
+ * <code>this</code>
+ * use
+ * <code>getActivity()</code>
+ * instead
+ */
 public class VoiceRecognitionActivity extends Fragment implements OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 
@@ -154,8 +169,6 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 	void showToastMessage(String message) {
 		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 	}
-
-
 
 	@Override
 	public void onClick(View v) {
