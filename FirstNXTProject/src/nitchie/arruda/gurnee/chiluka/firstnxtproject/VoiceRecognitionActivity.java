@@ -50,8 +50,13 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 	private ListView mlvTextMatches;
 	private Spinner msTextMatches;
 	private Button mbtSpeak;
+	
+	
 
 	private View rootView;
+	
+	String[] goForward = {"Stuff"};
+	String[] goLeft = {"Stuff"};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +74,6 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		return rootView;
 	}
 	
-	
-
 	public void checkVoiceRecognition() {
 		// Check if voice recognition is present
 		PackageManager pm = getActivity().getPackageManager();
@@ -82,6 +85,14 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 			Toast.makeText(getActivity(), "Voice recognizer not present",
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == this.mbtSpeak.getId()) {
+			this.speak(v);
+		}
+		
 	}
 
 	public void speak(View view) {
@@ -145,6 +156,15 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 						mlvTextMatches.setAdapter(new ArrayAdapter<String>(
 								getActivity(), android.R.layout.simple_list_item_1,
 								textMatchList));
+						
+//						for(String s : goForward) {
+//							if (textMatchList.get(0).toLowerCase().contains(s)) {
+//								onCommand('f');
+//								return;
+//							}
+//						}
+//						
+//						
 					}
 
 				}
@@ -168,13 +188,5 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 	 **/
 	void showToastMessage(String message) {
 		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onClick(View v) {
-		if (v.getId() == this.mbtSpeak.getId()) {
-			this.speak(v);
-		}
-		
 	}
 }
