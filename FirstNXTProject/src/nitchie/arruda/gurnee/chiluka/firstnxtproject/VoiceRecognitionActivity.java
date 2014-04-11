@@ -206,32 +206,15 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 			
 			break;
 			
-			/*
-		// Go Rev
-		case R.id.fwd_btn:
-
-			action = event.getAction();
-			button = (Button) rootView.findViewById(R.id.fwd_btn);
 			
-			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.arrow_up_pressed));
+		// Go Rev
+		case 'S':
 
-				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
-				}
-				this.flag = true;
-
-			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.arrow_up));
-				this.flag = false;
 				MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
 				MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
-			}
+			
 			break;
-
+			/*
 		// Go Right
 		case R.id.rgt_btn:
 
