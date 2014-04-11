@@ -1,16 +1,32 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class DriveActivity extends Activity implements OnTouchListener {
+/**
+ * PEEPS! Important!
+ * Anytime you would use
+ * <code>findViewById()</code>
+ * use
+ * <code>rootView.findViewById()</code>
+ * instead
+ * 
+ * Anytime you would use
+ * <code>this</code>
+ * use
+ * <code>getActivity()</code>
+ * instead
+ */
+public class DriveActivity extends Fragment implements OnTouchListener {
 
 	private int drivePower = 40;
 	private int thirdPower = 40;
@@ -24,39 +40,52 @@ public class DriveActivity extends Activity implements OnTouchListener {
 	private final int OFF_MOTOR = 0x00;
 
 	private DeviceData myObject;
-
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.drive_view);
-
+	
+	private View rootView;
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+		
+		rootView = inflater.inflate(R.layout.drive_view, container, false);
 		this.myObject = (DeviceData) DeviceData.getInstance();
 		this.driveDirections();
+		
+		return rootView;
 	}
+
+//	protected void onCreate(Bundle savedInstanceState) {
+//		super.onCreate(savedInstanceState);
+//		this.setContentView(R.layout.drive_view);
+//
+//		this.myObject = (DeviceData) DeviceData.getInstance();
+//		this.driveDirections();
+//	}
 
 	// Set up Drive View Controls
 	public void driveDirections() {
-		Button goBwd = (Button) findViewById(R.id.bwd_btn);
+		Button goBwd = (Button) rootView.findViewById(R.id.bwd_btn);
 		goBwd.setOnTouchListener(this);
 
-		Button goFwd = (Button) findViewById(R.id.fwd_btn);
+		Button goFwd = (Button) rootView.findViewById(R.id.fwd_btn);
 		goFwd.setOnTouchListener(this);
 
-		Button goRgt = (Button) findViewById(R.id.rgt_btn);
+		Button goRgt = (Button) rootView.findViewById(R.id.rgt_btn);
 		goRgt.setOnTouchListener(this);
 
-		Button goLft = (Button) findViewById(R.id.lft_btn);
+		Button goLft = (Button) rootView.findViewById(R.id.lft_btn);
 		goLft.setOnTouchListener(this);
 
-		Button goThirdLft = (Button) findViewById(R.id.third_lft_btn);
+		Button goThirdLft = (Button) rootView.findViewById(R.id.third_lft_btn);
 		goThirdLft.setOnTouchListener(this);
 
-		Button goThirdRgt = (Button) findViewById(R.id.third_rgt_btn);
+		Button goThirdRgt = (Button) rootView.findViewById(R.id.third_rgt_btn);
 		goThirdRgt.setOnTouchListener(this);
 
-		SeekBar powerSeekBar1 = (SeekBar) findViewById(R.id.seekBar1);
+		SeekBar powerSeekBar1 = (SeekBar) rootView.findViewById(R.id.seekBar1);
 		powerSeekBar1.setProgress(this.drivePower);
 
-		TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
+		TextView powerLabel1 = (TextView) rootView.findViewById(R.id.textViewDrive);
 		powerLabel1.setText("" + this.drivePower);
 
 		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -66,7 +95,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 					boolean fromUser) {
 				DriveActivity.this.drivePower = progress;
 
-				TextView powerLabel1 = (TextView) findViewById(R.id.textViewDrive);
+				TextView powerLabel1 = (TextView) rootView.findViewById(R.id.textViewDrive);
 				powerLabel1.setText("" + DriveActivity.this.drivePower);
 			}
 
@@ -79,10 +108,10 @@ public class DriveActivity extends Activity implements OnTouchListener {
 			}
 		});
 
-		SeekBar powerSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
+		SeekBar powerSeekBar2 = (SeekBar) rootView.findViewById(R.id.seekBar2);
 		powerSeekBar2.setProgress(this.thirdPower);
 
-		TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
+		TextView powerLabel2 = (TextView) rootView.findViewById(R.id.textViewAux);
 		powerLabel2.setText("" + this.thirdPower);
 
 		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -92,7 +121,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 					boolean fromUser) {
 				DriveActivity.this.thirdPower = progress;
 
-				TextView powerLabel2 = (TextView) findViewById(R.id.textViewAux);
+				TextView powerLabel2 = (TextView) rootView.findViewById(R.id.textViewAux);
 				powerLabel2.setText("" + DriveActivity.this.thirdPower);
 			}
 
@@ -118,7 +147,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		// Go Fwd
 		case R.id.bwd_btn:
 			action = event.getAction();
-			button = (Button) findViewById(R.id.bwd_btn);
+			button = (Button) rootView.findViewById(R.id.bwd_btn);
 
 			button.setBackground(getResources().getDrawable(
 					R.drawable.arrow_down_pressed));
@@ -145,7 +174,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		case R.id.fwd_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.fwd_btn);
+			button = (Button) rootView.findViewById(R.id.fwd_btn);
 			
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
@@ -170,7 +199,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		case R.id.rgt_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.rgt_btn);
+			button = (Button) rootView.findViewById(R.id.rgt_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
@@ -194,7 +223,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		case R.id.lft_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.lft_btn);
+			button = (Button) rootView.findViewById(R.id.lft_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
@@ -217,7 +246,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		case R.id.third_lft_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.third_lft_btn);
+			button = (Button) rootView.findViewById(R.id.third_lft_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
@@ -240,7 +269,7 @@ public class DriveActivity extends Activity implements OnTouchListener {
 		case R.id.third_rgt_btn:
 
 			action = event.getAction();
-			button = (Button) findViewById(R.id.third_rgt_btn);
+			button = (Button) rootView.findViewById(R.id.third_rgt_btn);
 
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
