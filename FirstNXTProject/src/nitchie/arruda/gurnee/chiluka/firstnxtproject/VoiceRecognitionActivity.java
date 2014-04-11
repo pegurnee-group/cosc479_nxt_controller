@@ -51,6 +51,10 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 	private ListView mlvTextMatches;
 	private Spinner msTextMatches;
 	private Button mbtSpeak;
+		
+	String[] goForward = {"Stuff"};
+	String[] goLeft = {"Stuff"};
+
 	private boolean flag = false;
 
 	private View rootView;
@@ -82,8 +86,6 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		return rootView;
 	}
 	
-	
-
 	public void checkVoiceRecognition() {
 		// Check if voice recognition is present
 		PackageManager pm = getActivity().getPackageManager();
@@ -179,6 +181,15 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 						mlvTextMatches.setAdapter(new ArrayAdapter<String>(
 								getActivity(), android.R.layout.simple_list_item_1,
 								textMatchList));
+						
+//						for(String s : goForward) {
+//							if (textMatchList.get(0).toLowerCase().contains(s)) {
+//								onCommand('f');
+//								return;
+//							}
+//						}
+//						
+//						
 					}
 
 				}
@@ -211,7 +222,6 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		}
 		
 	}
-	
 	
 	public boolean onCommand(char call) {
 
