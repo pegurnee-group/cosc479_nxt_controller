@@ -135,7 +135,11 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		});
 	}
 
+	
+	
+
 	public boolean onTouch(View view, MotionEvent event) {
+
 		int action;
 		Button button;
 
