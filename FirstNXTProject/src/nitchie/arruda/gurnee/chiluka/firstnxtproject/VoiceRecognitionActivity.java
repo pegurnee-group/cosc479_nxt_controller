@@ -2,7 +2,7 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 /**
  * Taken from:
-http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
+ http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
  */
 
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,44 +29,38 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 /**
- * PEEPS! Important!
- * Anytime you would use
- * <code>findViewById()</code>
- * use
- * <code>rootView.findViewById()</code>
- * instead
+ * PEEPS! Important! Anytime you would use <code>findViewById()</code> use
+ * <code>rootView.findViewById()</code> instead
  * 
- * Anytime you would use
- * <code>this</code>
- * use
- * <code>getActivity()</code>
+ * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class VoiceRecognitionActivity extends Fragment implements OnClickListener {
+public class VoiceRecognitionActivity extends Fragment implements
+		OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
+	private final String TAG = "NXT Project 1";
 
 	private EditText metTextHint;
 	private ListView mlvTextMatches;
 	private Spinner msTextMatches;
 	private Button mbtSpeak;
-		
-	String[] goForward = {"Stuff"};
-	String[] goLeft = {"Stuff"};
+
+	String[] goForward = { "forward", "come" };
+	String[] goLeft = { "Stuff" };
 
 	private boolean flag = false;
 
 	private View rootView;
 	private DeviceData myObject;
-	
+
 	private final int MOTOR_A = 0;
 	private final int MOTOR_B = 1;
 	private final int MOTOR_C = 2;
-	
+
 	private final int ON_MOTOR = 0x20;
 	private final int OFF_MOTOR = 0x00;
-	
+
 	private int drivePower = 40;
 	private int thirdPower = 40;
 
@@ -81,11 +75,12 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		msTextMatches = (Spinner) rootView.findViewById(R.id.sNoOfMatches);
 		mbtSpeak = (Button) rootView.findViewById(R.id.btSpeak);
 		mbtSpeak.setOnClickListener(this);
+		this.myObject = (DeviceData) DeviceData.getInstance();
 		checkVoiceRecognition();
 
 		return rootView;
 	}
-	
+
 	public void checkVoiceRecognition() {
 		// Check if voice recognition is present
 		PackageManager pm = getActivity().getPackageManager();
@@ -146,25 +141,16 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
 				/*
-				 * goForward(): 
-				 *     forward, fwd, come, here, "good idea"
-				 *     commandKey = 'f'
-				 *     
-				 * goBackward():
-				 *     back, backward
-				 *     commandKey = 'b'
-				 *     
-				 * stop():
-				 *     stop, "bad idea"
-				 *     commandKey = 's'
-				 *     
-				 * goLeft():
-				 *     left
-				 *     commandKey = 'l'
-				 *     
-				 * goRight():
-				 *     right, write, rite
-				 *     commandKey = 'r'
+				 * goForward(): forward, fwd, come, here, "good idea" commandKey
+				 * = 'f'
+				 * 
+				 * goBackward(): back, backward commandKey = 'b'
+				 * 
+				 * stop(): stop, "bad idea" commandKey = 's'
+				 * 
+				 * goLeft(): left commandKey = 'l'
+				 * 
+				 * goRight(): right, write, rite commandKey = 'r'
 				 */
 				if (!textMatchList.isEmpty()) {
 					// If first Match contains the 'search' word
@@ -179,17 +165,22 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 					} else {
 						// populate the Matches
 						mlvTextMatches.setAdapter(new ArrayAdapter<String>(
-								getActivity(), android.R.layout.simple_list_item_1,
+								getActivity(),
+								android.R.layout.simple_list_item_1,
 								textMatchList));
-						
-//						for(String s : goForward) {
-//							if (textMatchList.get(0).toLowerCase().contains(s)) {
-//								onCommand('f');
-//								return;
-//							}
-//						}
-//						
-//						
+
+						Log.i(TAG, "Driving forward");
+						onCommand('F');
+
+						// for(String s : goForward) {
+						// if
+						// (textMatchList.get(0).toLowerCase(Locale.US).contains(s))
+						// {
+						// onCommand('f');
+						// return;
+						// }
+						// }
+
 					}
 
 				}
@@ -220,130 +211,111 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		if (v.getId() == this.mbtSpeak.getId()) {
 			this.speak(v);
 		}
-		
+
 	}
-	
+
 	public boolean onCommand(char call) {
 
 		int action;
 		Button button;
 
+		Log.i(TAG, "In onCommand()");
+
 		switch (call) {
 		// Go Fwd
 		case 'F':
-				
-					MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
-			
+			Log.i(TAG, "In case \"F\"");
+			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
+
 			break;
-			
-			
+
 		// Go Rev
 		case 'S':
 
-				MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
-			
+			MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
+			MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
+
 			break;
-			/*
-		// Go Right
-		case R.id.rgt_btn:
-
-			action = event.getAction();
-			button = (Button) rootView.findViewById(R.id.rgt_btn);
-
-			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.arrow_right_pressed));
-				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
-				}
-				this.flag = true;
-
-			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.arrow_right));
-				this.flag = false;
-				MoveMotor(this.MOTOR_A, -this.drivePower, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
-			}
-			break;
-
-		// Go Left
-		case R.id.lft_btn:
-
-			action = event.getAction();
-			button = (Button) rootView.findViewById(R.id.lft_btn);
-
-			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.arrow_left_pressed));
-				if (this.flag == false) {
-					MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
-					MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
-				}
-				this.flag = true;
-
-			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.arrow_left));
-				this.flag = false;
-				MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, -this.drivePower, this.OFF_MOTOR);
-			}
-			break;
-
-		case R.id.third_lft_btn:
-
-			action = event.getAction();
-			button = (Button) rootView.findViewById(R.id.third_lft_btn);
-
-			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.backward_pressed));
-				if (this.flag == false) {
-					MoveMotor(this.MOTOR_C, -this.thirdPower, this.ON_MOTOR);
-
-				}
-				this.flag = true;
-
-			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.backward));
-				this.flag = false;
-				MoveMotor(this.MOTOR_C, -this.thirdPower, this.OFF_MOTOR);
-
-			}
-			break;
-
-		case R.id.third_rgt_btn:
-
-			action = event.getAction();
-			button = (Button) rootView.findViewById(R.id.third_rgt_btn);
-
-			if (action == MotionEvent.ACTION_DOWN) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.forward_pressed));
-				if (this.flag == false) {
-					MoveMotor(this.MOTOR_C, this.thirdPower, this.ON_MOTOR);
-				}
-				this.flag = true;
-
-			} else if ((action == MotionEvent.ACTION_UP)) {
-				button.setBackground(getResources().getDrawable(
-						R.drawable.forward));
-				this.flag = false;
-				MoveMotor(this.MOTOR_C, this.thirdPower, this.OFF_MOTOR);
-			}
-			break;
-*/
+		/*
+		 * // Go Right case R.id.rgt_btn:
+		 * 
+		 * action = event.getAction(); button = (Button)
+		 * rootView.findViewById(R.id.rgt_btn);
+		 * 
+		 * if (action == MotionEvent.ACTION_DOWN) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.arrow_right_pressed)); if (this.flag == false) {
+		 * MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
+		 * MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR); } this.flag
+		 * = true;
+		 * 
+		 * } else if ((action == MotionEvent.ACTION_UP)) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.arrow_right)); this.flag = false; MoveMotor(this.MOTOR_A,
+		 * -this.drivePower, this.OFF_MOTOR); MoveMotor(this.MOTOR_B,
+		 * this.drivePower, this.OFF_MOTOR); } break;
+		 * 
+		 * // Go Left case R.id.lft_btn:
+		 * 
+		 * action = event.getAction(); button = (Button)
+		 * rootView.findViewById(R.id.lft_btn);
+		 * 
+		 * if (action == MotionEvent.ACTION_DOWN) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.arrow_left_pressed)); if (this.flag == false) {
+		 * MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+		 * MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR); } this.flag
+		 * = true;
+		 * 
+		 * } else if ((action == MotionEvent.ACTION_UP)) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.arrow_left)); this.flag = false; MoveMotor(this.MOTOR_A,
+		 * this.drivePower, this.OFF_MOTOR); MoveMotor(this.MOTOR_B,
+		 * -this.drivePower, this.OFF_MOTOR); } break;
+		 * 
+		 * case R.id.third_lft_btn:
+		 * 
+		 * action = event.getAction(); button = (Button)
+		 * rootView.findViewById(R.id.third_lft_btn);
+		 * 
+		 * if (action == MotionEvent.ACTION_DOWN) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.backward_pressed)); if (this.flag == false) {
+		 * MoveMotor(this.MOTOR_C, -this.thirdPower, this.ON_MOTOR);
+		 * 
+		 * } this.flag = true;
+		 * 
+		 * } else if ((action == MotionEvent.ACTION_UP)) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.backward)); this.flag = false; MoveMotor(this.MOTOR_C,
+		 * -this.thirdPower, this.OFF_MOTOR);
+		 * 
+		 * } break;
+		 * 
+		 * case R.id.third_rgt_btn:
+		 * 
+		 * action = event.getAction(); button = (Button)
+		 * rootView.findViewById(R.id.third_rgt_btn);
+		 * 
+		 * if (action == MotionEvent.ACTION_DOWN) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.forward_pressed)); if (this.flag == false) {
+		 * MoveMotor(this.MOTOR_C, this.thirdPower, this.ON_MOTOR); } this.flag
+		 * = true;
+		 * 
+		 * } else if ((action == MotionEvent.ACTION_UP)) {
+		 * button.setBackground(getResources().getDrawable(
+		 * R.drawable.forward)); this.flag = false; MoveMotor(this.MOTOR_C,
+		 * this.thirdPower, this.OFF_MOTOR); } break;
+		 */
 		}
 		return true;
 
 	}
 
 	private void MoveMotor(int motor, int speed, int state) {
+		Log.i(TAG, "Moving Motor");
 		try {
 			byte[] buffer = new byte[15];
 
