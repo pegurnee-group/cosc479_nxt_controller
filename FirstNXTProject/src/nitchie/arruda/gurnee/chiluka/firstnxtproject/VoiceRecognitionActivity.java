@@ -7,10 +7,9 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -37,7 +36,6 @@ import android.widget.Toast;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-@SuppressLint("DefaultLocale")
 public class VoiceRecognitionActivity extends Fragment implements
 		OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
@@ -68,7 +66,6 @@ public class VoiceRecognitionActivity extends Fragment implements
 	private final int OFF_MOTOR = 0x00;
 
 	private int drivePower = 45;
-	private int thirdPower = 45;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,105 +144,81 @@ public class VoiceRecognitionActivity extends Fragment implements
 				ArrayList<String> textMatchList = data
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-				/*
-				 * goForward(): forward, fwd, come, here, "good idea" commandKey
-				 * = 'f'
-				 * 
-				 * goBackward(): back, backward commandKey = 'b'
-				 * 
-				 * stop(): stop, "bad idea" commandKey = 's'
-				 * 
-				 * goLeft(): left commandKey = 'l'
-				 * 
-				 * goRight(): right, write, rite commandKey = 'r'
-				 */
 				if (!textMatchList.isEmpty()) {
-					// If first Match contains the 'search' word
-					// Then start web search.
-					if (textMatchList.get(0).contains("search")) {
+					// populate the Matches
+					mlvTextMatches.setAdapter(new ArrayAdapter<String>(
+							getActivity(), android.R.layout.simple_list_item_1,
+							textMatchList));
 
-						String searchQuery = textMatchList.get(0);
-						searchQuery = searchQuery.replace("search", "");
-						Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
-						search.putExtra(SearchManager.QUERY, searchQuery);
-						startActivity(search);
-					} else {
-						// populate the Matches
-						mlvTextMatches.setAdapter(new ArrayAdapter<String>(
-								getActivity(),
-								android.R.layout.simple_list_item_1,
-								textMatchList));
-
-						for (String s : stop) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Stopping");
-								onCommand('s');
-								return;
-							}
+					for (String s : stop) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Stopping");
+							onCommand('s');
+							return;
 						}
+					}
 
-						for (String s : goForward) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Going Forward");
-								onCommand('f');
-								return;
-							}
+					for (String s : goForward) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Going Forward");
+							onCommand('f');
+							return;
 						}
+					}
 
-						for (String s : this.goBack) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Going backwards");
-								onCommand('b');
-								return;
-							}
+					for (String s : this.goBack) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Going backwards");
+							onCommand('b');
+							return;
 						}
+					}
 
-						for (String s : this.goLeft) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Turning Left");
-								onCommand('l');
-								return;
-							}
+					for (String s : this.goLeft) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Turning Left");
+							onCommand('l');
+							return;
 						}
+					}
 
-						for (String s : this.goRight) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Turning Right");
-								onCommand('r');
-								return;
-							}
+					for (String s : this.goRight) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Turning Right");
+							onCommand('r');
+							return;
 						}
+					}
 
-						for (String s : this.armForward) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Arm forward");
-								onCommand('F');
-								return;
-							}
+					for (String s : this.armForward) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Arm forward");
+							onCommand('F');
+							return;
 						}
+					}
 
-						for (String s : this.armBack) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Arm backwards");
-								onCommand('R');
-								return;
-							}
+					for (String s : this.armBack) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Arm backwards");
+							onCommand('R');
+							return;
 						}
+					}
 
-						for (String s : this.armBack) {
-							if (textMatchList.get(0).toLowerCase()
-									.contains(s.toLowerCase())) {
-								Log.i(TAG, "Arm stop");
-								onCommand('S');
-								return;
-							}
+					for (String s : this.armStop) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Arm stop");
+							onCommand('S');
+							return;
 						}
 					}
 				}
