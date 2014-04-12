@@ -7,7 +7,8 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Locale;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import android.widget.Toast;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
+@SuppressLint("DefaultLocale")
 public class VoiceRecognitionActivity extends Fragment implements
 		OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
@@ -47,7 +49,13 @@ public class VoiceRecognitionActivity extends Fragment implements
 	private Button mbtSpeak;
 
 	String[] goForward = { "forward", "come" };
-	String[] goLeft = { "Stuff" };
+	String[] goLeft = { "left" };
+	String[] goRight = { "right" };
+	String[] goBack = { "reverse" };
+	String[] stop = { "stop" };
+	String[] armForward = { "swing" };
+	String[] armBack = { "bunt" };
+	String[] armStop = { "out" };
 
 	private View rootView;
 	private DeviceData myObject;
@@ -59,8 +67,8 @@ public class VoiceRecognitionActivity extends Fragment implements
 	private final int ON_MOTOR = 0x20;
 	private final int OFF_MOTOR = 0x00;
 
-	private int drivePower = 40;
-	private int thirdPower = 40;
+	private int drivePower = 45;
+	private int thirdPower = 45;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,6 +136,7 @@ public class VoiceRecognitionActivity extends Fragment implements
 		startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
 	}
 
+	@SuppressLint("DefaultLocale")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == VOICE_RECOGNITION_REQUEST_CODE)
@@ -167,20 +176,78 @@ public class VoiceRecognitionActivity extends Fragment implements
 								android.R.layout.simple_list_item_1,
 								textMatchList));
 
-						Log.i(TAG, "Driving forward");
-						onCommand('F');
+						for (String s : stop) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Stopping");
+								onCommand('s');
+								return;
+							}
+						}
 
-						// for(String s : goForward) {
-						// if
-						// (textMatchList.get(0).toLowerCase(Locale.US).contains(s))
-						// {
-						// onCommand('f');
-						// return;
-						// }
-						// }
+						for (String s : goForward) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Going Forward");
+								onCommand('f');
+								return;
+							}
+						}
 
+						for (String s : this.goBack) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Going backwards");
+								onCommand('b');
+								return;
+							}
+						}
+
+						for (String s : this.goLeft) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Turning Left");
+								onCommand('l');
+								return;
+							}
+						}
+
+						for (String s : this.goRight) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Turning Right");
+								onCommand('r');
+								return;
+							}
+						}
+
+						for (String s : this.armForward) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Arm forward");
+								onCommand('F');
+								return;
+							}
+						}
+
+						for (String s : this.armBack) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Arm backwards");
+								onCommand('R');
+								return;
+							}
+						}
+
+						for (String s : this.armBack) {
+							if (textMatchList.get(0).toLowerCase()
+									.contains(s.toLowerCase())) {
+								Log.i(TAG, "Arm stop");
+								onCommand('S');
+								return;
+							}
+						}
 					}
-
 				}
 				// Result code for various error.
 			} else if (resultCode == RecognizerIntent.RESULT_AUDIO_ERROR) {
@@ -224,15 +291,15 @@ public class VoiceRecognitionActivity extends Fragment implements
 		switch (myDir) {
 		// Go Fwd
 		case 'f':
-			MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
-			MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
 
 			break;
 
 		// Go Bwd
 		case 'b':
-			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
-			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
 
 			break;
 
@@ -275,14 +342,12 @@ public class VoiceRecognitionActivity extends Fragment implements
 
 			break;
 		}
-
 	}
 
 	/*
 	 * Drive the Robot
 	 */
 	private void MoveMotor(int motor, int speed, int state) {
-		Log.i(TAG, "Moving Motor");
 		try {
 			byte[] buffer = new byte[15];
 
