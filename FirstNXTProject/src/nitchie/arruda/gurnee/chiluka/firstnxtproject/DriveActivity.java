@@ -4,7 +4,6 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -159,6 +158,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		String defSpeedFlag = (preferences.getString("sp", "false"));
 		if(defSpeedFlag.equals("true"))
 			drivePower = 100;
+		else
+			drivePower = 75;
 		
 		switch (view.getId()) {
 		// Go Fwd

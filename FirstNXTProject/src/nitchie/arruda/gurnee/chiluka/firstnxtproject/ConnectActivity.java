@@ -174,6 +174,8 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		String getBattFlag = (preferences.getString("bt", "false"));
 		if(getBattFlag.equals("true"))
 			batteryPollInterval = 60000;
+		else
+			batteryPollInterval = 60000; //Default battery level..?
 		this.mpollBattery(this.batteryPollInterval);
 		
 		Log.i(TAG, "Connected with " + this.bd.getName());
