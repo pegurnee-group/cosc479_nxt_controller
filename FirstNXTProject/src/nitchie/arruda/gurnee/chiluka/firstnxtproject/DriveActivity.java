@@ -53,7 +53,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		String defSpeedFlag = (preferences.getString("sp", "false"));
 		if (defSpeedFlag.equals("true"))
 			drivePower = 100;
-		
+		else
+			this.drivePower = 75;
 		Log.e("Def Speed",""+drivePower);
 		this.driveDirections();
 
