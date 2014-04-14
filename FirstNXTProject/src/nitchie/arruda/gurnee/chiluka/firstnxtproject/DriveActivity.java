@@ -1,6 +1,9 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,8 +31,8 @@ import android.widget.TextView;
  */
 public class DriveActivity extends Fragment implements OnTouchListener {
 
-	private int drivePower = 40;
-	private int thirdPower = 40;
+	private int drivePower = 75;
+	private int thirdPower = 75;
 	private boolean flag = false;
 	
 	private final int MOTOR_A = 0;
@@ -43,13 +46,20 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 	
 	private View rootView;
 	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
 		rootView = inflater.inflate(R.layout.drive_view, container, false);
+
 		this.myObject = (DeviceData) DeviceData.getInstance();
 		this.driveDirections();
+		
+		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
+		String defSpeedFlag = (preferences.getString("sp", "false"));
+		if(defSpeedFlag.equals("true"))
+			drivePower = 100;
 		
 		return rootView;
 	}

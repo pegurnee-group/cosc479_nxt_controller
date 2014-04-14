@@ -36,5 +36,15 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+    <string name="aboutapp">About App</string>
+    <string name="preference">Preference</string>
+    <string name="Pref1">Polling Settings</string>
+    <string name="Pref2">Servo Setting</string>
+    <string name="pref_cb1_title">Battery Level</string>
+    <string name="pref_cb2_title">Default Speed</string>
+    <string name="pref_list_title">Time Interval</string>
+    <string name="version">Version ID: 1.0.3</string>
+    <string name="prodId">Product ID:  000-123-528-XCA1</string>
+    <string name="copyright">copyright © 2014 MANEIt Software, Inc.</string>
 
 </resources>
