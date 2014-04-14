@@ -7,8 +7,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,12 +72,30 @@ public class AccelerometerActivity extends Fragment implements
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-
+		/*
+		float[] data = Arrays.copyOf(event.values, event.values.length);
+		Arrays.sort(data);
+		
+		if ((int)event.values[0] == (int)event.values[1] && (int)event.values[1] == (int)event.values[2]) {
+			
+		}
+		if (event.values[0] > event.values[1]) {
+			if (event.values[0] > event.values[2]) {
+				
+			}
+		} else {
+			
+		}
 		String msg = String.format(
 				"X: %8.4f\nY: %8.4f\nZ: %8.4f\nRotation: %d", event.values[0],
 				event.values[1], event.values[2], mRotation);
 		text.setText(msg);
 		text.invalidate();
+		*/
+		Log.e("gx", "" + event.values[0]);
+		Log.e("gy", "" + event.values[1]);
+		Log.e("gz", "" + event.values[2]);
+		
 	}
 
 	/**
