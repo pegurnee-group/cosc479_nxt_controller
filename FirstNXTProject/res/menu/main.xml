@@ -5,14 +5,14 @@
 
     <item
         android:id="@+id/preference"
+        android:icon="@drawable/preference"
         android:orderInCategory="100"
-        android:title="@string/preference"
-        android:icon="@drawable/preference"/>
-
-<item
+        android:title="@string/preference"/>
+    <item
         android:id="@+id/aboutapp"
+        android:icon="@drawable/aboutapp"
         android:orderInCategory="100"
-        android:title="@string/aboutapp"
-        android:icon="@drawable/aboutapp">
-</item>
+        android:title="@string/aboutapp">
+    </item>
+
 </menu>
