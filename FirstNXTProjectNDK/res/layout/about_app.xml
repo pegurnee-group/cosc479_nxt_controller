@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:text="NXT Project"
+        android:background="#07000000"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="center"
+         android:focusable="false"
+        android:textColor="@color/NiceButtonEndColor"
+        android:inputType="textNoSuggestions" >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:contentDescription="@string/none"
+        android:src="@drawable/aboutapp_large" />
+
+    <EditText
+        android:id="@+id/prodId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/logoImg"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:gravity="center"
+        android:text="@string/prodId"
+        android:textColor="@color/NiceButtonEndColor"
+        android:background="#07000000"
+        android:textColorHint="@color/NiceButtonEndColor"
+         android:focusable="false"
+        android:inputType="textNoSuggestions" />
+
+    <EditText
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/prodId"
+        android:ems="10"
+        android:background="#07000000"
+        android:gravity="center"
+        android:text="@string/version"
+        android:textColor="@color/NiceButtonEndColor"
+        android:textColorHint="@color/NiceButtonEndColor"
+         android:focusable="false"
+        android:inputType="textNoSuggestions" />
+
+    <EditText
+        android:id="@+id/copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/version"
+        android:layout_marginTop="5dp"
+        android:background="#07000000"
+        android:ems="10"
+        android:text="@string/copyright"
+        android:textColor="@color/NiceButtonEndColor"
+        android:textColorHint="@color/NiceButtonEndColor"
+        android:gravity="center"
+         android:focusable="false"
+        android:inputType="textNoSuggestions" />
+
+    <EditText
+        android:id="@+id/details"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/copyright"
+        android:layout_marginTop="38dp"
+        android:background="#07000000"
+   	    android:textColor="@color/NiceButtonEndColor"
+        android:textColorHint="@color/NiceButtonEndColor"
+        android:focusable="false"
+        android:gravity="center"
+	   android:singleLine="false"
+	   />
+
+</RelativeLayout>
