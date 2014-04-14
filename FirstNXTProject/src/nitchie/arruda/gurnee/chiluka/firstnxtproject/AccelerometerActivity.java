@@ -1,7 +1,6 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.support.v4.app.Fragment;
 
 public class AccelerometerActivity extends Fragment implements
 		SensorEventListener {
@@ -73,29 +73,50 @@ public class AccelerometerActivity extends Fragment implements
 
 	public void onSensorChanged(SensorEvent event) {
 		/*
-		float[] data = Arrays.copyOf(event.values, event.values.length);
-		Arrays.sort(data);
-		
-		if ((int)event.values[0] == (int)event.values[1] && (int)event.values[1] == (int)event.values[2]) {
-			
-		}
-		if (event.values[0] > event.values[1]) {
-			if (event.values[0] > event.values[2]) {
-				
+		 * float[] data = Arrays.copyOf(event.values, event.values.length);
+		 * Arrays.sort(data);
+		 * 
+		 * if ((int)event.values[0] == (int)event.values[1] &&
+		 * (int)event.values[1] == (int)event.values[2]) {
+		 * 
+		 * } if (event.values[0] > event.values[1]) { if (event.values[0] >
+		 * event.values[2]) {
+		 * 
+		 * } } else {
+		 * 
+		 * } String msg = String.format(
+		 * "X: %8.4f\nY: %8.4f\nZ: %8.4f\nRotation: %d", event.values[0],
+		 * event.values[1], event.values[2], mRotation); text.setText(msg);
+		 * text.invalidate();
+		 */
+		if (Math.abs(event.values[0]) > 1) {
+			if (event.values[0] > 0) {
+				Log.e("gx", "positive");
+				this.onCommand('f');
+			} else {
+				Log.e("gx", "negative");
+				this.onCommand('b');
+			}
+		} else if (Math.abs(event.values[1]) > 1) {
+			if (event.values[1] > 0) {
+				Log.e("gy", "positive");
+				this.onCommand('r');
+			} else {
+				Log.e("gy", "negative");
+				this.onCommand('l');
+			}
+		} else if (Math.abs(event.values[2] - 9.2) > 1) {
+			if (event.values[2] > 0) {
+				Log.e("gz", "positive");
+				this.onCommand('F');
+			} else {
+				Log.e("gz", "negative");
+				this.onCommand('R');
 			}
 		} else {
-			
+			this.onCommand('s');
+			this.onCommand('S');
 		}
-		String msg = String.format(
-				"X: %8.4f\nY: %8.4f\nZ: %8.4f\nRotation: %d", event.values[0],
-				event.values[1], event.values[2], mRotation);
-		text.setText(msg);
-		text.invalidate();
-		*/
-		Log.e("gx", "" + event.values[0]);
-		Log.e("gy", "" + event.values[1]);
-		Log.e("gz", "" + event.values[2]);
-		
 	}
 
 	/**
