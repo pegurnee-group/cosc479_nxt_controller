@@ -29,19 +29,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 /**
- * PEEPS! Important!
- * Anytime you would use
- * <code>findViewById()</code>
- * use
- * <code>rootView.findViewById()</code>
- * instead
+ * PEEPS! Important! Anytime you would use <code>findViewById()</code> use
+ * <code>rootView.findViewById()</code> instead
  * 
- * Anytime you would use
- * <code>this</code>
- * use
- * <code>getActivity()</code>
+ * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
 public class ConnectActivity extends Fragment implements OnClickListener {
@@ -60,7 +52,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	private TextView statusLabel;
 	private ProgressBar batteryStatus;
 	private Button singButton;
-	
+
 	// Bluetooth Variables
 	private BluetoothDevice bd;
 	private BluetoothSocket socket;
@@ -71,52 +63,52 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	private final int PICK_BLUETOOTH_ID = 1;
 
 	private DeviceData myObject;
-	
+
 	private View rootView;
-	
-	//default poll?
+
+	// default poll?
 	private int batteryPollInterval = 60000;
 	private Timer mBatteryTimer;
-	
+
 	private boolean nxtConnected = false;
-	
-	
+
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
- 
-        rootView = inflater.inflate(R.layout.connect_view, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		rootView = inflater.inflate(R.layout.connect_view, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
-		
-		this.connectButton = (Button)rootView.findViewById(R.id.connectButton);
+
+		this.connectButton = (Button) rootView.findViewById(R.id.connectButton);
 		this.connectButton.setOnClickListener(this);
-		
-		singButton = (Button)rootView.findViewById(R.id.singButton);
+
+		singButton = (Button) rootView.findViewById(R.id.singButton);
 		singButton.setOnClickListener(this);
 		singButton.setVisibility(View.INVISIBLE);
 
-		this.disconnectButton = (Button)
-				rootView.findViewById(R.id.disconnectButton);
+		this.disconnectButton = (Button) rootView
+				.findViewById(R.id.disconnectButton);
 		this.disconnectButton.setOnClickListener(this);
 		this.disconnectButton.setVisibility(View.GONE);
 
-		this.btImage = (ImageView)rootView.findViewById(R.id.imageView1);
+		this.btImage = (ImageView) rootView.findViewById(R.id.imageView1);
 		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 
-		this.statusLabel = (TextView)rootView.findViewById(R.id.statusLabel);
-		//this.statusLabel.setTextColor(color.primary_text_light);
+		this.statusLabel = (TextView) rootView.findViewById(R.id.statusLabel);
+		// this.statusLabel.setTextColor(color.primary_text_light);
 
-		this.batteryStatus = (ProgressBar)rootView.findViewById(R.id.batteryStatusBar);
+		this.batteryStatus = (ProgressBar) rootView
+				.findViewById(R.id.batteryStatusBar);
 		this.batteryStatus.setIndeterminate(false);
 		this.batteryStatus.setMax(this.BATTERY_MAX);
 		this.batteryStatus.setProgress(this.BATTERY_MIN);
-		
+
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
-         
-        return rootView;
-    }
-	
+
+		return rootView;
+	}
+
 	private void mpollBattery(int interval) {
 		final ConnectActivity current = this;
 		mBatteryTimer = new Timer();
@@ -139,8 +131,8 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		} catch (IOException e) {
 			Log.e(TAG,
 					"Error interacting with remote device -> " + e.getMessage());
-			Toast.makeText(getActivity(), "Yikes! That didn't work.", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getActivity(), "Yikes! That didn't work.",
+					Toast.LENGTH_LONG).show();
 			return;
 		}
 
@@ -155,29 +147,33 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 			this.is = null;
 			this.os = null;
 			this.disconnectNXT(null);
-			Toast.makeText(getActivity(), "You crossed the streams!", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getActivity(), "You crossed the streams!",
+					Toast.LENGTH_LONG).show();
 			return;
 		}
 
 		this.connectButton.setVisibility(View.GONE);
 		this.disconnectButton.setVisibility(View.VISIBLE);
-		
-//		this.setBatteryMeter(this.getBatteryLevel());
+
+		// this.setBatteryMeter(this.getBatteryLevel());
 		this.btImage.setImageAlpha(this.IMAGE_OPAQUE);
-		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
-		this.statusLabel.setTextColor(this.getResources().getColor(color.holo_orange_light));
+		this.statusLabel.setText(this.getResources().getString(
+				R.string.nxtConnected)
+				+ bd.getName());
+		this.statusLabel.setTextColor(this.getResources().getColor(
+				color.holo_orange_light));
 		this.nxtConnected = true;
-		
-		//Check for preference for drive power
-		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
+
+		// Check for preference for drive power
+		SharedPreferences preferences = this.getActivity()
+				.getSharedPreferences("GetPrefs", 0);
 		String getBattFlag = (preferences.getString("bt", "false"));
-		if(getBattFlag.equals("true"))
+		if (getBattFlag.equals("true"))
 			batteryPollInterval = 60000;
 		else
 			batteryPollInterval = 60000; //Default battery level..?
 		this.mpollBattery(this.batteryPollInterval);
-		
+
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
 
@@ -199,7 +195,8 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 		this.statusLabel.setText(R.string.nxtDisconnected);
 		this.batteryStatus.setProgress(this.BATTERY_MIN);
-		this.statusLabel.setTextColor(this.getResources().getColor(color.white));
+		this.statusLabel
+				.setTextColor(this.getResources().getColor(color.white));
 		this.singButton.setVisibility(View.INVISIBLE);
 		this.nxtConnected = false;
 	}
@@ -270,14 +267,16 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 		case (R.id.connectButton):
 			if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
 				builder.setMessage(
 						"Your Bluetooth is not enabled, would you like to enable it now?")
 						.setPositiveButton("Yes", new DialogClickListener())
 						.setNegativeButton("No", new DialogClickListener())
 						.show();
 			} else {
-				Intent i = new Intent(getActivity(), PopupActivity.class);
+				Intent i = new Intent(getActivity(),
+						SelectBluetoothDeviceActivity.class);
 				this.startActivityForResult(i, PICK_BLUETOOTH_ID);
 			}
 			break;
