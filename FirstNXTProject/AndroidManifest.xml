@@ -38,7 +38,7 @@
           <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetails_Activity" >
         </activity>
         <activity
-            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.PopupActivity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectBluetoothDeviceActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog" >
         </activity>

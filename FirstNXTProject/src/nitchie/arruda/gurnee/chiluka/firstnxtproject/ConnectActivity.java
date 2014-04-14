@@ -275,7 +275,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 						.setNegativeButton("No", new DialogClickListener())
 						.show();
 			} else {
-				Intent i = new Intent(getActivity(), PopupActivity.class);
+				Intent i = new Intent(getActivity(), SelectBluetoothDeviceActivity.class);
 				this.startActivityForResult(i, PICK_BLUETOOTH_ID);
 			}
 			break;
