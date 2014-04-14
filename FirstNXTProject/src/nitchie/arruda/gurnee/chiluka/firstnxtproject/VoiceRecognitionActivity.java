@@ -2,20 +2,21 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 /**
  * Taken from:
-http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
+ http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
  */
 
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,45 +29,43 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 /**
- * PEEPS! Important!
- * Anytime you would use
- * <code>findViewById()</code>
- * use
- * <code>rootView.findViewById()</code>
- * instead
+ * PEEPS! Important! Anytime you would use <code>findViewById()</code> use
+ * <code>rootView.findViewById()</code> instead
  * 
- * Anytime you would use
- * <code>this</code>
- * use
- * <code>getActivity()</code>
+ * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class VoiceRecognitionActivity extends Fragment implements OnClickListener {
+public class VoiceRecognitionActivity extends Fragment implements
+		OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
+	private final String TAG = "NXT Project 1";
 
 	private EditText metTextHint;
 	private ListView mlvTextMatches;
 	private Spinner msTextMatches;
 	private Button mbtSpeak;
-		
-	String[] goForward = {"Stuff"};
-	String[] goLeft = {"Stuff"};
 
+	String[] goForward = { "forward", "come" };
+	String[] goLeft = { "left" };
+	String[] goRight = { "right" };
+	String[] goBack = { "reverse" };
+	String[] stop = { "stop" };
+	String[] armForward = { "swing" };
+	String[] armBack = { "bunt" };
+	String[] armStop = { "out" };
 
 	private View rootView;
 	private DeviceData myObject;
-	
+
 	private final int MOTOR_A = 0;
 	private final int MOTOR_B = 1;
 	private final int MOTOR_C = 2;
-	
+
 	private final int ON_MOTOR = 0x20;
 	private final int OFF_MOTOR = 0x00;
-	
-	private int drivePower = 40;
-	private int thirdPower = 40;
+
+	private int drivePower = 45;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,11 +78,12 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		msTextMatches = (Spinner) rootView.findViewById(R.id.sNoOfMatches);
 		mbtSpeak = (Button) rootView.findViewById(R.id.btSpeak);
 		mbtSpeak.setOnClickListener(this);
+		this.myObject = (DeviceData) DeviceData.getInstance();
 		checkVoiceRecognition();
 
 		return rootView;
 	}
-	
+
 	public void checkVoiceRecognition() {
 		// Check if voice recognition is present
 		PackageManager pm = getActivity().getPackageManager();
@@ -133,6 +133,7 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
 	}
 
+	@SuppressLint("DefaultLocale")
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == VOICE_RECOGNITION_REQUEST_CODE)
@@ -143,53 +144,83 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 				ArrayList<String> textMatchList = data
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-				/*
-				 * goForward(): 
-				 *     forward, fwd, come, here, "good idea"
-				 *     commandKey = 'f'
-				 *     
-				 * goBackward():
-				 *     back, backward
-				 *     commandKey = 'b'
-				 *     
-				 * stop():
-				 *     stop, "bad idea"
-				 *     commandKey = 's'
-				 *     
-				 * goLeft():
-				 *     left
-				 *     commandKey = 'l'
-				 *     
-				 * goRight():
-				 *     right, write, rite
-				 *     commandKey = 'r'
-				 */
 				if (!textMatchList.isEmpty()) {
-					// If first Match contains the 'search' word
-					// Then start web search.
-					if (textMatchList.get(0).contains("search")) {
+					// populate the Matches
+					mlvTextMatches.setAdapter(new ArrayAdapter<String>(
+							getActivity(), android.R.layout.simple_list_item_1,
+							textMatchList));
 
-						String searchQuery = textMatchList.get(0);
-						searchQuery = searchQuery.replace("search", "");
-						Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
-						search.putExtra(SearchManager.QUERY, searchQuery);
-						startActivity(search);
-					} else {
-						// populate the Matches
-						mlvTextMatches.setAdapter(new ArrayAdapter<String>(
-								getActivity(), android.R.layout.simple_list_item_1,
-								textMatchList));
-						
-//						for(String s : goForward) {
-//							if (textMatchList.get(0).toLowerCase().contains(s)) {
-//								onCommand('f');
-//								return;
-//							}
-//						}
-//						
-//						
+					for (String s : stop) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Stopping");
+							onCommand('s');
+							return;
+						}
 					}
 
+					for (String s : goForward) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Going Forward");
+							onCommand('f');
+							return;
+						}
+					}
+
+					for (String s : this.goBack) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Going backwards");
+							onCommand('b');
+							return;
+						}
+					}
+
+					for (String s : this.goLeft) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Turning Left");
+							onCommand('l');
+							return;
+						}
+					}
+
+					for (String s : this.goRight) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Turning Right");
+							onCommand('r');
+							return;
+						}
+					}
+
+					for (String s : this.armForward) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Arm forward");
+							onCommand('F');
+							return;
+						}
+					}
+
+					for (String s : this.armBack) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Arm backwards");
+							onCommand('R');
+							return;
+						}
+					}
+
+					for (String s : this.armStop) {
+						if (textMatchList.get(0).toLowerCase()
+								.contains(s.toLowerCase())) {
+							Log.i(TAG, "Arm stop");
+							onCommand('S');
+							return;
+						}
+					}
 				}
 				// Result code for various error.
 			} else if (resultCode == RecognizerIntent.RESULT_AUDIO_ERROR) {
@@ -218,73 +249,72 @@ public class VoiceRecognitionActivity extends Fragment implements OnClickListene
 		if (v.getId() == this.mbtSpeak.getId()) {
 			this.speak(v);
 		}
-		
+
 	}
 
 	/**
 	 * Get the command
+	 * 
 	 * @param call
 	 */
 	public void onCommand(char call) {
 
 		char myDir = call;
-		
+
 		switch (myDir) {
 		// Go Fwd
 		case 'f':
-				MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
-				MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
-			
+			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
+
 			break;
-		
+
 		// Go Bwd
 		case 'b':
-				MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
-				MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
-						
+			MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
+
 			break;
-			
+
 		// Go Right
 		case 'r':
-				MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
-				MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
-				
+			MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
+
 			break;
-		
+
 		// Go Left
 		case 'l':
-				MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
-				MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
-			
+			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
+			MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
+
 			break;
-		
+
 		// Stop!
 		case 's':
-				MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
-				MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
-						
+			MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
+			MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
+
 			break;
-			
+
 		// Motor 3 Fwd
 		case 'F':
-				MoveMotor(this.MOTOR_C, -this.drivePower, this.ON_MOTOR);
-							
+			MoveMotor(this.MOTOR_C, -this.drivePower, this.ON_MOTOR);
+
 			break;
-						
+
 		// Motor3 Rev
 		case 'R':
-				MoveMotor(this.MOTOR_C, this.drivePower, this.ON_MOTOR);
-							
-			break;	
-			
+			MoveMotor(this.MOTOR_C, this.drivePower, this.ON_MOTOR);
+
+			break;
+
 		// Stop Motor 3!
 		case 'S':
-				MoveMotor(this.MOTOR_C, this.drivePower, this.OFF_MOTOR);
-											
-			break;
-				
-		}
+			MoveMotor(this.MOTOR_C, this.drivePower, this.OFF_MOTOR);
 
+			break;
+		}
 	}
 
 	/*

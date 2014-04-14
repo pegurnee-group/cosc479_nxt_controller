@@ -3,6 +3,8 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import android.R.color;
@@ -71,15 +73,17 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	
 	private View rootView;
 	
+	private int batteryPollInterval = 60000;
+	private Timer mBatteryTimer;
+	
+	private boolean nxtConnected = false;
+	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
         rootView = inflater.inflate(R.layout.connect_view, container, false);
-        
-//		super.onCreate(savedInstanceState);
-//		this.setContentView(R.layout.connect_view);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 		
@@ -111,38 +115,17 @@ public class ConnectActivity extends Fragment implements OnClickListener {
         return rootView;
     }
 	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		this.setContentView(R.layout.connect_view);
-//
-//		this.myObject = (DeviceData) DeviceData.getInstance();
-//		
-//		this.connectButton = (Button) this.findViewById(R.id.connectButton);
-//		this.connectButton.setOnClickListener(this);
-//		
-//		singButton = (Button) findViewById(R.id.singButton);
-//		singButton.setOnClickListener(this);
-//		singButton.setVisibility(View.INVISIBLE);
-//
-//		this.disconnectButton = (Button) this
-//				.findViewById(R.id.disconnectButton);
-//		this.disconnectButton.setOnClickListener(this);
-//		this.disconnectButton.setVisibility(View.GONE);
-//
-//		this.btImage = (ImageView) findViewById(R.id.imageView1);
-//		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
-//
-//		this.statusLabel = (TextView) findViewById(R.id.statusLabel);
-//		//this.statusLabel.setTextColor(color.primary_text_light);
-//
-//		this.batteryStatus = (ProgressBar) findViewById(R.id.batteryStatusBar);
-//		this.batteryStatus.setIndeterminate(false);
-//		this.batteryStatus.setMax(this.BATTERY_MAX);
-//		this.batteryStatus.setProgress(this.BATTERY_MIN);
-//		
-//		this.batteryStatus.setOnClickListener(this); // for battery level reset
-//	}
+	private void mpollBattery(int interval) {
+		final ConnectActivity current = this;
+		mBatteryTimer = new Timer();
+		mBatteryTimer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				if (nxtConnected) {
+					current.setBatteryMeter(current.getBatteryLevel());
+				}
+			}
+		}, 0, interval);
+	}
 
 	public void connectToDevice() {
 		try {
@@ -178,10 +161,12 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.connectButton.setVisibility(View.GONE);
 		this.disconnectButton.setVisibility(View.VISIBLE);
 		
-		this.setBatteryMeter(this.getBatteryLevel());
+//		this.setBatteryMeter(this.getBatteryLevel());
 		this.btImage.setImageAlpha(this.IMAGE_OPAQUE);
 		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
 		this.statusLabel.setTextColor(this.getResources().getColor(color.holo_orange_light));
+		this.nxtConnected = true;
+		this.mpollBattery(this.batteryPollInterval);
 
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
@@ -206,6 +191,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.batteryStatus.setProgress(this.BATTERY_MIN);
 		this.statusLabel.setTextColor(this.getResources().getColor(color.white));
 		this.singButton.setVisibility(View.INVISIBLE);
+		this.nxtConnected = false;
 	}
 
 	private int getBatteryLevel() {
@@ -247,8 +233,6 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICK_BLUETOOTH_ID) {
-			// TODO: Was simply RESULT_OK before refactoring to swipe
-			// Check that Activity.RESULT_OK is the same value
 			if (resultCode == Activity.RESULT_OK) {
 				this.connectToDevice();
 			}
@@ -324,8 +308,5 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		double batteryLevel = voltage / this.MAX_MILLI_VOLTS;
 		int batteryProgress = (int) (batteryLevel * 100);
 		this.batteryStatus.setProgress(batteryProgress);
-
-		Toast.makeText(getActivity(), "Battery level at " + batteryProgress + "%",
-				Toast.LENGTH_LONG).show();
 	}
 }
