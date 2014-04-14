@@ -1,5 +1,6 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -153,6 +154,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		switch (view.getId()) {
 		// Go bwd
 		case R.id.bwd_btn:
+			/*
 			action = event.getAction();
 			button = (Button) rootView.findViewById(R.id.bwd_btn);
 
@@ -176,6 +178,10 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 				MoveMotor(this.MOTOR_A, -this.drivePower, this.OFF_MOTOR);
 				MoveMotor(this.MOTOR_B, -this.drivePower, this.OFF_MOTOR);
 			}
+			*/
+			Intent i = new Intent(getActivity(),
+					AccelerometerActivity.class);
+			this.startActivity(i);
 			break;
 		// Go fwd
 		case R.id.fwd_btn:
