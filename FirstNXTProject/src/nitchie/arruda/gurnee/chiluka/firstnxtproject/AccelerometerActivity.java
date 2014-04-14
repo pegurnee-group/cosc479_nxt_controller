@@ -92,18 +92,18 @@ public class AccelerometerActivity extends Fragment implements
 		if (Math.abs(event.values[0]) > 1) {
 			if (event.values[0] > 0) {
 				Log.e("gx", "positive");
-				this.onCommand('f');
+				this.onCommand('r');
 			} else {
 				Log.e("gx", "negative");
-				this.onCommand('b');
+				this.onCommand('l');
 			}
 		} else if (Math.abs(event.values[1]) > 1) {
 			if (event.values[1] > 0) {
 				Log.e("gy", "positive");
-				this.onCommand('r');
+				this.onCommand('f');
 			} else {
 				Log.e("gy", "negative");
-				this.onCommand('l');
+				this.onCommand('b');
 			}
 		} else if (Math.abs(event.values[2] - 9.2) > 1) {
 			if (event.values[2] > 0) {
