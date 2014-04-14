@@ -45,7 +45,6 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		rootView = inflater.inflate(R.layout.drive_view, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
-		
 
 		// Check for preference for drive power
 		SharedPreferences preferences = this.getActivity()
@@ -55,7 +54,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 			drivePower = 100;
 		else
 			this.drivePower = 75;
-		Log.e("Def Speed",""+drivePower);
+		Log.e("Def Speed", "" + drivePower);
 		this.driveDirections();
 
 		return rootView;
@@ -150,8 +149,6 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 
 		int action;
 		Button button;
-
-		
 
 		switch (view.getId()) {
 		// Go Fwd
