@@ -118,12 +118,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		 if(requestCode == PREF_ID){
 	            SharedPreferences myPref = getSharedPreferences("GetPrefs", MODE_PRIVATE);
-	            String batteryFlag = (myPref.getString("bt", "false"));
-	            String defSpeedFlag = (myPref.getString("sp", "false"));
-	            String timeIntravel = (myPref.getString("updates_interval", "0"));
-	            System.out.println("batteryFlag status::"+batteryFlag);
-	            System.out.println("defSpeedFlag status::"+defSpeedFlag);
-	        	System.out.println("timeIntravel----"+timeIntravel);
+	            //String batteryFlag = (myPref.getString("bt", "false"));
+	            //String defSpeedFlag = (myPref.getString("sp", "false"));
+	            //String timeIntravel = (myPref.getString("updates_interval", "0"));
+	            //System.out.println("batteryFlag status::"+batteryFlag);
+	            //System.out.println("defSpeedFlag status::"+defSpeedFlag);
+	        	//System.out.println("timeIntravel----"+timeIntravel);
 	 
 	       }	
 		 super.onActivityResult(requestCode, resultCode, data);

@@ -15,6 +15,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -73,6 +74,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	
 	private View rootView;
 	
+	//default poll?
 	private int batteryPollInterval = 60000;
 	private Timer mBatteryTimer;
 	
@@ -166,8 +168,15 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.statusLabel.setText(this.getResources().getString(R.string.nxtConnected) + bd.getName());
 		this.statusLabel.setTextColor(this.getResources().getColor(color.holo_orange_light));
 		this.nxtConnected = true;
+		
+		//Check for preference for drive power
+		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
+		String getBattFlag = (preferences.getString("bt", "false"));
+		if(getBattFlag.equals("true"))
+			batteryPollInterval = 60000;
 		this.mpollBattery(this.batteryPollInterval);
-
+		
+		System.out.println("defSpeedFlag status::"+getBattFlag);
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
 

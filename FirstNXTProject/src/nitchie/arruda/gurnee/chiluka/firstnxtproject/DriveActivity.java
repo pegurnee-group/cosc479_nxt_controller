@@ -1,9 +1,8 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import android.app.ActionBar;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -56,10 +55,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		this.myObject = (DeviceData) DeviceData.getInstance();
 		this.driveDirections();
 		
-		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
-		String defSpeedFlag = (preferences.getString("sp", "false"));
-		if(defSpeedFlag.equals("true"))
-			drivePower = 100;
+		
 		
 		return rootView;
 	}
@@ -152,6 +148,14 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 
 		int action;
 		Button button;
+		
+		//Check for preference for drive power
+		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
+		String defSpeedFlag = (preferences.getString("sp", "false"));
+		if(defSpeedFlag.equals("true"))
+			drivePower = 100;
+		
+		System.out.println("defSpeedFlag status::"+defSpeedFlag);
 
 		switch (view.getId()) {
 		// Go Fwd

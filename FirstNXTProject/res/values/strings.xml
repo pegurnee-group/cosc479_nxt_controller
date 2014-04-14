@@ -12,6 +12,8 @@
     <string name="nxtConnected">Connected to NXT\n </string>
     <string name="defaultBatteryStatus">Battery level:</string>
     <string name="sing">Sing!</string>
+    <string name="none">""</string>
+    <string name="drive">Drive power:</string>
     
     
     <!-- 
