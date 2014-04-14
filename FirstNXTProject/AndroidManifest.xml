@@ -32,6 +32,8 @@
         </activity>
         <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.DriveActivity" >
         </activity>
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AccelerometerActivity" >
+        </activity>
         <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetails_Activity" >
         </activity>
         <activity
