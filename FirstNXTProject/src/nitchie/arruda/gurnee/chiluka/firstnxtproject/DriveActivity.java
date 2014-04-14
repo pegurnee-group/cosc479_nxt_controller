@@ -1,6 +1,5 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,17 +14,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 /**
- * PEEPS! Important!
- * Anytime you would use
- * <code>findViewById()</code>
- * use
- * <code>rootView.findViewById()</code>
- * instead
+ * PEEPS! Important! Anytime you would use <code>findViewById()</code> use
+ * <code>rootView.findViewById()</code> instead
  * 
- * Anytime you would use
- * <code>this</code>
- * use
- * <code>getActivity()</code>
+ * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
 public class DriveActivity extends Fragment implements OnTouchListener {
@@ -33,44 +25,44 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 	private int drivePower = 75;
 	private int thirdPower = 75;
 	private boolean flag = false;
-	
+
 	private final int MOTOR_A = 0;
 	private final int MOTOR_B = 1;
 	private final int MOTOR_C = 2;
-	
+
 	private final int ON_MOTOR = 0x20;
 	private final int OFF_MOTOR = 0x00;
 
 	private DeviceData myObject;
-	
+
 	private View rootView;
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-		
+			Bundle savedInstanceState) {
+
 		rootView = inflater.inflate(R.layout.drive_view, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 		this.driveDirections();
-		
-		//Check for preference for drive power
-		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
+
+		// Check for preference for drive power
+		SharedPreferences preferences = this.getActivity()
+				.getSharedPreferences("GetPrefs", 0);
 		String defSpeedFlag = (preferences.getString("sp", "false"));
-		if(defSpeedFlag.equals("true"))
+		if (defSpeedFlag.equals("true"))
 			drivePower = 100;
-		
+
 		return rootView;
 	}
 
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		this.setContentView(R.layout.drive_view);
-//
-//		this.myObject = (DeviceData) DeviceData.getInstance();
-//		this.driveDirections();
-//	}
+	// protected void onCreate(Bundle savedInstanceState) {
+	// super.onCreate(savedInstanceState);
+	// this.setContentView(R.layout.drive_view);
+	//
+	// this.myObject = (DeviceData) DeviceData.getInstance();
+	// this.driveDirections();
+	// }
 
 	// Set up Drive View Controls
 	public void driveDirections() {
@@ -95,7 +87,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		SeekBar powerSeekBar1 = (SeekBar) rootView.findViewById(R.id.seekBar1);
 		powerSeekBar1.setProgress(this.drivePower);
 
-		TextView powerLabel1 = (TextView) rootView.findViewById(R.id.textViewDrive);
+		TextView powerLabel1 = (TextView) rootView
+				.findViewById(R.id.textViewDrive);
 		powerLabel1.setText("" + this.drivePower);
 
 		powerSeekBar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -105,7 +98,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 					boolean fromUser) {
 				DriveActivity.this.drivePower = progress;
 
-				TextView powerLabel1 = (TextView) rootView.findViewById(R.id.textViewDrive);
+				TextView powerLabel1 = (TextView) rootView
+						.findViewById(R.id.textViewDrive);
 				powerLabel1.setText("" + DriveActivity.this.drivePower);
 			}
 
@@ -121,7 +115,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		SeekBar powerSeekBar2 = (SeekBar) rootView.findViewById(R.id.seekBar2);
 		powerSeekBar2.setProgress(this.thirdPower);
 
-		TextView powerLabel2 = (TextView) rootView.findViewById(R.id.textViewAux);
+		TextView powerLabel2 = (TextView) rootView
+				.findViewById(R.id.textViewAux);
 		powerLabel2.setText("" + this.thirdPower);
 
 		powerSeekBar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -131,7 +126,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 					boolean fromUser) {
 				DriveActivity.this.thirdPower = progress;
 
-				TextView powerLabel2 = (TextView) rootView.findViewById(R.id.textViewAux);
+				TextView powerLabel2 = (TextView) rootView
+						.findViewById(R.id.textViewAux);
 				powerLabel2.setText("" + DriveActivity.this.thirdPower);
 			}
 
@@ -145,20 +141,20 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		});
 	}
 
-	
-	
-
 	public boolean onTouch(View view, MotionEvent event) {
 
 		int action;
 		Button button;
-		
-		//Check for preference for drive power
-		SharedPreferences preferences = this.getActivity().getSharedPreferences("GetPrefs",0);
+
+		// Check for preference for drive power
+		SharedPreferences preferences = this.getActivity()
+				.getSharedPreferences("GetPrefs", 0);
 		String defSpeedFlag = (preferences.getString("sp", "false"));
-		if(defSpeedFlag.equals("true"))
+		if (defSpeedFlag.equals("true"))
 			drivePower = 100;
-		
+		else
+			drivePower = 75;
+
 		switch (view.getId()) {
 		// Go Fwd
 		case R.id.bwd_btn:
@@ -167,7 +163,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 
 			button.setBackground(getResources().getDrawable(
 					R.drawable.arrow_down_pressed));
-			
+
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_down_pressed));
@@ -191,7 +187,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 
 			action = event.getAction();
 			button = (Button) rootView.findViewById(R.id.fwd_btn);
-			
+
 			if (action == MotionEvent.ACTION_DOWN) {
 				button.setBackground(getResources().getDrawable(
 						R.drawable.arrow_up_pressed));
