@@ -41,7 +41,7 @@ public class AccelerometerActivity extends Fragment implements
 
 		WindowManager window = (WindowManager) somethingNew
 				.getSystemService(Context.WINDOW_SERVICE);
-		mRotation = window.getDefaultDisplay().getRotation();
+		this.mRotation = window.getDefaultDisplay().getRotation();
 
 		return rootView;
 	}
