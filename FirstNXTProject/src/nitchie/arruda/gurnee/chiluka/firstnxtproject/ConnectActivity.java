@@ -176,7 +176,6 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 			batteryPollInterval = 60000;
 		this.mpollBattery(this.batteryPollInterval);
 		
-		System.out.println("defSpeedFlag status::"+getBattFlag);
 		Log.i(TAG, "Connected with " + this.bd.getName());
 	}
 
