@@ -18,14 +18,14 @@ import android.widget.TextView;
 public class AccelerometerActivity extends Fragment implements
 		SensorEventListener {
 
-	private View rootView;
-	private DeviceData myObject;
-
 	private SensorManager mgr;
 	private Sensor accelerometer;
 	private TextView text;
 	private int mRotation;
-	
+
+	private View rootView;
+	private DeviceData myObject;
+
 	private final int MOTOR_A = 0;
 	private final int MOTOR_B = 1;
 	private final int MOTOR_C = 2;
@@ -72,14 +72,14 @@ public class AccelerometerActivity extends Fragment implements
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		
+
 		String msg = String.format(
 				"X: %8.4f\nY: %8.4f\nZ: %8.4f\nRotation: %d", event.values[0],
 				event.values[1], event.values[2], mRotation);
 		text.setText(msg);
 		text.invalidate();
 	}
-	
+
 	/**
 	 * Get the command
 	 * 
@@ -94,53 +94,45 @@ public class AccelerometerActivity extends Fragment implements
 		case 'f':
 			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
 			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
-
 			break;
 
 		// Go Bwd
 		case 'b':
 			MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
 			MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
-
 			break;
 
 		// Go Right
 		case 'r':
 			MoveMotor(this.MOTOR_A, -this.drivePower, this.ON_MOTOR);
 			MoveMotor(this.MOTOR_B, this.drivePower, this.ON_MOTOR);
-
 			break;
 
 		// Go Left
 		case 'l':
 			MoveMotor(this.MOTOR_A, this.drivePower, this.ON_MOTOR);
 			MoveMotor(this.MOTOR_B, -this.drivePower, this.ON_MOTOR);
-
 			break;
 
 		// Stop!
 		case 's':
 			MoveMotor(this.MOTOR_A, this.drivePower, this.OFF_MOTOR);
 			MoveMotor(this.MOTOR_B, this.drivePower, this.OFF_MOTOR);
-
 			break;
 
 		// Motor 3 Fwd
 		case 'F':
 			MoveMotor(this.MOTOR_C, -this.drivePower, this.ON_MOTOR);
-
 			break;
 
 		// Motor3 Rev
 		case 'R':
 			MoveMotor(this.MOTOR_C, this.drivePower, this.ON_MOTOR);
-
 			break;
 
 		// Stop Motor 3!
 		case 'S':
 			MoveMotor(this.MOTOR_C, this.drivePower, this.OFF_MOTOR);
-
 			break;
 		}
 	}
