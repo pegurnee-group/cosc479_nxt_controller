@@ -41,13 +41,7 @@ public class AccelerometerActivity extends Fragment implements
 
 		WindowManager window = (WindowManager) somethingNew
 				.getSystemService(Context.WINDOW_SERVICE);
-		int apiLevel = Integer.parseInt(Build.VERSION.SDK);
-
-		if (apiLevel < 8) {
-			mRotation = window.getDefaultDisplay().getOrientation();
-		} else {
-			mRotation = window.getDefaultDisplay().getRotation();
-		}
+		mRotation = window.getDefaultDisplay().getRotation();
 
 		return rootView;
 	}
