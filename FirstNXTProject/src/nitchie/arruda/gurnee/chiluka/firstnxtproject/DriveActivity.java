@@ -151,7 +151,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		Button button;
 
 		switch (view.getId()) {
-		// Go Fwd
+		// Go bwd
 		case R.id.bwd_btn:
 			action = event.getAction();
 			button = (Button) rootView.findViewById(R.id.bwd_btn);
@@ -177,7 +177,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 				MoveMotor(this.MOTOR_B, -this.drivePower, this.OFF_MOTOR);
 			}
 			break;
-		// Go Rev
+		// Go fwd
 		case R.id.fwd_btn:
 
 			action = event.getAction();
