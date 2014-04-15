@@ -5,7 +5,6 @@ import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -30,7 +29,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
 		setContentView(R.layout.main_view);
@@ -77,14 +76,6 @@ public class MainActivity extends FragmentActivity implements
 			myActionBar.addTab(myActionBar.newTab().setText(tabs[i])
 					.setIcon(icons[i]).setTabListener(this));
 		}
-
-		/*
-		for (String s : tabs) {
-			myActionBar.addTab(myActionBar.newTab().setText(s)
-					.setTabListener(this));
-		}
-		*/
-
 	}
 
 	@Override
