@@ -10,7 +10,6 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 	
 	public MyPagerAdapter(FragmentManager fm) {
 		super(fm);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -34,7 +33,6 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return TAB_NUM;
 	}
 }
