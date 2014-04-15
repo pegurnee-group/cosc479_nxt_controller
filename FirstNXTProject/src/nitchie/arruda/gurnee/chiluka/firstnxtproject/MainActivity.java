@@ -25,7 +25,7 @@ public class MainActivity extends FragmentActivity implements
 			"Accel" };
 	private int[] icons = { R.drawable.icon_connect, R.drawable.icon_drive,
 			R.drawable.icon_sensors, R.drawable.icon_voice,
-			R.drawable.icon_gyro, R.drawable.icon_gyro };
+			R.drawable.icon_gyro, R.drawable.icon_accel };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

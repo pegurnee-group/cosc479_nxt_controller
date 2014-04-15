@@ -46,11 +46,11 @@ public class VoiceRecognitionActivity extends Fragment implements
 	private Spinner msTextMatches;
 	private Button mbtSpeak;
 
-	String[] goForward = { "forward", "come" };
-	String[] goLeft = { "left" };
-	String[] goRight = { "right" };
-	String[] goBack = { "reverse" };
-	String[] stop = { "stop" };
+	String[] goForward = { "forward", "come", "start" };
+	String[] goLeft = { "left", "port" };
+	String[] goRight = { "right", "starboard" };
+	String[] goBack = { "reverse", "back" };
+	String[] stop = { "stop", "calm", "bad" };
 	String[] armForward = { "swing" };
 	String[] armBack = { "bunt" };
 	String[] armStop = { "out" };
