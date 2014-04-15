@@ -58,13 +58,17 @@ public class AccelerometerActivity extends Fragment implements
 				.getSystemService(Context.WINDOW_SERVICE);
 		this.mRotation = window.getDefaultDisplay().getRotation();
 
-		this.accelButton = (Button) this.rootView.findViewById(R.id.accelBtn);
+//		this.accelButton = (Button) this.rootView.findViewById(R.id.accelBtn);
 
 		return rootView;
 	}
 
+	/*
+	 * Deleted button in Accelerometer view... do we need this method?
+	 */
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
+		/*
 		switch (view.getId()) {
 		case R.id.accelBtn:
 			int action = event.getAction();
@@ -103,6 +107,7 @@ public class AccelerometerActivity extends Fragment implements
 			}
 			break;
 		}
+		*/
 		return true;
 	}
 
@@ -155,9 +160,6 @@ public class AccelerometerActivity extends Fragment implements
 					this.onCommand('R');
 				}
 			} else {
-				this.onCommand('s');
-				this.onCommand('S');
-				
 				//i call her any
 				new Runnable() {
 
@@ -172,6 +174,9 @@ public class AccelerometerActivity extends Fragment implements
 						}
 					}
 				};
+				
+				this.onCommand('s');
+				this.onCommand('S');
 			}
 		}
 	}

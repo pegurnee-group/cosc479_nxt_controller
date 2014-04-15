@@ -92,7 +92,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.disconnectButton.setOnClickListener(this);
 		this.disconnectButton.setVisibility(View.GONE);
 
-		this.btImage = (ImageView) rootView.findViewById(R.id.imageView1);
+		this.btImage = (ImageView) rootView.findViewById(R.id.sensor_image);
 		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 
 		this.statusLabel = (TextView) rootView.findViewById(R.id.statusLabel);

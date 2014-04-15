@@ -136,7 +136,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/list_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bluetooth device is connected or whatever"

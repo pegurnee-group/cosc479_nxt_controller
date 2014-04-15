@@ -2,13 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="bottom"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/textView1"
+    
+    <ListView
+        android:id="@+id/sensor_listView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="THAR BE SENSARS!!11!"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_height="360dp"
+        android:background="@android:color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button_reset_sensors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_sensors" />
+
+        <Button
+            android:id="@+id/button_reset_servos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_servos" />
+
+    </LinearLayout>
 
 </LinearLayout>
