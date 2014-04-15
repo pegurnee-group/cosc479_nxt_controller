@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SelectBluetoothDeviceActivity extends ListActivity {
+public class SelectBluetoothDevicePopupActivity extends ListActivity {
 	private BluetoothDevice[] devices;
 	private DeviceData myObject;
 

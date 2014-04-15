@@ -276,7 +276,7 @@ public class ConnectFragment extends Fragment implements OnClickListener {
 						.show();
 			} else {
 				Intent i = new Intent(getActivity(),
-						SelectBluetoothDeviceActivity.class);
+						SelectBluetoothDevicePopupActivity.class);
 				this.startActivityForResult(i, PICK_BLUETOOTH_ID);
 			}
 			break;
