@@ -1,8 +1,10 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,7 +46,6 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		rootView = inflater.inflate(R.layout.drive_view, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
-		this.driveDirections();
 
 		// Check for preference for drive power
 		SharedPreferences preferences = this.getActivity()
@@ -52,6 +53,10 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		String defSpeedFlag = (preferences.getString("sp", "false"));
 		if (defSpeedFlag.equals("true"))
 			drivePower = 100;
+		else
+			this.drivePower = 75;
+		Log.e("Def Speed", "" + drivePower);
+		this.driveDirections();
 
 		return rootView;
 	}
@@ -146,17 +151,8 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 		int action;
 		Button button;
 
-		// Check for preference for drive power
-		SharedPreferences preferences = this.getActivity()
-				.getSharedPreferences("GetPrefs", 0);
-		String defSpeedFlag = (preferences.getString("sp", "false"));
-		if (defSpeedFlag.equals("true"))
-			drivePower = 100;
-		else
-			drivePower = 75;
-
 		switch (view.getId()) {
-		// Go Fwd
+		// Go bwd
 		case R.id.bwd_btn:
 			action = event.getAction();
 			button = (Button) rootView.findViewById(R.id.bwd_btn);
@@ -182,7 +178,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 				MoveMotor(this.MOTOR_B, -this.drivePower, this.OFF_MOTOR);
 			}
 			break;
-		// Go Rev
+		// Go fwd
 		case R.id.fwd_btn:
 
 			action = event.getAction();
