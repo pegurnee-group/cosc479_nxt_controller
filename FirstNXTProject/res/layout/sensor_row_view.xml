@@ -7,26 +7,27 @@
     android:orientation="horizontal" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:id="@+id/list_number"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
         android:paddingLeft="@dimen/control_label_margin"
         android:paddingRight="@dimen/control_label_margin"
-        android:text="1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/sensor_image"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/sensor_distance" />
+        android:maxLevel="0"
+        android:src="@drawable/sensor_image_selector" />
 
     <Switch
-        android:id="@+id/switch1"
-        android:layout_width="fill_parent"
+        android:id="@+id/sensor_switch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
-        android:padding="@dimen/control_label_margin"
+        android:paddingLeft="@dimen/sensor_switch_padding"
         android:textOff="@string/poll_switch_label"
         android:textOn="@string/stop_switch_label" />
 
