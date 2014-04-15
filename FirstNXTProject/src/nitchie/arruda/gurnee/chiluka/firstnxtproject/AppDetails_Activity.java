@@ -17,8 +17,8 @@ public class AppDetails_Activity extends Activity {
 			EditText mytext = (EditText) findViewById(R.id.details);
 
 			mytext.setText("Product Design: 	COSC479/Group3\nProduct Engineering: Michael Nitchie,\t\t\t\t\t" +
-					"		updated by: Eddie Gurnee\nUI Design: Nicole Arruda,\n"+
-					"				updated by: Anjana Chiluka");
+					"		updated by: Eddie Gurnee\nUI Design: Anjana Chiluka,\n"+
+					"				updated by: Nicole Arruda");
 
 		}
 
