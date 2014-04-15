@@ -123,73 +123,55 @@ public class AccelerometerActivity extends Fragment implements
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		/*
-		 * float[] data = Arrays.copyOf(event.values, event.values.length);
-		 * Arrays.sort(data);
-		 * 
-		 * if ((int)event.values[0] == (int)event.values[1] &&
-		 * (int)event.values[1] == (int)event.values[2]) {
-		 * 
-		 * } if (event.values[0] > event.values[1]) { if (event.values[0] >
-		 * event.values[2]) {
-		 * 
-		 * } } else {
-		 * 
-		 * } String msg = String.format(
-		 * "X: %8.4f\nY: %8.4f\nZ: %8.4f\nRotation: %d", event.values[0],
-		 * event.values[1], event.values[2], mRotation); text.setText(msg);
-		 * text.invalidate();
-		 */
-		
-		/*
-		event.values[2] -= 9.2;
-		for (int i = 0; i < event.values.length; i++) {
-			if (Math.abs(event.values[this.direction]) < Math.abs(event.values[i])) {
-				this.direction = i;
-			}
-		}
-		if (event.values[this.direction] > 0) {
-			this.forward = true;
-		} else {
-			this.forward = false;
-		}
-		*/
-		
 
 		Log.e("gx", "" + event.values[0]);
 		Log.e("gy", "" + event.values[1]);
 		Log.e("gz", "" + event.values[2]);
 		
-		
-		if (Math.abs(event.values[0]) > 1) {
-			if (event.values[0] > 0) {
-				Log.e("gx", "positive");
-				this.onCommand('r');
+		if (this.enabled) {
+			if (Math.abs(event.values[0]) > 1) {
+				if (event.values[0] > 0) {
+					Log.e("gx", "positive");
+					this.onCommand('r');
+
+				} else {
+					Log.e("gx", "negative");
+					this.onCommand('l');
+				}
+			} else if (Math.abs(event.values[1]) > 1) {
+				if (event.values[1] > 0) {
+					Log.e("gy", "positive");
+					this.onCommand('f');
+				} else {
+					Log.e("gy", "negative");
+					this.onCommand('b');
+				}
+			} else if (Math.abs(event.values[2]) - 9.2 > 1) {
+				if (event.values[2] > 0) {
+					Log.e("gz", "positive");
+					this.onCommand('F');
+				} else {
+					Log.e("gz", "negative");
+					this.onCommand('R');
+				}
 			} else {
-				Log.e("gx", "negative");
-				this.onCommand('l');
+				this.onCommand('s');
+				this.onCommand('S');
+				new Runnable() {
+
+					@Override
+					public void run() {
+						AccelerometerActivity.this.enabled = false;
+						try {
+							Thread.sleep(500);
+							AccelerometerActivity.this.enabled = true;
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				};
 			}
-		} else if (Math.abs(event.values[1]) > 1) {
-			if (event.values[1] > 0) {
-				Log.e("gy", "positive");
-				this.onCommand('f');
-			} else {
-				Log.e("gy", "negative");
-				this.onCommand('b');
-			}
-		} else if (Math.abs(event.values[2]) - 9.2 > 1) {
-			if (event.values[2] > 0) {
-				Log.e("gz", "positive");
-				this.onCommand('F');
-			} else {
-				Log.e("gz", "negative");
-				this.onCommand('R');
-			}
-		} else {
-			this.onCommand('s');
-			this.onCommand('S');
 		}
-		
 	}
 
 	/**
@@ -246,15 +228,6 @@ public class AccelerometerActivity extends Fragment implements
 		case 'S':
 			MoveMotor(this.MOTOR_C, this.drivePower, this.OFF_MOTOR);
 			break;
-		}
-		
-		if (call != 's' && call != 'S') {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
