@@ -87,12 +87,10 @@ public class MainActivity extends FragmentActivity implements
 	   		@Override 
 	   		public void onReceive(Context context,Intent intent) {
 	   			if (intent.getAction().equals("android.bluetooth.device.action.ACL_CONNECTED")) {
-	       			////handleConnected();
 	  			}
 	   			if (intent.getAction().equals("android.bluetooth.device.action.ACL_DISCONNECTED")) {
 	       			////handleDisconnected();
 	   				ConnectFragment connect = (ConnectFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + myViewPager.getCurrentItem());
-//	   				ConnectFragment connect = (ConnectFragment) getSupportFragmentManager().findFragmentById(R.id.connect_view_layout);
 	   				connect.disconnectNXT(null);
 	   			}
 			}
