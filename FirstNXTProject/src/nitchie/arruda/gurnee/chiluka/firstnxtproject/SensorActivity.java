@@ -106,6 +106,7 @@ public class SensorActivity extends Fragment {
 		NXTExtensionAdapter theAdapter = new NXTExtensionAdapter(
 				this.getActivity(), R.layout.sensor_row_view, this.extensions);
 
+		
 		ListView theList = (ListView) this.rootView
 				.findViewById(R.id.sensor_listView);
 		theList.setAdapter(theAdapter);
