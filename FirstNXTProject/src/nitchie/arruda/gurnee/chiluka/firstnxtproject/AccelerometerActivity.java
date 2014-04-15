@@ -155,6 +155,11 @@ public class AccelerometerActivity extends Fragment implements
 		}
 		*/
 		
+
+		Log.e("gx", "" + event.values[0]);
+		Log.e("gy", "" + event.values[1]);
+		Log.e("gz", "" + event.values[2]);
+		
 		
 		if (Math.abs(event.values[0]) > 1) {
 			if (event.values[0] > 0) {
