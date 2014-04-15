@@ -7,20 +7,22 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.support.v4.app.Fragment;
+import android.widget.Button;
 
 public class AccelerometerActivity extends Fragment implements
-		SensorEventListener {
+		SensorEventListener, OnTouchListener {
 
 	private SensorManager mgr;
 	private Sensor accelerometer;
-	private TextView text;
+	private Button accelButton;
 	private int mRotation;
 
 	private View rootView;
@@ -33,7 +35,11 @@ public class AccelerometerActivity extends Fragment implements
 	private final int ON_MOTOR = 0x20;
 	private final int OFF_MOTOR = 0x00;
 
-	private int drivePower = 45;
+	private boolean enabled;
+	private boolean forward;
+	private int direction;
+
+	private int drivePower = 75;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +58,52 @@ public class AccelerometerActivity extends Fragment implements
 				.getSystemService(Context.WINDOW_SERVICE);
 		this.mRotation = window.getDefaultDisplay().getRotation();
 
+		this.accelButton = (Button) this.rootView.findViewById(R.id.accelBtn);
+
 		return rootView;
+	}
+
+	@Override
+	public boolean onTouch(View view, MotionEvent event) {
+		switch (view.getId()) {
+		case R.id.accelBtn:
+			int action = event.getAction();
+			if (action == MotionEvent.ACTION_DOWN) {
+				if (this.enabled == false) {
+					switch (this.direction) {
+					case 0:
+						if (this.forward) {
+							this.onCommand('r');
+						} else {
+							this.onCommand('l');
+						}
+						break;
+					case 1:
+						if (this.forward) {
+							this.onCommand('f');
+						} else {
+							this.onCommand('b');
+						}
+						break;
+					case 2:
+						if (this.forward) {
+							this.onCommand('F');
+						} else {
+							this.onCommand('R');
+						}
+						break;
+					}
+				}
+				this.enabled = true;
+
+			} else if ((action == MotionEvent.ACTION_UP)) {
+				this.enabled = false;
+				this.onCommand('s');
+				this.onCommand('S');
+			}
+			break;
+		}
+		return true;
 	}
 
 	@Override
@@ -89,6 +140,22 @@ public class AccelerometerActivity extends Fragment implements
 		 * event.values[1], event.values[2], mRotation); text.setText(msg);
 		 * text.invalidate();
 		 */
+		
+		/*
+		event.values[2] -= 9.2;
+		for (int i = 0; i < event.values.length; i++) {
+			if (Math.abs(event.values[this.direction]) < Math.abs(event.values[i])) {
+				this.direction = i;
+			}
+		}
+		if (event.values[this.direction] > 0) {
+			this.forward = true;
+		} else {
+			this.forward = false;
+		}
+		*/
+		
+		
 		if (Math.abs(event.values[0]) > 1) {
 			if (event.values[0] > 0) {
 				Log.e("gx", "positive");
@@ -105,7 +172,7 @@ public class AccelerometerActivity extends Fragment implements
 				Log.e("gy", "negative");
 				this.onCommand('b');
 			}
-		} else if (Math.abs(event.values[2] - 9.2) > 1) {
+		} else if (Math.abs(event.values[2]) - 9.2 > 1) {
 			if (event.values[2] > 0) {
 				Log.e("gz", "positive");
 				this.onCommand('F');
@@ -117,6 +184,7 @@ public class AccelerometerActivity extends Fragment implements
 			this.onCommand('s');
 			this.onCommand('S');
 		}
+		
 	}
 
 	/**
@@ -174,6 +242,15 @@ public class AccelerometerActivity extends Fragment implements
 			MoveMotor(this.MOTOR_C, this.drivePower, this.OFF_MOTOR);
 			break;
 		}
+		
+		if (call != 's' && call != 'S') {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/*
@@ -205,5 +282,4 @@ public class AccelerometerActivity extends Fragment implements
 		} catch (Exception e) {
 		}
 	}
-
 }

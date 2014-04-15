@@ -82,7 +82,6 @@ public class MainActivity extends FragmentActivity implements
 			myActionBar.addTab(myActionBar.newTab().setText(entry.getKey())
 					.setIcon(entry.getValue()).setTabListener(this));
 		}
-
 	}
 
 	@Override
