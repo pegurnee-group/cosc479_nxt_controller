@@ -2,15 +2,21 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -25,6 +31,8 @@ public class MainActivity extends FragmentActivity implements
 	private int[] icons = { R.drawable.icon_connect, R.drawable.icon_drive,
 			R.drawable.icon_sensors, R.drawable.icon_voice,
 			R.drawable.icon_gyro, R.drawable.icon_gyro };
+	
+	BroadcastReceiver btMonitor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,22 @@ public class MainActivity extends FragmentActivity implements
 			myActionBar.addTab(myActionBar.newTab().setText(tabs[i])
 					.setIcon(icons[i]).setTabListener(this));
 		}
+		
+		FragmentActivity current = this;
+		btMonitor = new BroadcastReceiver() {
+			
+	   		@Override 
+	   		public void onReceive(Context context,Intent intent) {
+	   			if (intent.getAction().equals("android.bluetooth.device.action.ACL_CONNECTED")) {
+	       			////handleConnected();
+	  			}
+	   			if (intent.getAction().equals("android.bluetooth.device.action.ACL_DISCONNECTED")) {
+	       			////handleDisconnected();
+//	   				current.getFragmentManager().fin
+//	   				ConnectActivity connect = (ConnectActivity) getFragmentManager().findFragmentById(R.id.connect_view_layout);
+	   			}
+			}
+	    };
 	}
 
 	@Override
@@ -135,4 +159,19 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
+	
+	@Override
+    public void onResume() {
+    	super.onResume();
+    	////Log.i(tag,"onResume");
+    	registerReceiver(btMonitor,new IntentFilter("android.bluetooth.device.action.ACL_CONNECTED"));
+    	registerReceiver(btMonitor,new IntentFilter("android.bluetooth.device.action.ACL_DISCONNECTED"));
+    }
+    
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	////Log.i(tag,"onPause");
+    	unregisterReceiver(btMonitor);
+    }
 }
