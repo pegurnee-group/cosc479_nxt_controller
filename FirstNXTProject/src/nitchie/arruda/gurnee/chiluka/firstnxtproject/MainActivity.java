@@ -19,7 +19,6 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	private ViewPager myViewPager;
-	private MyPagerAdapter myPagerAdapter;
 	private ActionBar myActionBar;
 	private final int PREF_ID = 2;
 
@@ -34,13 +33,10 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-
 		setContentView(R.layout.main_view_layout);
 
 		myViewPager = (ViewPager) findViewById(R.id.pager);
-
 		/**
 		 * on swiping the viewpager make respective tab selected
 		 * */
@@ -63,27 +59,23 @@ public class MainActivity extends FragmentActivity implements
 					}
 				});
 
+		myViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+		
+		// Configure the action bar
 		myActionBar = getActionBar();
-
-		myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-
-		myViewPager.setAdapter(myPagerAdapter);
 		myActionBar.setHomeButtonEnabled(false);
 		myActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		// Hide the title bar
 		myActionBar.setDisplayShowTitleEnabled(false);
 		myActionBar.setDisplayShowHomeEnabled(false);
 
 		// Adding Tabs
-
 		for (int i = 0; i < tabs.length; i++) {
 			myActionBar.addTab(myActionBar.newTab().setText(tabs[i])
 					.setIcon(icons[i]).setTabListener(this));
 		}
 		
+		// Monitor for BT Disconnect
 		btMonitor = new BroadcastReceiver() {
-			
 	   		@Override 
 	   		public void onReceive(Context context,Intent intent) {
 	   			if (intent.getAction().equals("android.bluetooth.device.action.ACL_CONNECTED")) {
@@ -158,7 +150,6 @@ public class MainActivity extends FragmentActivity implements
 	@Override
     public void onResume() {
     	super.onResume();
-    	////Log.i(tag,"onResume");
     	registerReceiver(btMonitor,new IntentFilter("android.bluetooth.device.action.ACL_CONNECTED"));
     	registerReceiver(btMonitor,new IntentFilter("android.bluetooth.device.action.ACL_DISCONNECTED"));
     }
@@ -166,7 +157,6 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void onPause() {
     	super.onPause();
-    	////Log.i(tag,"onPause");
     	unregisterReceiver(btMonitor);
     }
 }
