@@ -1,6 +1,5 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
