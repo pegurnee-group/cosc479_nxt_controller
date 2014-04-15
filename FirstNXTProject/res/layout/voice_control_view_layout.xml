@@ -3,17 +3,28 @@ Taken from:
 http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
  -->
  
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+<!--     <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btSpeak"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="@string/voiceInstruction"
+        android:textAppearance="?android:attr/textAppearanceLarge" /> -->
+
     <Button
         android:id="@+id/btSpeak"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btSpeak" />
+        android:layout_width="193dp"
+        android:layout_height="218dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/microphone" />
 
-
-</LinearLayout>
+</RelativeLayout>
