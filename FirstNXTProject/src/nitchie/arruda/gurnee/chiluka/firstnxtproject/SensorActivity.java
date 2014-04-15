@@ -1,11 +1,15 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * PEEPS! Important! Anytime you would use <code>findViewById()</code> use
@@ -20,7 +24,13 @@ public class SensorActivity extends Fragment {
 
 	private DeviceData myObject;
 
-	private class NXTSensor {
+	/**
+	 * this class is used in the NXTSensorAdapter to create a fancy list view
+	 * 
+	 * @author eddie
+	 * 
+	 */
+	public class NXTSensor {
 		private String title;
 		private int icon;
 		private boolean polling;
@@ -35,6 +45,31 @@ public class SensorActivity extends Fragment {
 			this.icon = icon;
 			this.polling = false;
 		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+
+		public int getIcon() {
+			return icon;
+		}
+
+		public void setIcon(int icon) {
+			this.icon = icon;
+		}
+
+		public boolean isPolling() {
+			return polling;
+		}
+
+		public void setPolling(boolean polling) {
+			this.polling = polling;
+		}
+
 	}
 
 	@Override
