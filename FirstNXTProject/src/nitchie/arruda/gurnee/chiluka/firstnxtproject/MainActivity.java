@@ -2,18 +2,22 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-
+@SuppressLint("NewApi") @TargetApi(Build.VERSION_CODES.HONEYCOMB) 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener  {
 	
 	private ViewPager myViewPager;
@@ -90,6 +94,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
          getMenuInflater().inflate(R.menu.main, menu);
+        
 		return true;
 	}
 	

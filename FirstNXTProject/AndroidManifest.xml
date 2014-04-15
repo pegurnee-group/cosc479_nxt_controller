@@ -11,38 +11,51 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="19" />
+        android:minSdkVersion="8" android:targetSdkVersion="8"
+       />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo" >
+         android:uiOptions="splitActionBarWhenNarrow"
+         >
         <activity
             android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+             android:uiOptions="splitActionBarWhenNarrow"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectActivity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectActivity" 
+             android:uiOptions="splitActionBarWhenNarrow"
+         >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.DriveActivity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.DriveActivity" 
+             android:uiOptions="splitActionBarWhenNarrow"
+      >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetails_Activity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetails_Activity" 
+             android:uiOptions="splitActionBarWhenNarrow"
+            >
         </activity>
         <activity
             android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectBluetoothDeviceActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog"
+             android:uiOptions="splitActionBarWhenNarrow"
+             >
         </activity>
         <activity
             android:name=".Preference_Activity"
             android:label="Preference"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog"
+             android:uiOptions="splitActionBarWhenNarrow"
+             >
         </activity>
     </application>
 
