@@ -26,7 +26,7 @@ public class SensorActivity extends Fragment {
 			"C" };
 	private final int[] EXTENSION_ICONS = { R.drawable.sensor_distance,
 			R.drawable.sensor_light, R.drawable.sensor_sound,
-			R.drawable.sensor_touch, R.drawable.sensor_distance,
+			R.drawable.sensor_touch, R.drawable.servo,
 			R.drawable.sensor_distance, R.drawable.sensor_distance };
 
 	/**
@@ -106,7 +106,6 @@ public class SensorActivity extends Fragment {
 		NXTExtensionAdapter theAdapter = new NXTExtensionAdapter(
 				this.getActivity(), R.layout.sensor_row_view, this.extensions);
 
-		
 		ListView theList = (ListView) this.rootView
 				.findViewById(R.id.sensor_listView);
 		theList.setAdapter(theAdapter);
