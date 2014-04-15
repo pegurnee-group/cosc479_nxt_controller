@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class MyPagerAdapter extends FragmentPagerAdapter {
 
-	final int TAB_NUM = 5;
+	final int TAB_NUM = 6;
 	
 	public MyPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -26,8 +26,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         	return new VoiceRecognitionActivity();
         case 4:
         	return new GyroscopeActivity();
-//        case 5:
-//        	return new AccelerometerActivity();
+        case 5:
+        	return new AccelerometerActivity();
 		}
 		return null;
 	}

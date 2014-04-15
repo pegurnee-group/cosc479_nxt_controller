@@ -1,7 +1,5 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import java.util.HashMap;
-import java.util.Map;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
