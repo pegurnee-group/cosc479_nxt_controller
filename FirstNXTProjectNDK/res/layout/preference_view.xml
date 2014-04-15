@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/Pref1"> 
+    <CheckBoxPreference android:key="cb1" 
+        android:title="@string/pref_cb1_title" 
+        android:summary="Poll battery level every 1 minute"
+        android:defaultValue="false" >
+      </CheckBoxPreference> 
+      
+     <ListPreference
+	            android:key="updates_interval"
+	            android:title="@string/pref_list_title"
+	            android:summary="Time between each sensor/servo polling"
+	            android:defaultValue="5"
+	            android:entries="@array/updateInterval"
+	            android:entryValues="@array/updateIntervalValues"
+	        />  
+	        
+    
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/Pref2">
+	      <CheckBoxPreference android:key="cb2" 
+        android:title="@string/pref_cb2_title" 
+        android:summary="Set power level 100 instead of 75"
+        android:defaultValue="false" >
+      </CheckBoxPreference>  
+      </PreferenceCategory> 
+    </PreferenceScreen>
