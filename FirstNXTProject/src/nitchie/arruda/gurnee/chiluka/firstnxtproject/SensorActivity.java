@@ -1,15 +1,11 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ListView;
 
 /**
  * PEEPS! Important! Anytime you would use <code>findViewById()</code> use
@@ -23,9 +19,18 @@ public class SensorActivity extends Fragment {
 	private View rootView;
 
 	private DeviceData myObject;
+	private NXTExtension[] extensions;
+
+	private final int N_EXTENSIONS = 7;
+	private final String[] EXTENSION_NAMES = { "1", "2", "3", "4", "A", "B",
+			"C" };
+	private final int[] EXTENSION_ICONS = { R.drawable.sensor_distance,
+			R.drawable.sensor_light, R.drawable.sensor_sound,
+			R.drawable.sensor_touch, R.drawable.sensor_distance,
+			R.drawable.sensor_distance, R.drawable.sensor_distance };
 
 	/**
-	 * this class is used in the NXTExtensionAdapter to create a fancy list view 
+	 * this class is used in the NXTExtensionAdapter to create a fancy list view
 	 * 
 	 * @author eddie
 	 * 
@@ -91,6 +96,18 @@ public class SensorActivity extends Fragment {
 		/*
 		 * trying arrayAdapter
 		 */
+		this.extensions = new NXTExtension[this.N_EXTENSIONS];
+		for (int i = 0; i < this.N_EXTENSIONS; i++) {
+			this.extensions[i] = new NXTExtension(this.EXTENSION_NAMES[i],
+					i < 4 ? EXTENSION_ICONS[i] : EXTENSION_ICONS[4]);
+		}
+
+		NXTExtensionAdapter theAdapter = new NXTExtensionAdapter(
+				this.getActivity(), R.layout.sensor_row_view, this.extensions);
+
+		ListView theList = (ListView) this.rootView
+				.findViewById(R.id.sensor_listView);
+		theList.setAdapter(theAdapter);
 
 		return rootView;
 	}
