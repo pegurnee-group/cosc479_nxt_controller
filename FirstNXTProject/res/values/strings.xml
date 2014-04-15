@@ -49,5 +49,7 @@
     <string name="prodId">Product ID:  000-123-528-XCA1</string>
     <string name="copyright">copyright © 2014 MANEIt Software, Inc.</string>
     <string name="accel_instructions_str">Hold to Enable Accelerometer</string>
+    <string name="drive_arrow_label">Drive</string>
+    <string name="aux_arrow_label">Aux</string>
 
 </resources>
