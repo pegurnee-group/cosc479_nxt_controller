@@ -1,5 +1,6 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -44,7 +45,7 @@ public class AccelerometerActivity extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.accel_view, container, false);
+		this.rootView = inflater.inflate(R.layout, container, false);
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
 		Activity somethingNew = this.getActivity();
