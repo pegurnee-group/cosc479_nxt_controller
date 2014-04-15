@@ -13,10 +13,8 @@
     <item
         android:drawable="@drawable/sensor_touch"
         android:maxLevel="3"/>
-    <!--
     <item
     	android:maxLevel="4"
-    	android:drawable="@drawable/sensor_servo"/> 
-    -->
+    	android:drawable="@drawable/servo"/>
 
 </level-list>
