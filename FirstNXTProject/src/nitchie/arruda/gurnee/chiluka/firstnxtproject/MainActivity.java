@@ -39,8 +39,8 @@ public class MainActivity extends FragmentActivity implements
 		tabs.put("Drive", R.drawable.drive_icon);
 		tabs.put("Sensors", R.drawable.connect_icon);
 		tabs.put("Voice", R.drawable.connect_icon);
-		tabs.put("Accel", R.drawable.connect_icon);
 		tabs.put("Gyro", R.drawable.connect_icon);
+//		tabs.put("Accel", R.drawable.connect_icon);
 
 		myViewPager = (ViewPager) findViewById(R.id.pager);
 

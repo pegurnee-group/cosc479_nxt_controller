@@ -25,9 +25,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         case 3:
         	return new VoiceRecognitionActivity();
         case 4:
-        	return new AccelerometerActivity();
-        case 5:
         	return new GyroscopeActivity();
+//        case 5:
+//        	return new AccelerometerActivity();
 		}
 		return null;
 	}
