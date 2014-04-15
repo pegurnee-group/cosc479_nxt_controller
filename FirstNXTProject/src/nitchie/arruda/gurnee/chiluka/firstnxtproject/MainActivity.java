@@ -1,7 +1,5 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import java.util.HashMap;
-import java.util.Map;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -22,9 +20,7 @@ public class MainActivity extends FragmentActivity implements
 	private ActionBar myActionBar;
 	private final int PREF_ID = 2;
 
-	// private String[] tabs = {"Connect", "Drive", "Sensors"};
-
-	private Map<String, Integer> tabs;
+	private String[] tabs = { "Connect", "Drive", "Sensors", "Voice", "Gyro" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +29,6 @@ public class MainActivity extends FragmentActivity implements
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
 		setContentView(R.layout.main_view);
-
-		tabs = new HashMap<String, Integer>();
-		tabs.put("Connect", R.drawable.connect_icon);
-		tabs.put("Drive", R.drawable.drive_icon);
-		tabs.put("Sensors", R.drawable.connect_icon);
-		tabs.put("Voice", R.drawable.connect_icon);
-		tabs.put("Gyro", R.drawable.connect_icon);
-		tabs.put("Accel", R.drawable.connect_icon);
 
 		myViewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -79,10 +67,16 @@ public class MainActivity extends FragmentActivity implements
 		myActionBar.setDisplayShowHomeEnabled(false);
 
 		// Adding Tabs
-		for (Map.Entry<String, Integer> entry : tabs.entrySet()) {
-			myActionBar.addTab(myActionBar.newTab().setText(entry.getKey())
-					.setIcon(entry.getValue()).setTabListener(this));
+
+		for (String s : tabs) {
+			myActionBar.addTab(myActionBar.newTab().setText(s)
+					.setTabListener(this));
 		}
+
+		// for (Map.Entry<String, Integer> entry : tabs.entrySet()) {
+		// myActionBar.addTab(myActionBar.newTab().setText(entry.getKey())
+		// .setIcon(entry.getValue()).setTabListener(this));
+		// }
 	}
 
 	@Override
