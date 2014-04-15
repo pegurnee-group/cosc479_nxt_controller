@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
 		setContentView(R.layout.main_view_layout);
