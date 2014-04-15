@@ -53,5 +53,7 @@
     <string name="aux_arrow_label">Aux</string>
     <string name="poll_switch_label">Poll</string>
     <string name="stop_switch_label">Stop</string>
+    <string name="reset_sensors">Reset Sensors</string>
+    <string name="reset_servos">Reset Servos</string>
 
 </resources>
