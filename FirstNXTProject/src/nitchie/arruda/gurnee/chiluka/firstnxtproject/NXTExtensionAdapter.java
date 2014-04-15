@@ -34,8 +34,8 @@ public class NXTExtensionAdapter extends ArrayAdapter<NXTExtension> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new NXTExtensionHolder();
-			holder.imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
-			holder.txtTitle = (TextView) row.findViewById(R.id.txtTitle);
+			holder.imgIcon = (ImageView) row.findViewById(R.id.sensor_image);
+			holder.txtTitle = (TextView) row.findViewById(R.id.list_number);
 
 			row.setTag(holder);
 		} else {

@@ -95,11 +95,11 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.btImage = (ImageView) rootView.findViewById(R.id.sensor_image);
 		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 
-		this.statusLabel = (TextView) rootView.findViewById(R.id.connected_status_lbl);
+		this.statusLabel = (TextView) rootView.findViewById(R.id.statusLabel);
 		// this.statusLabel.setTextColor(color.primary_text_light);
 
 		this.batteryStatus = (ProgressBar) rootView
-				.findViewById(R.id.battery_status_progBar);
+				.findViewById(R.id.batteryStatusBar);
 		this.batteryStatus.setIndeterminate(false);
 		this.batteryStatus.setMax(this.BATTERY_MAX);
 		this.batteryStatus.setProgress(this.BATTERY_MIN);
@@ -286,7 +286,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		case (R.id.singButton):
 			singASong();
 			break;
-		case (R.id.battery_status_progBar):
+		case (R.id.batteryStatusBar):
 			this.setBatteryMeter(this.getBatteryLevel());
 			break;
 		}
