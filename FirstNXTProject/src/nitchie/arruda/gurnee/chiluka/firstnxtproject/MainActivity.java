@@ -32,7 +32,7 @@ public class MainActivity extends FragmentActivity implements
 		
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
-		setContentView(R.layout.main_view);
+		setContentView(R.layout.main_view_layout);
 
 		myViewPager = (ViewPager) findViewById(R.id.pager);
 

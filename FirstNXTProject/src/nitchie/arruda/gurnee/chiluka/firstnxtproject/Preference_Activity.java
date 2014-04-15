@@ -24,9 +24,9 @@ public class Preference_Activity extends PreferenceActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.layout.preference_view);
+		addPreferencesFromResource(R.layout.preferences_layout);
 
-		PreferenceManager.setDefaultValues(Preference_Activity.this, R.layout.preference_view,
+		PreferenceManager.setDefaultValues(Preference_Activity.this, R.layout.preferences_layout,
 				false);
 		cb_batt = (CheckBoxPreference) findPreference("cb1");
 		cb_defSpeed = (CheckBoxPreference) findPreference("cb2");

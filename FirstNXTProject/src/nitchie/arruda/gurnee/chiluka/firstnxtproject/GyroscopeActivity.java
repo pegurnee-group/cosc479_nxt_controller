@@ -42,7 +42,7 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.gyro_view, container, false);
+		this.rootView = inflater.inflate(R.layout.gyro_view_layout, container, false);
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
 		Activity somethingNew = this.getActivity();

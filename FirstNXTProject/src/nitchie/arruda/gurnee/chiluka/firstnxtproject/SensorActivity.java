@@ -82,7 +82,7 @@ public class SensorActivity extends Fragment {
 			Bundle savedInstanceState) {
 
 		this.rootView = inflater
-				.inflate(R.layout.sensor_view, container, false);
+				.inflate(R.layout.sensor_list_view_layout, container, false);
 
 		/*
 		 * Not sure if this is how to go about this...? No setLevel() for
@@ -104,7 +104,7 @@ public class SensorActivity extends Fragment {
 		}
 
 		NXTExtensionAdapter theAdapter = new NXTExtensionAdapter(
-				this.getActivity(), R.layout.sensor_row_view, this.extensions);
+				this.getActivity(), R.layout.sensor_list_row_layout, this.extensions);
 
 		ListView theList = (ListView) this.rootView
 				.findViewById(R.id.sensor_listView);

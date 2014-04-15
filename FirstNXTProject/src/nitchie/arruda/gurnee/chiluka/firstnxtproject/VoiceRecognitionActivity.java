@@ -71,7 +71,7 @@ public class VoiceRecognitionActivity extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.voice_control_view, container,
+		rootView = inflater.inflate(R.layout.voice_control_view_layout, container,
 				false);
 		metTextHint = (EditText) rootView.findViewById(R.id.etTextHint);
 		mlvTextMatches = (ListView) rootView.findViewById(R.id.lvTextMatches);

@@ -43,7 +43,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.drive_view, container, false);
+		rootView = inflater.inflate(R.layout.drive_view_layout, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 

@@ -9,7 +9,7 @@ public class AppDetails_Activity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.about_app);
+		setContentView(R.layout.about_app_layout);
 
 		EditText mytext = (EditText) findViewById(R.id.details);
 

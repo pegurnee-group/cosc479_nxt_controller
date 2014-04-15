@@ -76,7 +76,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.connect_view, container, false);
+		rootView = inflater.inflate(R.layout.connect_view_layout, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
