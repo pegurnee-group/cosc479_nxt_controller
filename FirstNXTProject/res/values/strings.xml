@@ -51,5 +51,7 @@
     <string name="accel_instructions_str">Hold to Enable Accelerometer</string>
     <string name="drive_arrow_label">Drive</string>
     <string name="aux_arrow_label">Aux</string>
+    <string name="poll_switch_label">Poll</string>
+    <string name="stop_switch_label">Stop</string>
 
 </resources>
