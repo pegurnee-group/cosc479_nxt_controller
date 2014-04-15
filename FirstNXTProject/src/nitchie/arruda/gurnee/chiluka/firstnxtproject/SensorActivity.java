@@ -95,6 +95,7 @@ public class SensorActivity extends Fragment {
 
 		/*
 		 * trying arrayAdapter
+		 * http://www.ezzylearning.com/tutorial.aspx?tid=1763429
 		 */
 		this.extensions = new NXTExtension[this.N_EXTENSIONS];
 		for (int i = 0; i < this.N_EXTENSIONS; i++) {
