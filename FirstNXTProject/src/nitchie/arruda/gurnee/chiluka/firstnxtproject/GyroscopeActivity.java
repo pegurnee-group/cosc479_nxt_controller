@@ -115,12 +115,12 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 		 * this.forward = false; }
 		 */
 
-		Log.e("gx", "" + event.values[0]);
-		Log.e("gy", "" + event.values[1]);
-		Log.e("gz", "" + event.values[2]);
+		Log.e("x", "" + event.values[0]);
+		Log.e("y", "" + event.values[1]);
+		Log.e("z", "" + event.values[2]);
 		
 		if (Math.abs(event.values[0]) > 1) {
-			if (event.values[0] > 0) {
+			if (event.values[0] < 0) {
 				Log.e("gx", "positive");
 //				this.onCommand('r');
 			} else {
@@ -128,14 +128,14 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 //				this.onCommand('l');
 			}
 		} else if (Math.abs(event.values[1]) > 1) {
-			if (event.values[1] > 0) {
+			if (event.values[1] < 0) {
 				Log.e("gy", "positive");
 //				this.onCommand('f');
 			} else {
 				Log.e("gy", "negative");
 //				this.onCommand('b');
 			}
-		} else if (Math.abs(event.values[2]) - 9.2 > 1) {
+		} else if (Math.abs(event.values[2]) > 1) {
 			if (event.values[2] > 0) {
 				Log.e("gz", "positive");
 //				this.onCommand('F');
