@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class GyroscopeActivity extends Fragment implements SensorEventListener {
+public class GyroscopeDriveFragment extends Fragment implements SensorEventListener {
 
 	private SensorManager mgr;
 	private Sensor gyroscope;

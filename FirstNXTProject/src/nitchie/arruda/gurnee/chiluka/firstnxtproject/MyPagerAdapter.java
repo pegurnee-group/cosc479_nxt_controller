@@ -17,17 +17,17 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int arg0) {
 		switch (arg0) {
         case 0:
-        	return new ConnectActivity();
+        	return new ConnectFragment();
         case 1:
-        	return new DriveActivity();
+        	return new ManualDriveFragment();
         case 2:
-        	return new SensorActivity();
+        	return new SensorListFragment();
         case 3:
-        	return new VoiceRecognitionActivity();
+        	return new VoiceDriveFragment();
         case 4:
-        	return new GyroscopeActivity();
+        	return new GyroscopeDriveFragment();
         case 5:
-        	return new AccelerometerActivity();
+        	return new AccelerometerDriveFragment();
 		}
 		return null;
 	}

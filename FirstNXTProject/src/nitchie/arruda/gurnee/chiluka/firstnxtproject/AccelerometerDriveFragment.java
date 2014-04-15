@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class AccelerometerActivity extends Fragment implements
+public class AccelerometerDriveFragment extends Fragment implements
 		SensorEventListener, OnTouchListener {
 
 	private SensorManager mgr;
@@ -165,10 +165,10 @@ public class AccelerometerActivity extends Fragment implements
 
 					@Override
 					public void run() {
-						AccelerometerActivity.this.enabled = false;
+						AccelerometerDriveFragment.this.enabled = false;
 						try {
 							Thread.sleep(500);
-							AccelerometerActivity.this.enabled = true;
+							AccelerometerDriveFragment.this.enabled = true;
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

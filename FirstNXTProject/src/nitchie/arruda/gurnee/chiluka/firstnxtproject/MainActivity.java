@@ -91,11 +91,11 @@ public class MainActivity extends FragmentActivity implements
 
 		switch (item.getItemId()) {
 		case R.id.aboutapp:
-			Intent intent1 = new Intent(this, AppDetails_Activity.class);
+			Intent intent1 = new Intent(this, AppDetailsActivity.class);
 			startActivity(intent1);
 			break;
 		case R.id.preference:
-			Intent intent2 = new Intent(this, Preference_Activity.class);
+			Intent intent2 = new Intent(this, PreferencesActivity.class);
 			// this.startActivity(intent);
 			startActivityForResult(intent2, PREF_ID);
 			break;

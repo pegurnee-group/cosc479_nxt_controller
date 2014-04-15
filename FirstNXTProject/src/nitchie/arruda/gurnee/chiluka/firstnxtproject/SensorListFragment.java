@@ -14,7 +14,7 @@ import android.widget.ListView;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class SensorActivity extends Fragment {
+public class SensorListFragment extends Fragment {
 
 	private View rootView;
 
@@ -103,7 +103,7 @@ public class SensorActivity extends Fragment {
 					i < 4 ? EXTENSION_ICONS[i] : EXTENSION_ICONS[4]);
 		}
 
-		NXTExtensionAdapter theAdapter = new NXTExtensionAdapter(
+		NXTExtensionArrayAdapter theAdapter = new NXTExtensionArrayAdapter(
 				this.getActivity(), R.layout.sensor_list_row_layout, this.extensions);
 
 		ListView theList = (ListView) this.rootView

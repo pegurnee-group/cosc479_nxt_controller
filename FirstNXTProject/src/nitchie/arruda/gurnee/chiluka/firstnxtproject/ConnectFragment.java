@@ -36,7 +36,7 @@ import android.widget.Toast;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class ConnectActivity extends Fragment implements OnClickListener {
+public class ConnectFragment extends Fragment implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
 	private final double MAX_MILLI_VOLTS = 9000.0;
@@ -110,7 +110,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	}
 
 	private void mpollBattery(int interval) {
-		final ConnectActivity current = this;
+		final ConnectFragment current = this;
 		mBatteryTimer = new Timer();
 		mBatteryTimer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {

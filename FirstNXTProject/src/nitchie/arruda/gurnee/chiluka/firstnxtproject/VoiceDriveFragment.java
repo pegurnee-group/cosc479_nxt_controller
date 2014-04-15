@@ -36,7 +36,7 @@ import android.widget.Toast;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class VoiceRecognitionActivity extends Fragment implements
+public class VoiceDriveFragment extends Fragment implements
 		OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 	private final String TAG = "NXT Project 1";
