@@ -22,7 +22,7 @@ import android.widget.TextView;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class DriveActivity extends Fragment implements OnTouchListener {
+public class ManualDriveFragment extends Fragment implements OnTouchListener {
 
 	private int drivePower = 75;
 	private int thirdPower = 75;
@@ -43,7 +43,7 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.drive_view, container, false);
+		rootView = inflater.inflate(R.layout.drive_view_layout, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
@@ -101,11 +101,11 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				DriveActivity.this.drivePower = progress;
+				ManualDriveFragment.this.drivePower = progress;
 
 				TextView powerLabel1 = (TextView) rootView
 						.findViewById(R.id.textViewDrive);
-				powerLabel1.setText("" + DriveActivity.this.drivePower);
+				powerLabel1.setText("" + ManualDriveFragment.this.drivePower);
 			}
 
 			@Override
@@ -129,11 +129,11 @@ public class DriveActivity extends Fragment implements OnTouchListener {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				DriveActivity.this.thirdPower = progress;
+				ManualDriveFragment.this.thirdPower = progress;
 
 				TextView powerLabel2 = (TextView) rootView
 						.findViewById(R.id.textViewAux);
-				powerLabel2.setText("" + DriveActivity.this.thirdPower);
+				powerLabel2.setText("" + ManualDriveFragment.this.thirdPower);
 			}
 
 			@Override

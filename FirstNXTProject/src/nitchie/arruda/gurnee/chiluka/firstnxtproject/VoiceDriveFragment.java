@@ -36,7 +36,7 @@ import android.widget.Toast;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class VoiceRecognitionActivity extends Fragment implements
+public class VoiceDriveFragment extends Fragment implements
 		OnClickListener {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 	private final String TAG = "NXT Project 1";
@@ -71,7 +71,7 @@ public class VoiceRecognitionActivity extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.voice_control_view, container,
+		rootView = inflater.inflate(R.layout.voice_control_view_layout, container,
 				false);
 		metTextHint = (EditText) rootView.findViewById(R.id.etTextHint);
 		mlvTextMatches = (ListView) rootView.findViewById(R.id.lvTextMatches);

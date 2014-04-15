@@ -31,18 +31,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectActivity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectFragment"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
-            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.DriveActivity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ManualDriveFragment"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AccelerometerActivity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AccelerometerDriveFragment" >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.GyroscopeActivity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.GyroscopeDriveFragment" >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetails_Activity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetailsActivity" >
         </activity>
         <activity
             android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectBluetoothDeviceActivity"
@@ -51,7 +51,7 @@
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
-            android:name=".Preference_Activity"
+            android:name=".PreferencesActivity"
             android:label="Preference"
             android:theme="@android:style/Theme.Dialog"
             android:uiOptions="splitActionBarWhenNarrow" >

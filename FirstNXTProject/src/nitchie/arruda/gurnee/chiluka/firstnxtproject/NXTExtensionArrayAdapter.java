@@ -1,6 +1,6 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import nitchie.arruda.gurnee.chiluka.firstnxtproject.SensorActivity.NXTExtension;
+import nitchie.arruda.gurnee.chiluka.firstnxtproject.SensorListFragment.NXTExtension;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,13 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class NXTExtensionAdapter extends ArrayAdapter<NXTExtension> {
+public class NXTExtensionArrayAdapter extends ArrayAdapter<NXTExtension> {
 
 	Context context;
 	int layoutResourceId;
 	NXTExtension data[] = null;
 
-	public NXTExtensionAdapter(Context context, int layoutResourceId,
+	public NXTExtensionArrayAdapter(Context context, int layoutResourceId,
 			NXTExtension[] data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
