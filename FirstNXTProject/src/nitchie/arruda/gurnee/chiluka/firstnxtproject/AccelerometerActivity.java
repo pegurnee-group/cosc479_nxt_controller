@@ -109,6 +109,7 @@ public class AccelerometerActivity extends Fragment implements
 	@Override
 	public void onResume() {
 		mgr.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		this.enabled = true;
 		super.onResume();
 	}
 
@@ -133,7 +134,6 @@ public class AccelerometerActivity extends Fragment implements
 				if (event.values[0] > 0) {
 					Log.e("gx", "positive");
 					this.onCommand('r');
-
 				} else {
 					Log.e("gx", "negative");
 					this.onCommand('l');
