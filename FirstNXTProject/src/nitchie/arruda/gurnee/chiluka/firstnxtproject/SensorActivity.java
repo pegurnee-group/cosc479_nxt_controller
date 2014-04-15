@@ -25,21 +25,21 @@ public class SensorActivity extends Fragment {
 	private DeviceData myObject;
 
 	/**
-	 * this class is used in the NXTSensorAdapter to create a fancy list view
+	 * this class is used in the NXTExtensionAdapter to create a fancy list view 
 	 * 
 	 * @author eddie
 	 * 
 	 */
-	public class NXTSensor {
+	public class NXTExtension {
 		private String title;
 		private int icon;
 		private boolean polling;
 
-		public NXTSensor() {
+		public NXTExtension() {
 			this("no title", -1);
 		}
 
-		public NXTSensor(String title, int icon) {
+		public NXTExtension(String title, int icon) {
 			super();
 			this.title = title;
 			this.icon = icon;

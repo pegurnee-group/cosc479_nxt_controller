@@ -1,6 +1,6 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import nitchie.arruda.gurnee.chiluka.firstnxtproject.SensorActivity.NXTSensor;
+import nitchie.arruda.gurnee.chiluka.firstnxtproject.SensorActivity.NXTExtension;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,14 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class NXTSensorAdapter extends ArrayAdapter<NXTSensor> {
+public class NXTExtensionAdapter extends ArrayAdapter<NXTExtension> {
 
 	Context context;
 	int layoutResourceId;
-	NXTSensor data[] = null;
+	NXTExtension data[] = null;
 
-	public NXTSensorAdapter(Context context, int layoutResourceId,
-			NXTSensor[] data) {
+	public NXTExtensionAdapter(Context context, int layoutResourceId,
+			NXTExtension[] data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
@@ -27,29 +27,29 @@ public class NXTSensorAdapter extends ArrayAdapter<NXTSensor> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		NXTSensorHolder holder = null;
+		NXTExtensionHolder holder = null;
 
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 
-			holder = new NXTSensorHolder();
+			holder = new NXTExtensionHolder();
 			holder.imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 			holder.txtTitle = (TextView) row.findViewById(R.id.txtTitle);
 
 			row.setTag(holder);
 		} else {
-			holder = (NXTSensorHolder) row.getTag();
+			holder = (NXTExtensionHolder) row.getTag();
 		}
 
-		NXTSensor weather = data[position];
+		NXTExtension weather = data[position];
 		holder.txtTitle.setText(weather.getTitle());
 		holder.imgIcon.setImageResource(weather.getIcon());
 
 		return row;
 	}
 
-	static class NXTSensorHolder {
+	static class NXTExtensionHolder {
 		ImageView imgIcon;
 		TextView txtTitle;
 	}
