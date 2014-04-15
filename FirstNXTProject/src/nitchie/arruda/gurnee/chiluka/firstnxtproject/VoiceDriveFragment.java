@@ -21,12 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
@@ -41,16 +36,13 @@ public class VoiceDriveFragment extends Fragment implements
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 	private final String TAG = "NXT Project 1";
 
-	private EditText metTextHint;
-	private ListView mlvTextMatches;
-	private Spinner msTextMatches;
 	private Button mbtSpeak;
 
-	String[] goForward = { "forward", "come" };
-	String[] goLeft = { "left" };
-	String[] goRight = { "right" };
-	String[] goBack = { "reverse" };
-	String[] stop = { "stop" };
+	String[] goForward = { "forward", "engage", "warp", "go" };
+	String[] goLeft = { "left", "port" };
+	String[] goRight = { "right", "starboard" };
+	String[] goBack = { "reverse", "back" };
+	String[] stop = { "stop", "idiot", "quit", "it" };
 	String[] armForward = { "swing" };
 	String[] armBack = { "bunt" };
 	String[] armStop = { "out" };
@@ -73,9 +65,6 @@ public class VoiceDriveFragment extends Fragment implements
 
 		rootView = inflater.inflate(R.layout.voice_control_view_layout, container,
 				false);
-		metTextHint = (EditText) rootView.findViewById(R.id.etTextHint);
-		mlvTextMatches = (ListView) rootView.findViewById(R.id.lvTextMatches);
-		msTextMatches = (Spinner) rootView.findViewById(R.id.sNoOfMatches);
 		mbtSpeak = (Button) rootView.findViewById(R.id.btSpeak);
 		mbtSpeak.setOnClickListener(this);
 		this.myObject = (DeviceData) DeviceData.getInstance();
@@ -104,10 +93,6 @@ public class VoiceDriveFragment extends Fragment implements
 		intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass()
 				.getPackage().getName());
 
-		// Display an hint to the user about what he should say.
-		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, metTextHint.getText()
-				.toString());
-
 		// Given an hint to the recognizer about what the user is going to say
 		// There are two form of language model available
 		// 1.LANGUAGE_MODEL_WEB_SEARCH : For short phrases
@@ -116,19 +101,6 @@ public class VoiceDriveFragment extends Fragment implements
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 				RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
 
-		// If number of Matches is not selected then return show toast message
-		if (msTextMatches.getSelectedItemPosition() == AdapterView.INVALID_POSITION) {
-			Toast.makeText(getActivity(),
-					"Please select No. of Matches from spinner",
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-
-		int noOfMatches = Integer.parseInt(msTextMatches.getSelectedItem()
-				.toString());
-		// Specify how many results you want to receive. The results will be
-		// sorted where the first result is the one with higher confidence.
-		intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, noOfMatches);
 		// Start the Voice recognizer activity for the result.
 		startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
 	}
@@ -145,10 +117,6 @@ public class VoiceDriveFragment extends Fragment implements
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
 				if (!textMatchList.isEmpty()) {
-					// populate the Matches
-					mlvTextMatches.setAdapter(new ArrayAdapter<String>(
-							getActivity(), android.R.layout.simple_list_item_1,
-							textMatchList));
 
 					for (String s : stop) {
 						if (textMatchList.get(0).toLowerCase()
