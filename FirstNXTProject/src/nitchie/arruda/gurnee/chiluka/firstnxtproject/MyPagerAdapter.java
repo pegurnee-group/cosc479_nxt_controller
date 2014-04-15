@@ -18,7 +18,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 		switch (arg0) {
         case 0:
         	return new ConnectFragment();
-        case 1:
+        case 1:        	
         	return new ManualDriveFragment();
         case 2:
         	return new SensorListFragment();

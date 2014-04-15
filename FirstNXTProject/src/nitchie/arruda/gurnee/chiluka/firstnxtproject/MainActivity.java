@@ -2,7 +2,6 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,11 +11,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -32,8 +29,8 @@ public class MainActivity extends FragmentActivity implements
 			R.drawable.icon_sensors, R.drawable.icon_voice,
 			R.drawable.icon_gyro, R.drawable.icon_gyro };
 	
-	BroadcastReceiver btMonitor;
-
+	private BroadcastReceiver btMonitor;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,7 +82,6 @@ public class MainActivity extends FragmentActivity implements
 					.setIcon(icons[i]).setTabListener(this));
 		}
 		
-		FragmentActivity current = this;
 		btMonitor = new BroadcastReceiver() {
 			
 	   		@Override 
@@ -95,8 +91,9 @@ public class MainActivity extends FragmentActivity implements
 	  			}
 	   			if (intent.getAction().equals("android.bluetooth.device.action.ACL_DISCONNECTED")) {
 	       			////handleDisconnected();
-//	   				current.getFragmentManager().fin
-//	   				ConnectActivity connect = (ConnectActivity) getFragmentManager().findFragmentById(R.id.connect_view_layout);
+	   				ConnectFragment connect = (ConnectFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + myViewPager.getCurrentItem());
+//	   				ConnectFragment connect = (ConnectFragment) getSupportFragmentManager().findFragmentById(R.id.connect_view_layout);
+	   				connect.disconnectNXT(null);
 	   			}
 			}
 	    };
