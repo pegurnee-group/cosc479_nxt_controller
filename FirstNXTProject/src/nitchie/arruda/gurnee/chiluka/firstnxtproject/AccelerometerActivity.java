@@ -108,14 +108,14 @@ public class AccelerometerActivity extends Fragment implements
 
 	@Override
 	public void onResume() {
-		mgr.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		this.mgr.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
 		this.enabled = true;
 		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		mgr.unregisterListener(this, accelerometer);
+		this.mgr.unregisterListener(this, accelerometer);
 		super.onPause();
 	}
 
@@ -157,6 +157,8 @@ public class AccelerometerActivity extends Fragment implements
 			} else {
 				this.onCommand('s');
 				this.onCommand('S');
+				
+				//i call her any
 				new Runnable() {
 
 					@Override
