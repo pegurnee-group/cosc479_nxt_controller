@@ -1,35 +1,20 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-<<<<<<< HEAD
-import java.util.HashMap;
-import java.util.Map;
-
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-=======
->>>>>>> 83e8024d56b6ec80067c8099332d3c41ce78cf67
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-<<<<<<< HEAD
-@SuppressLint("NewApi") @TargetApi(Build.VERSION_CODES.HONEYCOMB) 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener  {
-	
-=======
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
->>>>>>> 83e8024d56b6ec80067c8099332d3c41ce78cf67
 	private ViewPager myViewPager;
 	private MyPagerAdapter myPagerAdapter;
 	private ActionBar myActionBar;
@@ -97,12 +82,8 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-<<<<<<< HEAD
-         getMenuInflater().inflate(R.menu.main, menu);
         
-=======
 		getMenuInflater().inflate(R.menu.main, menu);
->>>>>>> 83e8024d56b6ec80067c8099332d3c41ce78cf67
 		return true;
 	}
 

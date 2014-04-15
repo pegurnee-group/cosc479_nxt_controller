@@ -44,7 +44,7 @@ public class AccelerometerActivity extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.acce, container, false);
+		this.rootView = inflater.inflate(R.layout.accel_view, container, false);
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
 		Activity somethingNew = this.getActivity();
