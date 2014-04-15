@@ -155,9 +155,6 @@ public class AccelerometerActivity extends Fragment implements
 					this.onCommand('R');
 				}
 			} else {
-				this.onCommand('s');
-				this.onCommand('S');
-				
 				//i call her any
 				new Runnable() {
 
@@ -172,6 +169,9 @@ public class AccelerometerActivity extends Fragment implements
 						}
 					}
 				};
+				
+				this.onCommand('s');
+				this.onCommand('S');
 			}
 		}
 	}

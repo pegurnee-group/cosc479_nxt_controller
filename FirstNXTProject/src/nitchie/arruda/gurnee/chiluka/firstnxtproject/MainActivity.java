@@ -20,7 +20,7 @@ public class MainActivity extends FragmentActivity implements
 	private ActionBar myActionBar;
 	private final int PREF_ID = 2;
 
-	private String[] tabs = { "Connect", "Drive", "Sensors", "Voice", "Gyro" };
+	private String[] tabs = { "Connect", "Drive", "Sensors", "Voice", "Gyro", "Accel" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
