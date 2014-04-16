@@ -106,13 +106,15 @@ public class AccelerometerDriveFragment extends Fragment implements
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		if (event.sensor.equals(this.accelerometer)) {
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 			/*
 			 * Log.e("gx", "" + event.values[0]); 
 			 * Log.e("gy", "" + event.values[1]); 
 			 * Log.e("gz", "" + event.values[2]);
 			 */
-			
+
+			ImageView img = (ImageView) this.rootView
+					.findViewById(R.id.gyro_arrow);
 			if (this.enabled) {
 				if (Math.abs(event.values[0]) > 1) {
 					if (event.values[0] > 0) {

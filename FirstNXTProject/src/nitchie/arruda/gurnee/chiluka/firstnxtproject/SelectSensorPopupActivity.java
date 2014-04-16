@@ -48,7 +48,7 @@ public class SelectSensorPopupActivity extends ListActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.select_bluetooth_layout);
+		this.setContentView(R.layout.select_sensor_view_layout);
 
 		for (int i = 0; i < this.N_SENSORS; i++) {
 			this.sensors[i] = new NXTSensor(this.SENSOR_NAMES[i],

@@ -1,16 +1,17 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 
 /**
@@ -118,8 +119,9 @@ public class SensorListFragment extends Fragment {
 
 		ListView theList = (ListView) this.rootView
 				.findViewById(R.id.sensor_listView);
-		
+
 		theList.setAdapter(theAdapter);
+		
 		theList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -133,8 +135,8 @@ public class SensorListFragment extends Fragment {
 			}
 
 		});
-		this.rootView.setClickable(true);
 		
+
 		return rootView;
 	}
 
@@ -146,11 +148,11 @@ public class SensorListFragment extends Fragment {
 				this.extensions[this.clicked] = this.extensions[data
 						.getIntExtra("sensor", 0)];
 				this.extensions[data.getIntExtra("sensor", 0)] = temp;
-				
+
 				/*
-				ListView theList = (ListView) this.rootView
-						.findViewById(R.id.sensor_listView);
-						*/
+				 * ListView theList = (ListView) this.rootView
+				 * .findViewById(R.id.sensor_listView);
+				 */
 			}
 		}
 	}

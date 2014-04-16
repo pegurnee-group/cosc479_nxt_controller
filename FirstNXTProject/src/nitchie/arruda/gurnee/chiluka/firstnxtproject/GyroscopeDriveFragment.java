@@ -21,7 +21,6 @@ public class GyroscopeDriveFragment extends Fragment implements
 
 	private SensorManager mgr;
 	private Sensor gyroscope;
-	private Button accelButton;
 	private int mRotation;
 
 	private View rootView;
@@ -116,50 +115,46 @@ public class GyroscopeDriveFragment extends Fragment implements
 		 * (event.values[this.direction] > 0) { this.forward = true; } else {
 		 * this.forward = false; }
 		 */
-		if (event.sensor.equals(this.gyroscope)) {
+		if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
 			Log.e("x", "" + event.values[0]);
 			Log.e("y", "" + event.values[1]);
 			Log.e("z", "" + event.values[2]);
 
-			ImageView img = (ImageView) this.rootView
-					.findViewById(R.id.gyro_arrow);
-			
+//			ImageView img = (ImageView) this.rootView
+//					.findViewById(R.id.gyro_arrow);
+
 			if (Math.abs(event.values[0]) > 1) {
 				if (event.values[0] > 0) {
-					Log.e("gx", "positive");
-					this.onCommand('r');
-					img.setImageDrawable(getResources().getDrawable(R.drawable.gyro_arrow_right));
+					Log.e("x", "positive");
+					// this.onCommand('l');
+//					img.setBackground(getResources().getDrawable(
+//							R.drawable.gyro_arrow_right));
 				} else {
-					Log.e("gx", "negative");
-					img.setImageDrawable(getResources().getDrawable(R.drawable.gyro_arrow_left));
-					this.onCommand('l');
+					Log.e("x", "negative");
+//					img.setBackground(getResources().getDrawable(
+//							R.drawable.gyro_arrow_left));
+					// this.onCommand('r');
 				}
 			} else if (Math.abs(event.values[1]) > 1) {
 				if (event.values[1] > 0) {
-					Log.e("gy", "positive");
-					img.setImageDrawable(getResources().getDrawable(R.drawable.gyro_arrow_up));
-					this.onCommand('f');
+					Log.e("y", "positive");
+					// img.setBackground(getResources().getDrawable(R.drawable.gyro_arrow_up));
+					// this.onCommand('b');
 				} else {
-					Log.e("gy", "negative");
-					img.setImageDrawable(getResources().getDrawable(R.drawable.gyro_arrow_down));
-					this.onCommand('b');
+					Log.e("y", "negative");
+					// img.setBackground(getResources().getDrawable(R.drawable.gyro_arrow_down));
+					// this.onCommand('f');
 				}
-			} 
+			}
 			/*
-			else if (Math.abs(event.values[2]) > 1) {
-				if (event.values[2] > 0) {
-					Log.e("gz", "positive");
-					this.onCommand('F');
-				} else {
-					Log.e("gz", "negative");
-					this.onCommand('R');
-				}
-			} 
-			*/
+			 * else if (Math.abs(event.values[2]) > 1) { if (event.values[2] >
+			 * 0) { Log.e("gz", "positive"); this.onCommand('F'); } else {
+			 * Log.e("gz", "negative"); this.onCommand('R'); } }
+			 */
 			else {
 				this.onCommand('s');
 				this.onCommand('S');
-				img.setImageDrawable(null);
+				// img.setImageDrawable(null);
 			}
 		}
 
