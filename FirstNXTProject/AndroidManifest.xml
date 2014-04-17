@@ -22,7 +22,9 @@
         android:uiOptions="splitActionBarWhenNarrow" >
         <activity
             android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,27 +33,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectActivity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ConnectFragment"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
-            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.DriveActivity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.ManualDriveFragment"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AccelerometerActivity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AccelerometerDriveFragment" >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.GyroscopeActivity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.GyroscopeDriveFragment" >
         </activity>
-        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetails_Activity" >
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SensorListFragment" >
+        </activity>
+        <activity android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.AppDetailsActivity" >
         </activity>
         <activity
-            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectBluetoothDeviceActivity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectBluetoothDevicePopupActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
-            android:name=".Preference_Activity"
+            android:name="nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectSensorPopupActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name=".PreferencesActivity"
             android:label="Preference"
             android:theme="@android:style/Theme.Dialog"
             android:uiOptions="splitActionBarWhenNarrow" >

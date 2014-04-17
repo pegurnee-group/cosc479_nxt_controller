@@ -1,6 +1,6 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
-import nitchie.arruda.gurnee.chiluka.firstnxtproject.SensorActivity.NXTExtension;
+import nitchie.arruda.gurnee.chiluka.firstnxtproject.SelectSensorPopupActivity.NXTSensor;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,14 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class NXTExtensionAdapter extends ArrayAdapter<NXTExtension> {
+public class NXTSensorArrayAdapter extends ArrayAdapter<NXTSensor> {
 
 	Context context;
 	int layoutResourceId;
-	NXTExtension data[] = null;
+	NXTSensor[] data = null;
 
-	public NXTExtensionAdapter(Context context, int layoutResourceId,
-			NXTExtension[] data) {
+	public NXTSensorArrayAdapter(Context context, int layoutResourceId,
+			NXTSensor[] data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
@@ -27,29 +27,29 @@ public class NXTExtensionAdapter extends ArrayAdapter<NXTExtension> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		NXTExtensionHolder holder = null;
+		NXTSensorHolder holder = null;
 
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 
-			holder = new NXTExtensionHolder();
-			holder.imgIcon = (ImageView) row.findViewById(R.id.sensor_image);
-			holder.txtTitle = (TextView) row.findViewById(R.id.list_number);
+			holder = new NXTSensorHolder();
+			holder.txtTitle = (TextView) row.findViewById(R.id.select_sensor_image_imageView);
+			holder.imgIcon = (ImageView) row.findViewById(R.id.select_sensor_name_lbl);
 
 			row.setTag(holder);
 		} else {
-			holder = (NXTExtensionHolder) row.getTag();
+			holder = (NXTSensorHolder) row.getTag();
 		}
 
-		NXTExtension weather = data[position];
-		holder.txtTitle.setText(weather.getTitle());
-		holder.imgIcon.setImageResource(weather.getIcon());
+		NXTSensor sensor = data[position];
+		holder.txtTitle.setText(sensor.getTitle());
+		holder.imgIcon.setImageResource(sensor.getIcon());
 
 		return row;
 	}
 
-	static class NXTExtensionHolder {
+	static class NXTSensorHolder {
 		ImageView imgIcon;
 		TextView txtTitle;
 	}

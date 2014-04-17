@@ -1,10 +1,17 @@
 package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 
 /**
@@ -14,7 +21,7 @@ import android.widget.ListView;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class SensorActivity extends Fragment {
+public class SensorListFragment extends Fragment {
 
 	private View rootView;
 
@@ -28,6 +35,9 @@ public class SensorActivity extends Fragment {
 			R.drawable.sensor_light, R.drawable.sensor_sound,
 			R.drawable.sensor_touch, R.drawable.servo,
 			R.drawable.sensor_distance, R.drawable.sensor_distance };
+
+	private final int PICK_A_SENSOR = 1;
+	private int clicked;
 
 	/**
 	 * this class is used in the NXTExtensionAdapter to create a fancy list view
@@ -81,8 +91,8 @@ public class SensorActivity extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		this.rootView = inflater
-				.inflate(R.layout.sensor_view, container, false);
+		this.rootView = inflater.inflate(R.layout.sensor_list_view_layout,
+				container, false);
 
 		/*
 		 * Not sure if this is how to go about this...? No setLevel() for
@@ -103,13 +113,47 @@ public class SensorActivity extends Fragment {
 					i < 4 ? EXTENSION_ICONS[i] : EXTENSION_ICONS[4]);
 		}
 
-		NXTExtensionAdapter theAdapter = new NXTExtensionAdapter(
-				this.getActivity(), R.layout.sensor_row_view, this.extensions);
+		NXTExtensionArrayAdapter theAdapter = new NXTExtensionArrayAdapter(
+				this.getActivity(), R.layout.sensor_list_row_layout,
+				this.extensions);
 
 		ListView theList = (ListView) this.rootView
 				.findViewById(R.id.sensor_listView);
+
 		theList.setAdapter(theAdapter);
+		
+		theList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Log.e("here", "here");
+				SensorListFragment.this.clicked = position;
+				Intent i = new Intent(getActivity(),
+						SelectSensorPopupActivity.class);
+				startActivityForResult(i, PICK_A_SENSOR);
+			}
+
+		});
+		
 
 		return rootView;
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PICK_A_SENSOR) {
+			if (resultCode == Activity.RESULT_OK) {
+				NXTExtension temp = this.extensions[this.clicked];
+				this.extensions[this.clicked] = this.extensions[data
+						.getIntExtra("sensor", 0)];
+				this.extensions[data.getIntExtra("sensor", 0)] = temp;
+
+				/*
+				 * ListView theList = (ListView) this.rootView
+				 * .findViewById(R.id.sensor_listView);
+				 */
+			}
+		}
 	}
 }

@@ -12,14 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
-public class GyroscopeActivity extends Fragment implements SensorEventListener {
+public class AccelerometerDriveFragment extends Fragment implements
+		SensorEventListener, OnTouchListener {
 
 	private SensorManager mgr;
-	private Sensor gyroscope;
+	private Sensor accelerometer;
 	private Button accelButton;
 	private int mRotation;
 
@@ -42,45 +45,59 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.gyro_view, container, false);
+		this.rootView = inflater.inflate(R.layout.accel_view_layout, container,
+				false);
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
 		Activity somethingNew = this.getActivity();
 
 		this.mgr = (SensorManager) somethingNew
 				.getSystemService(Context.SENSOR_SERVICE);
-		this.gyroscope = this.mgr.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		this.accelerometer = this.mgr
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
 		WindowManager window = (WindowManager) somethingNew
 				.getSystemService(Context.WINDOW_SERVICE);
 		this.mRotation = window.getDefaultDisplay().getRotation();
 
+		// this.accelButton = (Button)
+		// this.rootView.findViewById(R.id.accelBtn);
+
 		return rootView;
 	}
 
 	/*
-	 * @Override public boolean onTouch(View view, MotionEvent event) { switch
-	 * (view.getId()) { case R.id.accelBtn: int action = event.getAction(); if
-	 * (action == MotionEvent.ACTION_DOWN) { if (this.enabled == false) { switch
-	 * (this.direction) { case 0: if (this.forward) { this.onCommand('r'); }
-	 * else { this.onCommand('l'); } break; case 1: if (this.forward) {
-	 * this.onCommand('f'); } else { this.onCommand('b'); } break; case 2: if
-	 * (this.forward) { this.onCommand('F'); } else { this.onCommand('R'); }
-	 * break; } } this.enabled = true;
-	 * 
-	 * } else if ((action == MotionEvent.ACTION_UP)) { this.enabled = false;
-	 * this.onCommand('s'); this.onCommand('S'); } break; } return true; }
+	 * Deleted button in Accelerometer view... do we need this method?
 	 */
-	
+	@Override
+	public boolean onTouch(View view, MotionEvent event) {
+		/*
+		 * switch (view.getId()) { case R.id.accelBtn: int action =
+		 * event.getAction(); if (action == MotionEvent.ACTION_DOWN) { if
+		 * (this.enabled == false) { switch (this.direction) { case 0: if
+		 * (this.forward) { this.onCommand('r'); } else { this.onCommand('l'); }
+		 * break; case 1: if (this.forward) { this.onCommand('f'); } else {
+		 * this.onCommand('b'); } break; case 2: if (this.forward) {
+		 * this.onCommand('F'); } else { this.onCommand('R'); } break; } }
+		 * this.enabled = true;
+		 * 
+		 * } else if ((action == MotionEvent.ACTION_UP)) { this.enabled = false;
+		 * this.onCommand('s'); this.onCommand('S'); } break; }
+		 */
+		return true;
+	}
+
 	@Override
 	public void onResume() {
-		mgr.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_UI);
+		this.mgr.registerListener(this, accelerometer,
+				SensorManager.SENSOR_DELAY_UI);
+		this.enabled = true;
 		super.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		mgr.unregisterListener(this, gyroscope);
+		this.mgr.unregisterListener(this, accelerometer);
 		super.onPause();
 	}
 
@@ -89,65 +106,61 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		/*
-		 * float[] data = Arrays.copyOf(event.values, event.values.length);
-		 * Arrays.sort(data);
-		 * 
-		 * if ((int)event.values[0] == (int)event.values[1] &&
-		 * (int)event.values[1] == (int)event.values[2]) {
-		 * 
-		 * } if (event.values[0] > event.values[1]) { if (event.values[0] >
-		 * event.values[2]) {
-		 * 
-		 * } } else {
-		 * 
-		 * } String msg = String.format(
-		 * "X: %8.4f\nY: %8.4f\nZ: %8.4f\nRotation: %d", event.values[0],
-		 * event.values[1], event.values[2], mRotation); text.setText(msg);
-		 * text.invalidate();
-		 */
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+			/*
+			 * Log.e("gx", "" + event.values[0]); 
+			 * Log.e("gy", "" + event.values[1]); 
+			 * Log.e("gz", "" + event.values[2]);
+			 */
 
-		/*
-		 * event.values[2] -= 9.2; for (int i = 0; i < event.values.length; i++)
-		 * { if (Math.abs(event.values[this.direction]) <
-		 * Math.abs(event.values[i])) { this.direction = i; } } if
-		 * (event.values[this.direction] > 0) { this.forward = true; } else {
-		 * this.forward = false; }
-		 */
+			ImageView img = (ImageView) this.rootView
+					.findViewById(R.id.gyro_arrow);
+			if (this.enabled) {
+				if (Math.abs(event.values[0]) > 1) {
+					if (event.values[0] > 0) {
+						Log.e("gx", "positive");
+						this.onCommand('r');
+					} else {
+						Log.e("gx", "negative");
+						this.onCommand('l');
+					}
+				} else if (Math.abs(event.values[1]) > 1) {
+					if (event.values[1] > 0) {
+						Log.e("gy", "positive");
+						this.onCommand('f');
+					} else {
+						Log.e("gy", "negative");
+						this.onCommand('b');
+					}
+				} else if (Math.abs(event.values[2]) - 9.2 > 1) {
+					if (event.values[2] > 0) {
+						Log.e("gz", "positive");
+						this.onCommand('F');
+					} else {
+						Log.e("gz", "negative");
+						this.onCommand('R');
+					}
+				} else {
+					// i call her any
+					new Runnable() {
 
-		Log.e("x", "" + event.values[0]);
-		Log.e("y", "" + event.values[1]);
-		Log.e("z", "" + event.values[2]);
-		
-		if (Math.abs(event.values[0]) > 1) {
-			if (event.values[0] < 0) {
-				Log.e("gx", "positive");
-//				this.onCommand('r');
-			} else {
-				Log.e("gx", "negative");
-//				this.onCommand('l');
+						@Override
+						public void run() {
+							AccelerometerDriveFragment.this.enabled = false;
+							try {
+								Thread.sleep(500);
+								AccelerometerDriveFragment.this.enabled = true;
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					};
+
+					this.onCommand('s');
+					this.onCommand('S');
+				}
 			}
-		} else if (Math.abs(event.values[1]) > 1) {
-			if (event.values[1] < 0) {
-				Log.e("gy", "positive");
-//				this.onCommand('f');
-			} else {
-				Log.e("gy", "negative");
-//				this.onCommand('b');
-			}
-		} else if (Math.abs(event.values[2]) > 1) {
-			if (event.values[2] > 0) {
-				Log.e("gz", "positive");
-//				this.onCommand('F');
-			} else {
-				Log.e("gz", "negative");
-//				this.onCommand('R');
-			}
-		} else {
-//			this.onCommand('s');
-//			this.onCommand('S');
 		}
-
 	}
 
 	/**
@@ -204,14 +217,6 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 		case 'S':
 			MoveMotor(this.MOTOR_C, this.drivePower, this.OFF_MOTOR);
 			break;
-		}
-
-		if (call != 's' && call != 'S') {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 

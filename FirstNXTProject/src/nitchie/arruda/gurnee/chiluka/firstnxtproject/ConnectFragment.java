@@ -36,7 +36,7 @@ import android.widget.Toast;
  * Anytime you would use <code>this</code> use <code>getActivity()</code>
  * instead
  */
-public class ConnectActivity extends Fragment implements OnClickListener {
+public class ConnectFragment extends Fragment implements OnClickListener {
 
 	private final String TAG = "NXT Project 1";
 	private final double MAX_MILLI_VOLTS = 9000.0;
@@ -76,16 +76,16 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.connect_view, container, false);
+		rootView = inflater.inflate(R.layout.connect_view_layout, container, false);
 
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
 		this.connectButton = (Button) rootView.findViewById(R.id.connectButton);
 		this.connectButton.setOnClickListener(this);
 
-		singButton = (Button) rootView.findViewById(R.id.singButton);
-		singButton.setOnClickListener(this);
-		singButton.setVisibility(View.INVISIBLE);
+		this.singButton = (Button) rootView.findViewById(R.id.singButton);
+		this.singButton.setOnClickListener(this);
+		this.singButton.setVisibility(View.INVISIBLE);
 
 		this.disconnectButton = (Button) rootView
 				.findViewById(R.id.disconnectButton);
@@ -96,7 +96,6 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.btImage.setImageAlpha(this.IMAGE_TRANSPARENT);
 
 		this.statusLabel = (TextView) rootView.findViewById(R.id.statusLabel);
-		// this.statusLabel.setTextColor(color.primary_text_light);
 
 		this.batteryStatus = (ProgressBar) rootView
 				.findViewById(R.id.batteryStatusBar);
@@ -110,7 +109,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 	}
 
 	private void mpollBattery(int interval) {
-		final ConnectActivity current = this;
+		final ConnectFragment current = this;
 		mBatteryTimer = new Timer();
 		mBatteryTimer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
@@ -155,7 +154,6 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 		this.connectButton.setVisibility(View.GONE);
 		this.disconnectButton.setVisibility(View.VISIBLE);
 
-		// this.setBatteryMeter(this.getBatteryLevel());
 		this.btImage.setImageAlpha(this.IMAGE_OPAQUE);
 		this.statusLabel.setText(this.getResources().getString(
 				R.string.nxtConnected)
@@ -164,7 +162,6 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 				color.holo_orange_light));
 		this.nxtConnected = true;
 
-		// Check for preference for drive power
 		SharedPreferences preferences = this.getActivity()
 				.getSharedPreferences("GetPrefs", 0);
 		String getBattFlag = (preferences.getString("bt", "false"));
@@ -276,7 +273,7 @@ public class ConnectActivity extends Fragment implements OnClickListener {
 						.show();
 			} else {
 				Intent i = new Intent(getActivity(),
-						SelectBluetoothDeviceActivity.class);
+						SelectBluetoothDevicePopupActivity.class);
 				this.startActivityForResult(i, PICK_BLUETOOTH_ID);
 			}
 			break;

@@ -10,31 +10,29 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 	
 	public MyPagerAdapter(FragmentManager fm) {
 		super(fm);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Fragment getItem(int arg0) {
 		switch (arg0) {
         case 0:
-        	return new ConnectActivity();
-        case 1:
-        	return new DriveActivity();
+        	return new ConnectFragment();
+        case 1:        	
+        	return new ManualDriveFragment();
         case 2:
-        	return new SensorActivity();
+        	return new SensorListFragment();
         case 3:
-        	return new VoiceRecognitionActivity();
+        	return new VoiceDriveFragment();
         case 4:
-        	return new GyroscopeActivity();
+        	return new GyroscopeDriveFragment();
         case 5:
-        	return new AccelerometerActivity();
+        	return new AccelerometerDriveFragment();
 		}
 		return null;
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return TAB_NUM;
 	}
 }
