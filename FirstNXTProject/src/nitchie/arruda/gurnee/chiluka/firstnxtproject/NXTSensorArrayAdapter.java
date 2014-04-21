@@ -34,8 +34,8 @@ public class NXTSensorArrayAdapter extends ArrayAdapter<NXTSensor> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new NXTSensorHolder();
-			holder.txtTitle = (TextView) row.findViewById(R.id.select_sensor_image_imageView);
-			holder.imgIcon = (ImageView) row.findViewById(R.id.select_sensor_name_lbl);
+			holder.txtTitle = (TextView) row.findViewById(R.id.select_sensor_name_lbl);
+			holder.imgIcon = (ImageView) row.findViewById(R.id.select_sensor_image_imageView);
 
 			row.setTag(holder);
 		} else {
