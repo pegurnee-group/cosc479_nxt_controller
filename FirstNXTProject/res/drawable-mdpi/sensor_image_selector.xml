@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:drawable="@drawable/sensor_distance"
+        android:maxLevel="0"/>
+    <item
+        android:drawable="@drawable/sensor_light"
+        android:maxLevel="1"/>
+    <item
+        android:drawable="@drawable/sensor_sound"
+        android:maxLevel="2"/>
+    <item
+        android:drawable="@drawable/sensor_touch"
+        android:maxLevel="3"/>
+    <item
+    	android:maxLevel="4"
+    	android:drawable="@drawable/servo"/>
+
+</level-list>

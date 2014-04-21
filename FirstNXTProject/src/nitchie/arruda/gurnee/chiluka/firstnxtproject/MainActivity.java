@@ -3,7 +3,10 @@ package nitchie.arruda.gurnee.chiluka.firstnxtproject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,22 +19,25 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	private ViewPager myViewPager;
-	private MyPagerAdapter myPagerAdapter;
 	private ActionBar myActionBar;
 	private final int PREF_ID = 2;
 
-	private String[] tabs = { "Connect", "Drive", "Sensors", "Voice", "Gyro", "Accel" };
+	private String[] tabs = { "Connect", "Drive", "Sensors", "Voice", "Gyro",
+			"Accel" };
+	private int[] icons = { R.drawable.icon_connect, R.drawable.icon_drive,
+			R.drawable.icon_sensors, R.drawable.icon_voice,
+
+			R.drawable.icon_gyro, R.drawable.icon_gyro };
+
+	private BroadcastReceiver btMonitor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-
-		setContentView(R.layout.main_view);
+		setContentView(R.layout.main_view_layout);
 
 		myViewPager = (ViewPager) findViewById(R.id.pager);
-
 		/**
 		 * on swiping the viewpager make respective tab selected
 		 * */
@@ -54,35 +60,45 @@ public class MainActivity extends FragmentActivity implements
 					}
 				});
 
+		myViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+
+		// Configure the action bar
 		myActionBar = getActionBar();
-
-		myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-
-		myViewPager.setAdapter(myPagerAdapter);
 		myActionBar.setHomeButtonEnabled(false);
 		myActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		// Hide the title bar
 		myActionBar.setDisplayShowTitleEnabled(false);
 		myActionBar.setDisplayShowHomeEnabled(false);
 
 		// Adding Tabs
-
-		for (String s : tabs) {
-			myActionBar.addTab(myActionBar.newTab().setText(s)
-					.setTabListener(this));
+		for (int i = 0; i < tabs.length; i++) {
+			myActionBar.addTab(myActionBar.newTab().setText(tabs[i])
+					.setIcon(icons[i]).setTabListener(this));
 		}
 
-		// for (Map.Entry<String, Integer> entry : tabs.entrySet()) {
-		// myActionBar.addTab(myActionBar.newTab().setText(entry.getKey())
-		// .setIcon(entry.getValue()).setTabListener(this));
-		// }
+		// Monitor for BT Disconnect
+		btMonitor = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (intent.getAction().equals(
+						"android.bluetooth.device.action.ACL_CONNECTED")) {
+				}
+				if (intent.getAction().equals(
+						"android.bluetooth.device.action.ACL_DISCONNECTED")) {
+					// //handleDisconnected();
+					ConnectFragment connect = (ConnectFragment) getSupportFragmentManager()
+							.findFragmentByTag(
+									"android:switcher:" + R.id.pager + ":"
+											+ myViewPager.getCurrentItem());
+					connect.disconnectNXT(null);
+				}
+			}
+		};
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-        
+
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -92,11 +108,11 @@ public class MainActivity extends FragmentActivity implements
 
 		switch (item.getItemId()) {
 		case R.id.aboutapp:
-			Intent intent1 = new Intent(this, AppDetails_Activity.class);
+			Intent intent1 = new Intent(this, AppDetailsActivity.class);
 			startActivity(intent1);
 			break;
 		case R.id.preference:
-			Intent intent2 = new Intent(this, Preference_Activity.class);
+			Intent intent2 = new Intent(this, PreferencesActivity.class);
 			// this.startActivity(intent);
 			startActivityForResult(intent2, PREF_ID);
 			break;
@@ -135,5 +151,20 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		registerReceiver(btMonitor, new IntentFilter(
+				"android.bluetooth.device.action.ACL_CONNECTED"));
+		registerReceiver(btMonitor, new IntentFilter(
+				"android.bluetooth.device.action.ACL_DISCONNECTED"));
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		unregisterReceiver(btMonitor);
 	}
 }

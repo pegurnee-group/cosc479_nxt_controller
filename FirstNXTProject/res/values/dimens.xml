@@ -5,5 +5,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="arrow_button_margin">5dp</dimen>
     <dimen name="control_label_margin">10dp</dimen>
+    <dimen name="sensor_switch_padding">30dp</dimen>
 
 </resources>

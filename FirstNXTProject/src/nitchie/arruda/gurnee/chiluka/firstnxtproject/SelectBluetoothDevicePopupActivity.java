@@ -10,14 +10,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SelectBluetoothDeviceActivity extends ListActivity {
+public class SelectBluetoothDevicePopupActivity extends ListActivity {
 	private BluetoothDevice[] devices;
 	private DeviceData myObject;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.popup_view);
+		this.setContentView(R.layout.select_bluetooth_layout);
 
 		Set<BluetoothDevice> bluetoothDevicesSet = BluetoothAdapter
 				.getDefaultAdapter().getBondedDevices();
@@ -38,7 +38,7 @@ public class SelectBluetoothDeviceActivity extends ListActivity {
 		}
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.row_view, R.id.row_lbl, names);
+				R.layout.select_bluetooth_row_layout, R.id.row_lbl, names);
 		this.setListAdapter(adapter);
 	}
 

@@ -10,17 +10,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
-public class GyroscopeActivity extends Fragment implements SensorEventListener {
+public class GyroscopeDriveFragment extends Fragment implements
+		SensorEventListener {
 
 	private SensorManager mgr;
 	private Sensor gyroscope;
-	private Button accelButton;
 	private int mRotation;
 
 	private View rootView;
@@ -42,7 +42,8 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.gyro_view, container, false);
+		this.rootView = inflater.inflate(R.layout.gyro_view_layout, container,
+				false);
 		this.myObject = (DeviceData) DeviceData.getInstance();
 
 		Activity somethingNew = this.getActivity();
@@ -71,7 +72,7 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 	 * } else if ((action == MotionEvent.ACTION_UP)) { this.enabled = false;
 	 * this.onCommand('s'); this.onCommand('S'); } break; } return true; }
 	 */
-	
+
 	@Override
 	public void onResume() {
 		mgr.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_UI);
@@ -114,38 +115,47 @@ public class GyroscopeActivity extends Fragment implements SensorEventListener {
 		 * (event.values[this.direction] > 0) { this.forward = true; } else {
 		 * this.forward = false; }
 		 */
+		if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+			Log.e("x", "" + event.values[0]);
+			Log.e("y", "" + event.values[1]);
+			Log.e("z", "" + event.values[2]);
 
-		Log.e("x", "" + event.values[0]);
-		Log.e("y", "" + event.values[1]);
-		Log.e("z", "" + event.values[2]);
-		
-		if (Math.abs(event.values[0]) > 1) {
-			if (event.values[0] < 0) {
-				Log.e("gx", "positive");
-//				this.onCommand('r');
-			} else {
-				Log.e("gx", "negative");
-//				this.onCommand('l');
+//			ImageView img = (ImageView) this.rootView
+//					.findViewById(R.id.gyro_arrow);
+
+			if (Math.abs(event.values[0]) > 1) {
+				if (event.values[0] > 0) {
+					Log.e("x", "positive");
+					// this.onCommand('l');
+//					img.setBackground(getResources().getDrawable(
+//							R.drawable.gyro_arrow_right));
+				} else {
+					Log.e("x", "negative");
+//					img.setBackground(getResources().getDrawable(
+//							R.drawable.gyro_arrow_left));
+					// this.onCommand('r');
+				}
+			} else if (Math.abs(event.values[1]) > 1) {
+				if (event.values[1] > 0) {
+					Log.e("y", "positive");
+					// img.setBackground(getResources().getDrawable(R.drawable.gyro_arrow_up));
+					// this.onCommand('b');
+				} else {
+					Log.e("y", "negative");
+					// img.setBackground(getResources().getDrawable(R.drawable.gyro_arrow_down));
+					// this.onCommand('f');
+				}
 			}
-		} else if (Math.abs(event.values[1]) > 1) {
-			if (event.values[1] < 0) {
-				Log.e("gy", "positive");
-//				this.onCommand('f');
-			} else {
-				Log.e("gy", "negative");
-//				this.onCommand('b');
+			/*
+			 * else if (Math.abs(event.values[2]) > 1) { if (event.values[2] >
+			 * 0) { Log.e("gz", "positive"); this.onCommand('F'); } else {
+			 * Log.e("gz", "negative"); this.onCommand('R'); } }
+			 */
+			else {
+				this.onCommand('s');
+				this.onCommand('S');
+				// img.setImageDrawable(null);
 			}
-		} else if (Math.abs(event.values[2]) > 1) {
-			if (event.values[2] > 0) {
-				Log.e("gz", "positive");
-//				this.onCommand('F');
-			} else {
-				Log.e("gz", "negative");
-//				this.onCommand('R');
-			}
-		} else {
-//			this.onCommand('s');
-//			this.onCommand('S');
 		}
 
 	}

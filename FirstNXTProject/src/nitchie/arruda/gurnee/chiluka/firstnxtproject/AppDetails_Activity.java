@@ -12,7 +12,7 @@ public class AppDetails_Activity extends Activity {
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.about_app);
+/*			setContentView(R.layout.about_app);
 			
 			EditText mytext = (EditText) findViewById(R.id.details);
 
@@ -20,7 +20,7 @@ public class AppDetails_Activity extends Activity {
 					"		updated by: Eddie Gurnee\nUI Design: Anjana Chiluka,\n"+
 					"				updated by: Nicole Arruda");
 
-		}
+*/		}
 
 		
 }
