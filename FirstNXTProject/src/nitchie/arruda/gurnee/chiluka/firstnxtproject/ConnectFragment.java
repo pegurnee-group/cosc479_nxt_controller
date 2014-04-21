@@ -104,6 +104,8 @@ public class ConnectFragment extends Fragment implements OnClickListener {
 		this.batteryStatus.setProgress(this.BATTERY_MIN);
 
 		this.batteryStatus.setOnClickListener(this); // for battery level reset
+		
+		
 
 		return rootView;
 	}

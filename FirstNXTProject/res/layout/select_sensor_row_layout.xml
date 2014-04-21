@@ -15,7 +15,9 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/control_label_margin"
         android:paddingRight="@dimen/control_label_margin"
+        android:paddingTop="50dp"
+       
         android:textColor="@color/NiceButtonDisabledStartColor"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>
