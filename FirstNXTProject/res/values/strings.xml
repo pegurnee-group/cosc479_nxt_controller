@@ -45,5 +45,6 @@
     <string name="reset_servos">Reset Servos</string>
     <string name="paired">Paired Bluetooth Devices</string>
     <string name="select">Select NXT Device</string>
+    <string name="nxtSensor">Select NXT Sensor Type</string>
 
 </resources>
