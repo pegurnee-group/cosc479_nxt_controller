@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="@string/nxtDisconnected" />
+            
+           
 
         </LinearLayout>
 

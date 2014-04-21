@@ -253,6 +253,7 @@ public class ConnectFragment extends Fragment implements OnClickListener {
 				BluetoothAdapter.getDefaultAdapter().enable();
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
+				//connectButton.setEnabled(false);
 				break;
 			}
 		}
@@ -267,9 +268,9 @@ public class ConnectFragment extends Fragment implements OnClickListener {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
 				builder.setMessage(
-						"Your Bluetooth is not enabled, would you like to enable it now?")
-						.setPositiveButton("Yes", new DialogClickListener())
-						.setNegativeButton("No", new DialogClickListener())
+						"An app wants to turn on Bluetooth.")
+						.setPositiveButton("Allow", new DialogClickListener())
+						.setNegativeButton("Deny", new DialogClickListener())
 						.show();
 			} else {
 				Intent i = new Intent(getActivity(),

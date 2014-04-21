@@ -8,7 +8,7 @@
     <string name="close">Disconnect</string>
     <string name="bluetoothDesc">Bluetooth Icon</string>
     <string name="nxtConnecting">Attemping to connect to NXT</string>
-    <string name="nxtDisconnected">Not connected to NXT</string>
+    <string name="nxtDisconnected">Bluetooth Disabled</string>
     <string name="nxtConnected">Connected to NXT\n </string>
     <string name="defaultBatteryStatus">Battery level:</string>
     <string name="sing">Sing!</string>
@@ -43,5 +43,7 @@
     <string name="stop_switch_label">Stop</string>
     <string name="reset_sensors">Reset Sensors</string>
     <string name="reset_servos">Reset Servos</string>
+    <string name="paired">Paired Bluetooth Devices</string>
+    <string name="select">Select NXT Device</string>
 
 </resources>
